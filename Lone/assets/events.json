@@ -299,7 +299,8 @@
           "text": "Wait until they pass",
           "result":[
             {
-              "text": "Some infected found you. You tried to fight them off, but there were too many of them. You got hurt and lost some"
+              "text": "Some infected found you. You tried to fight them off, but there were too many of them. You got hurt and had to left half of your supplies in order to live.",
+              "playerData": {"meds": "/2", "food": "/2", "water": "/2", "health": -10}
             },{
               "attribute": ["experience", 75],
               "text": "You found a great hiding spot and waited until the swarm passed.\n\nYou found some supplies while you were hiding.",
@@ -307,9 +308,6 @@
             },{
               "attribute": ["combat", 75],
               "text": "Some infected found you, but you managed to knocked them out before more were alerted."
-            },{
-              "attribute": ["physique", 75],
-              "text": ""
             }
           ]
         }]
@@ -328,7 +326,8 @@
           },{
             "attribute": ["experience", 90],
             "text": "You couldn't trust the survivor, so you quickly took off without throughly looting the area.",
-            "playerData": {"food": 2, "water": 1, "charm": -5}
+            "playerData": {"food": 2, "water": 1, "charm": -5},
+            "next": "out"
           }
         ]
       }, {
@@ -339,16 +338,47 @@
       "title": "AN UNWELCOME EXPLORER",
       "text": "During your exploration, you noticed a raider a few meters from you without knowing you're there.",
       "choices": [{
-        "text": "Rob them"
+        "text": "Rob them",
+        "result": [
+          {
+            "text": "The raider had the faster move and defeated you with ease. They took off with all your supplies.",
+            "playerData": {"meds": 0, "food": 0, "water": 0, "charm": -5}
+          },{
+            "attribute": ["combat", 75],
+            "text": "You knocked down the raider with one hit and took away their supplies.",
+            "playerData": {"food": "+", "water": "+"}
+          }
+        ]
       }, {
-        "text": "Ignore them"
+        "text": "Leave the place",
+        "result": [
+          {
+            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away.",
+            "playerData": {"health": -5}
+          },{
+            "attribute": ["experience", 25],
+            "text": "You walked away quietly.",
+            "next": "out"
+          }
+        ]
       }]
     }, {
       "id": 2,
       "title": "A GROUP OF SURVIVOR",
       "text": "You met a group of survivors looting the same place. They saw you and waved.",
       "choices": [{
-        "text": "Loot with them"
+        "text": "Loot with them",
+        "result": [
+          {
+            "text": "Everything went okay. You and the survivors even exchanged surviving tips!",
+            "playerData": {"med": "+", "food": "+", "water": "+", "experience": 10, "charm": 10}
+          },{
+            "attribute": ["experience", 90],
+            "text": "You couldn't trust the group, so you quickly took off without throughly looting the area.",
+            "playerData": {"food": 1, "water": 1, "charm": -5},
+            "next": "out"
+          }
+        ]
       }, {
         "text": "Ignore them"
       }]
@@ -360,13 +390,17 @@
         "text": "MAKE A RUN",
         "result": [
           {
-            "text": "When you decided to run, you didn't have enough time to pick up your stuff. But you made it out alive."
+            "text": "When you decided to run, you didn't have enough time to pick up half of your stuff. But you made it out alive.",
+            "playerData": {"meds": "/2", "food": "/2", "water": "/2", "charm": -10},
+            "next": "out"
           },{
-            "attribute": ["combat", 75],
-            "text": "You ran fast enough to avoid the devouring of the flames."
+            "attribute": ["physique", 65],
+            "text": "You ran fast enough to avoid the devouring of the flames.",
+            "next": "out"
           },{
             "attribute": ["experience", 75],
-            "text": "You quickly planned out a route in your head, and executed it perfectly. You made it out without a burn."
+            "text": "You quickly planned out a route in your head, and executed it perfectly. You made it out without a burn.",
+            "next": "out"
           }
         ]
       }, {
@@ -374,11 +408,13 @@
         "result": [
           {
             "text": "You tried to go to the roof, but the supplies were slowing you down. You had to dispose half of them to make it in time. You went to the gorund through another route.",
-            "playerData": {"meds": "/2", "food": "/2", "water": "/2", "charm": -10}
+            "playerData": {"meds": "/2", "food": "/2", "water": "/2", "charm": -10},
+            "next": "out"
           },{
             "attribute": ["physique", 60],
             "text": "Your fitness training is finally now useful. You went to the roof without a sweat and made it to the gorund through another route.",
-            "playerData": {"charm": 5}
+            "playerData": {"charm": 5},
+            "next": "out"
           }
         ]
       }]
@@ -407,13 +443,17 @@
           "text": "Get out quickly",
           "result": [
             {
-              "text": "The infected caught you running out of the building and beat the heck out of you. But you managed to run away with some bruises."
+              "text": "The infected caught you running out of the building and beat the heck out of you. But you managed to run away with some bruises.",
+              "playerData": {"health": -15},
+              "next": "out"
             },{
               "attribute": ["physique", 75],
-              "text": "You ran so fast that the infected gave up chasing you."
+              "text": "You ran so fast that the infected gave up chasing you.",
+              "next": "out"
             },{
               "attribute": ["experience", 75],
-              "text": "You ran in a unpredictable snake route and confused all the infected. You got away when they were heading to find you in another building."
+              "text": "You ran in a unpredictable snake route and confused all the infected. You got away when they were heading to find you in another building.",
+              "next": "out"
             }
           ]
         }

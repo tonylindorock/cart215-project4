@@ -182,13 +182,13 @@ function showChoices() {
   } else {
     fill(238, 238, 238, 75);
   }
-  text(gameData.choices[0], width / 2 - width / 3, height / 2, width/4, card.height);
+  text(gameData.choices[0], width / 2 - width / 3, height / 2, width / 4, card.height);
   if (getMousePos() === MOUSE_ON_RIGHT) {
     fill(WHITE);
   } else {
     fill(238, 238, 238, 75);
   }
-  text(gameData.choices[1], width / 2 + width / 3, height / 2, width/4, card.height);
+  text(gameData.choices[1], width / 2 + width / 3, height / 2, width / 4, card.height);
   pop();
 }
 
@@ -224,18 +224,18 @@ function mousePressed() {
 
 function makeChoice(id) {
   // if the choice has a consequence
-  if (conseqClickCount === 0 && gameData.eventObj.choices[id].result != null){
+  if (conseqClickCount === 0 && gameData.eventObj.choices[id].result != null) {
     let hasAttribute = false;
     let index = 0;
-    for (let i = 1; i < gameData.eventObj.choices[id].result.length; i++){
+    for (let i = 1; i < gameData.eventObj.choices[id].result.length; i++) {
       // if player has the attribute
-      if (player.stats[gameData.eventObj.choices[id].result[i].attribute[0]] >=  gameData.eventObj.choices[id].result[i].attribute[1]){
+      if (player.stats[gameData.eventObj.choices[id].result[i].attribute[0]] >= gameData.eventObj.choices[id].result[i].attribute[1]) {
         hasAttribute = true;
         gameData.consequenceId = i;
         break;
       }
     }
-    if (!hasAttribute){
+    if (!hasAttribute) {
       gameData.consequenceId = 0;
     }
     gameData.hasConsequence = true;
@@ -243,7 +243,7 @@ function makeChoice(id) {
     gameData.choices[1] = "";
     conseqClickCount = 1;
     card.playAnimation(2);
-  }else{
+  } else {
     gameData.hasConsequence = false;
     conseqClickCount = 0;
     card.playAnimation(id);
@@ -309,43 +309,56 @@ function parseChoice(id) {
     gameData.state[gameData.eventObj.choices[id].state[0]] = gameData.eventObj.choices[id].state[1];
   }
   // if the choice has consequence, don't jump to the next event
-  if (gameData.hasConsequence){
+  if (gameData.hasConsequence) {
     let conseqObj = gameData.eventObj.choices[id].result[gameData.consequenceId];
     let change = "";
-    if (conseqObj.playerData != null){
-      for(var key in conseqObj.playerData){
+    if (conseqObj.playerData != null) {
+      for (var key in conseqObj.playerData) {
         let value = conseqObj.playerData[key];
         // if changing num
-        if (typeof(value) == 'number'){
+        if (typeof(value) == 'number') {
           // neg or pos
-          if (value != 0){
+          if (value != 0) {
             change += "\n" + str(value) + " " + key;
             player.stats[key] += value;
             player.stats[key] = constrain(player.stats[key], 0, 100);
-          // 0
-          }else{
+            // 0
+          } else {
             change += "\n-" + str(player.stats[key]) + " " + key;
             player.stats[key] = value;
           }
-        // if adding random num
-        }else if (value.include("+")){
-          let randTemp = int(random(0,4));
+          // if adding random num
+        } else if (value.includes("+")) {
+          let randTemp = int(random(0, 4));
           change += "\n" + str(randTemp) + " " + key;
           player.stats[key] += randTemp;
-        }else if (value.include("/2")){
-          let temp = int(player.stats[key]/2) - player.stats[key];
+          // if supplies cut to half
+        } else if (value.includes("/2")) {
+          let temp = int(player.stats[key] / 2) - player.stats[key];
           change += "\n" + str(temp) + " " + key;
           player.stats[key] += temp;
-        }else if (key === "weapon"){
-          player.stats["weapon"] = value;
+          // if some changes to the weapon
+        } else if (key === "weapon") {
+          // make sure it's an array
+          if (typeof(value) == 'object') {
+            // size 2/1, changing the weapon
+            if (value.length === 2 || value.length === 1) {
+              player.stats["weapon"] = value;
+              // size 4, change weapon stats
+            }
+          }
         }
       }
       stats.updateStats(player);
     }
+    if (conseqObj.next != null) {
+      if (conseqObj.next === "out") {
+        gameData.cardLimit = 0;
+        player.action = "";
+      }
+    }
     card.text = conseqObj.text + "\n" + change;
-    gameData.cardLimit = 0;
-    player.action = "";
-  }else{
+  } else {
     // change event to the next event
     if (gameData.eventObj.choices[id].next != null) {
       if (gameData.eventObj.choices[id].next.constructor === Array) {
@@ -366,8 +379,8 @@ function parseChoice(id) {
           if (id === 0) {
             updatePlayerData(currentLoot);
           }
-        // if finding supplies
-      } else if (gameData.currentEvent === 0) {
+          // if finding supplies
+        } else if (gameData.currentEvent === 0) {
           updatePlayerData(currentLoot);
         }
       }
@@ -387,6 +400,8 @@ function parseChoice(id) {
 function parseChoiceArray(array) {
   if (array[0] === "loc") {
     return getLocation(array[1]);
+  } else if (array[0] === "out") {
+
   }
 }
 
@@ -511,7 +526,7 @@ function getWeapon(type, id) {
 function updatePlayerData(array) {
   if (array.length === 1 || array.length === 2) {
     player.stats["weapon"] = array;
-  }else if (array.length === 3){
+  } else if (array.length === 3) {
     player.stats["meds"] += array[0];
     player.stats["food"] += array[1];
     player.stats["water"] += array[2];
