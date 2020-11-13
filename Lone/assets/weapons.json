@@ -1,0 +1,46 @@
+{
+  "weapons": {
+    "melee":[
+      {
+        "id": 0,
+        "name": "Knife",
+        "dam": 10
+      },{
+        "id": 1,
+        "name": "Machete",
+        "dam": 30
+      },{
+        "id": 2,
+        "name": "Bat",
+        "dam": 15
+      },{
+        "id": 3,
+        "name": "Pipe",
+        "dam": 15
+      }
+    ],
+    "gun":[
+      {
+        "id": 0,
+        "name": "Pistol",
+        "dam": 20,
+        "ammo": 10
+      },{
+        "id": 1,
+        "name": "Revolver",
+        "dam": 40,
+        "ammo": 6
+      },{
+        "id": 2,
+        "name": "Shotgun",
+        "dam": 80,
+        "ammo": 8
+      },{
+        "id": 3,
+        "name": "Rifle",
+        "dam": 60,
+        "ammo": 15
+      }
+    ]
+  }
+}

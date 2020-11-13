@@ -1,0 +1,69 @@
+{
+  "loc": [{
+    "id": 0,
+    "name": "Pharmacy",
+    "size": 4,
+    "spawn": {
+      "meds": 0.6,
+      "food": 0.5,
+      "water": 0.35,
+      "melee": 0.8,
+      "gun": 0.2
+    }
+  }, {
+    "id": 1,
+    "name": "Grocery store",
+    "size": 6,
+    "spawn": {
+      "meds": 0.3,
+      "food": 0.8,
+      "water": 0.8,
+      "melee": 0.8,
+      "gun": 0.2
+    }
+  }, {
+    "id": 2,
+    "name": "Hardware store",
+    "size": 4,
+    "spawn": {
+      "meds": 0,
+      "food": 0.1,
+      "water": 0.1,
+      "melee": 0.8,
+      "gun": 0.2
+    }
+  }, {
+    "id": 3,
+    "name": "Restaurant",
+    "size": 4,
+    "spawn": {
+      "meds": 0,
+      "food": 0.6,
+      "water": 0.5,
+      "melee": 0.9,
+      "gun": 0.1
+    }
+  }, {
+    "id": 4,
+    "name": "Coffee shop",
+    "size": 4,
+    "spawn": {
+      "meds": 0,
+      "food": 0.3,
+      "water": 0.6,
+      "melee": 0.9,
+      "gun": 0.1
+    }
+  }, {
+    "id": 5,
+    "name": "Apartment",
+    "size": 8,
+    "spawn": {
+      "meds": 0.2,
+      "food": 0.5,
+      "water": 0.5,
+      "melee": 0.7,
+      "gun": 0.3
+    }
+  }]
+}
