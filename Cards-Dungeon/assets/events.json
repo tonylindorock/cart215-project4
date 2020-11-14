@@ -2,8 +2,8 @@
   "events": {
     "other": [{
       "id": -1,
-      "title": "LONE",
-      "text": "A Card Adventure\n\n",
+      "title": "WELCOME TO",
+      "text": "Cards\nDungeon\n\n",
       "choices": [{
         "text": "Pick any side",
         "next": ["other", 0]

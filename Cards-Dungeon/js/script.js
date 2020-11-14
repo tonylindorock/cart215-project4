@@ -2,7 +2,7 @@
 /********************************************************************
 
 Prototype
-Lone: A Card Game
+Cards Dungeon
 Yichen Wang
 
 *********************************************************************/
@@ -98,8 +98,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
-  textFont("Verdana");
-  textStyle(BOLD);
+  textFont("Luminari");
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   angleMode(DEGREES)
