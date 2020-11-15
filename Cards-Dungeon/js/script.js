@@ -199,7 +199,7 @@ function updateCard(id, loot = null) {
       break;
       // supplies
     case 1:
-      card.text = gameData.eventObj.text + "\n\n" + loot[0] + " MEDS" + "\n" + loot[1] + " FOOD" + "\n" + loot[2] + " WATER" + "\n\nPick any side to contine";
+      card.text = gameData.eventObj.text + "\n\n" + loot[0] + " Herbs" + "\n" + loot[1] + " Food" + "\n" + loot[2] + " Coins" + "\n\nPick any side to contine";
       break;
       // melee
     case 2:
@@ -475,7 +475,7 @@ function getLoot() {
   // spawn random supplies
   if (temp >= 0.3) {
     let tempItem = random();
-    if (tempItem <= gameData.currentLoc.spawn.meds) {
+    if (tempItem <= gameData.currentLoc.spawn.herbs) {
       append(result, int(random(1, 4)));
     } else {
       append(result, 0);
@@ -487,7 +487,7 @@ function getLoot() {
       append(result, 0);
     }
     //tempItem = random();
-    if (tempItem <= gameData.currentLoc.spawn.water) {
+    if (tempItem <= gameData.currentLoc.spawn.coins) {
       append(result, int(random(1, 4)));
     } else {
       append(result, 0);
@@ -495,10 +495,10 @@ function getLoot() {
     // spawn random weapon
   } else {
     let tempWeapon = random();
-    if (tempWeapon <= gameData.currentLoc.spawn.gun) {
-      let tempGun = getWeapon("gun", int(random(weaponsJSON.weapons.gun.length)))
-      append(result, tempGun.name);
-      append(result, tempGun.ammo);
+    if (tempWeapon <= gameData.currentLoc.spawn.ranged) {
+      let tempRanged = getWeapon("ranged", int(random(weaponsJSON.weapons.ranged.length)))
+      append(result, tempRanged.name);
+      append(result, tempRanged.ammo);
     } else {
       let tempMelee = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
       append(result, tempMelee.name);
@@ -512,8 +512,8 @@ function getWeapon(type, id) {
   let targetArray;
   if (type === "melee") {
     targetArray = weaponsJSON.weapons.melee;
-  } else if (type === "gun") {
-    targetArray = weaponsJSON.weapons.gun;
+  } else if (type === "ranged") {
+    targetArray = weaponsJSON.weapons.ranged;
   }
   for (let i = 0; i < targetArray.length; i++) {
     if (targetArray[i].id === id) {
@@ -526,9 +526,9 @@ function updatePlayerData(array) {
   if (array.length === 1 || array.length === 2) {
     player.stats["weapon"] = array;
   } else if (array.length === 3) {
-    player.stats["meds"] += array[0];
+    player.stats["herbs"] += array[0];
     player.stats["food"] += array[1];
-    player.stats["water"] += array[2];
+    player.stats["coins"] += array[2];
   }
   stats.updateStats(player);
 }

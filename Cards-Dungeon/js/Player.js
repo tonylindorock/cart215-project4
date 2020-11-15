@@ -3,11 +3,12 @@ class Player{
     this.stats = {
       "combat": this.randomAttribute(),
       "physique": this.randomAttribute(),
-      "experience": this.randomAttribute(),
+      "wit": this.randomAttribute(),
       "charm": this.randomAttribute(),
+      "herbs": 0,
       "food": 0,
-      "water": 0,
-      "meds": 0,
+      "coins": 0,
+      "amour": "",
       "weapon": [""],
       "health": 30
     };

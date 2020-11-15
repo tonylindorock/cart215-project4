@@ -3,43 +3,52 @@
     "melee":[
       {
         "id": 0,
-        "name": "Knife",
+        "name": "Dagger",
         "dam": 10
       },{
         "id": 1,
-        "name": "Machete",
+        "name": "Sword",
         "dam": 30
       },{
         "id": 2,
-        "name": "Bat",
-        "dam": 15
+        "name": "Spear",
+        "dam": 25
       },{
         "id": 3,
-        "name": "Pipe",
-        "dam": 15
+        "name": "Axe",
+        "dam": 25
+      },{
+        "id": 4,
+        "name": "Mace",
+        "dam": 25
       }
     ],
-    "gun":[
+    "ranged":[
       {
         "id": 0,
-        "name": "Pistol",
+        "name": "Bow",
         "dam": 20,
         "ammo": 10
       },{
         "id": 1,
-        "name": "Revolver",
+        "name": "Crossbow",
         "dam": 40,
         "ammo": 6
       },{
         "id": 2,
-        "name": "Shotgun",
+        "name": "Musket",
+        "dam": 80,
+        "ammo": 6
+      },{
+        "id": 3,
+        "name": "Magic Staff",
         "dam": 80,
         "ammo": 8
       },{
-        "id": 3,
-        "name": "Rifle",
+        "id": 4,
+        "name": "Crystal Wand",
         "dam": 60,
-        "ammo": 15
+        "ammo": 10
       }
     ]
   }

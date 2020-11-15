@@ -20,13 +20,14 @@ class Stats {
     this.attributes = {
       combat: player.stats["combat"],
       physique: player.stats["physique"],
-      experience: player.stats["experience"],
+      wit: player.stats["wit"],
       charm: player.stats["charm"]
     };
-    this.supplies = {
-      meds: 0,
+    this.possessions = {
+      herbs: 0,
       food: 0,
-      water: 0,
+      coins: 0,
+      amour: player.stats["amour"],
       weapon: player.stats["weapon"]
     };
     this.health = 30;
@@ -34,33 +35,34 @@ class Stats {
 
   getAttributes(id) {
     if (id = -1) {
-      return "COMBAT: " + this.attributes.combat + "\nPHYSIQUE: " + this.attributes.physique +
-        "\nEXPERIENCE: " + this.attributes.experience + "\nCHARM: " + this.attributes.charm;
+      return "Combat: " + this.attributes.combat + "\nPhysique: " + this.attributes.physique +
+        "\nWit: " + this.attributes.wit + "\nCharm: " + this.attributes.charm;
     }
   }
 
   getSupplies(id) {
     let weaponName;
-    if (this.supplies.weapon.length === 1) {
-      weaponName = this.supplies.weapon[0];
-    } else if (this.supplies.weapon.length === 2) {
-      weaponName = this.supplies.weapon[0] + " (" + this.supplies.weapon[1] + ")";
+    if (this.possessions.weapon.length === 1) {
+      weaponName = this.possessions.weapon[0];
+    } else if (this.possessions.weapon.length === 2) {
+      weaponName = this.possessions.weapon[0] + " (" + this.possessions.weapon[1] + ")";
     }
     if (id = -1) {
-      return "MEDS: " + this.supplies.meds + "\nFOOD: " + this.supplies.food +
-        "\nWATER: " + this.supplies.water + "\nWEAPON: " + weaponName;
+      return "Herbs: " + this.possessions.herbs + "\nFood: " + this.possessions.food +
+        "\nCoins: " + this.possessions.coins + "\nWeapon: " + weaponName;
     }
   }
 
   updateStats(player) {
     this.attributes.combat = player.stats["combat"];
     this.attributes.physique = player.stats["physique"];
-    this.attributes.experience = player.stats["experience"];
+    this.attributes.wit = player.stats["wit"];
     this.attributes.charm = player.stats["charm"];
-    this.supplies.meds = player.stats["meds"];
-    this.supplies.food = player.stats["food"];
-    this.supplies.water = player.stats["water"];
-    this.supplies.weapon = player.stats["weapon"];
+    this.possessions.herbs = player.stats["herbs"];
+    this.possessions.food = player.stats["food"];
+    this.possessions.coins = player.stats["coins"];
+    this.possessions.amour = player.stats["amour"];
+    this.possessions.weapon = player.stats["weapon"];
     this.health = player.stats["health"];
   }
 

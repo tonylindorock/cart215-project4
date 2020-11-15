@@ -1,69 +1,75 @@
 {
   "loc": [{
     "id": 0,
-    "name": "Pharmacy",
+    "name": "Fallen Village",
     "size": 4,
     "spawn": {
-      "meds": 0.6,
+      "herbs": 0.5,
       "food": 0.5,
-      "water": 0.35,
-      "melee": 0.8,
-      "gun": 0.2
+      "coins": 0.5,
+      "amour": 0.5,
+      "melee": 0.7,
+      "ranged": 0.3
     }
   }, {
     "id": 1,
-    "name": "Grocery store",
+    "name": "Foggy Swamp",
     "size": 6,
     "spawn": {
-      "meds": 0.3,
-      "food": 0.8,
-      "water": 0.8,
-      "melee": 0.8,
-      "gun": 0.2
+      "herbs": 0.5,
+      "food": 0.5,
+      "coins": 0.5,
+      "amour": 0.5,
+      "melee": 0.7,
+      "ranged": 0.3
     }
   }, {
     "id": 2,
-    "name": "Hardware store",
-    "size": 4,
+    "name": "Fallen Castle",
+    "size": 8,
     "spawn": {
-      "meds": 0,
-      "food": 0.1,
-      "water": 0.1,
-      "melee": 0.8,
-      "gun": 0.2
+      "herbs": 0.5,
+      "food": 0.5,
+      "coins": 0.5,
+      "amour": 0.5,
+      "melee": 0.7,
+      "ranged": 0.3
     }
   }, {
     "id": 3,
-    "name": "Restaurant",
+    "name": "Cave",
     "size": 4,
     "spawn": {
-      "meds": 0,
-      "food": 0.6,
-      "water": 0.5,
-      "melee": 0.9,
-      "gun": 0.1
+      "herbs": 0.5,
+      "food": 0.5,
+      "coins": 0.5,
+      "amour": 0.5,
+      "melee": 0.7,
+      "ranged": 0.3
     }
   }, {
     "id": 4,
-    "name": "Coffee shop",
-    "size": 4,
+    "name": "Dark Forest",
+    "size": 8,
     "spawn": {
-      "meds": 0,
-      "food": 0.3,
-      "water": 0.6,
-      "melee": 0.9,
-      "gun": 0.1
+      "herbs": 0.5,
+      "food": 0.5,
+      "coins": 0.5,
+      "amour": 0.5,
+      "melee": 0.7,
+      "ranged": 0.3
     }
   }, {
     "id": 5,
-    "name": "Apartment",
-    "size": 8,
+    "name": "Warlock's Tower",
+    "size": 6,
     "spawn": {
-      "meds": 0.2,
+      "herbs": 0.5,
       "food": 0.5,
-      "water": 0.5,
+      "coins": 0.5,
+      "amour": 0.5,
       "melee": 0.7,
-      "gun": 0.3
+      "ranged": 0.3
     }
   }]
 }

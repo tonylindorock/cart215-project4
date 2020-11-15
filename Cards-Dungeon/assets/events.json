@@ -2,7 +2,7 @@
   "events": {
     "other": [{
       "id": -1,
-      "title": "WELCOME TO",
+      "title": "Welcome To",
       "text": "Cards\nDungeon\n\n",
       "choices": [{
         "text": "Pick any side",
@@ -14,7 +14,7 @@
     }, {
       "id": 0,
       "title": "TIP #1",
-      "text": "A brain-control parasite has emerged in your city and paralyzed the local government.\n\nYou're on a 7-day journey to a train station for the only safe passage to get out of the city.",
+      "text": "The last geartest hero has fallen, and the quest called for adventurers.\n\nYou're on a 7-day journey to the most challenging dungeon in the realm.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -26,7 +26,7 @@
     }, {
       "id": 1,
       "title": "TIP #2",
-      "text": "The infected are like normal humans but super hostile towards the uninfected.\n\nDon't provoke them unless necessary.",
+      "text": "On your journey, you'll meet a lot of obstacles. Dungeon is the last one for you to worry about.\n\nIt's always wise to do things within your abilities.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -38,7 +38,7 @@
     }, {
       "id": 2,
       "title": "TIP #3",
-      "text": "Every outcome of an event is determined by your COMBAT, PHYSIQUE, EXPERIENCE, and CHARM.\n\nYour supplies (FOOD, WATER, MEDS, and WEAPONS) sometimes also come into play.",
+      "text": "Every outcome of an event is determined by your Combat, Physique, Wit, and Charm.\n\nYour possessions (Food, Herbs, Coins, Amour, and Weapon) sometimes also come into play.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -50,7 +50,7 @@
     }, {
       "id": 3,
       "title": "TIP #4",
-      "text": "COBMAT affects how effective you can use melee weapons and guns.\n\nPHYSIQUE decides your fitness and how well you can heal yourself.",
+      "text": "Combat affects how effective you can use melee and ranged weapons.\n\nPhysique decides your fitness and how well you can heal yourself.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -62,7 +62,7 @@
     }, {
       "id": 4,
       "title": "TIP #5",
-      "text": "EXPERIENCE reflects your knowledge and the level of paranoia.\n\nCHARM influences your persuasion on other people and morale.",
+      "text": "Wit reflects your knowledge and the level of magic practice.\n\nCharm influences your persuasion on others and morale.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -74,7 +74,7 @@
     }, {
       "id": 5,
       "title": "TIP #6",
-      "text": "",
+      "text": "Once you deplete your weapon, you'll have to fight with your fists until you find another weapon.\n\nIf you're confident about your fight skills, you might never need a weapon!",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -114,14 +114,26 @@
       }, {
         "text": "Leave it"
       }]
+    }, {
+      "id": 2,
+      "title": "EXPLORING THE @LOC",
+      "text": "After some exploring, you found a piece of amour:",
+      "choices": [{
+        "text": "Equip it"
+      }, {
+        "text": "Leave it"
+      }]
     }],
     "outdoor": [{
         "id": 0,
-        "title": "LOOT OR LOSE",
-        "text": "To survive and successfully reach the train station, it's important to stop to replenish your supplies.\n\nYou decide to go to:",
+        "title": "The Death Crossroad",
+        "text": "In front of you presents two separate paths to different destinations. You decide to go to: ",
         "choices": [{
           "text": ["loc", -1],
-          "caseText": [["day", 1], ["loc", 1]],
+          "caseText": [
+            ["day", 1],
+            ["loc", 1]
+          ],
           "next": "loc"
         }, {
           "text": ["loc", -1],
@@ -136,103 +148,149 @@
           "text": "Take a detour"
         }, {
           "text": "Continue this route anyway",
-          "result":[
-            {
-              "text": "You approach the raiders without caution. They knocked you down and took all your supplies and weapon.",
-              "playerData": {"meds": 0, "food": 0, "water": 0, "weapon": [""], "charm": -10, "health": -10}
-            },{
-              "attribute": ["combat", 75],
-              "text": "You walked towards the raiders and used perfect martial art defeating them. You walked away with some of their supplies."
-            },{
-              "attribute": ["experience", 75],
-              "text": "You used objects in the environment for you advantage and successfully went through the area without being seen."
-            },{
-              "attribute": ["charm", 75],
-              "text": "You persuaded the raiders that you're a lonely survivor trying to survive just like them. They let you pass with accpetance."
+          "result": [{
+            "text": "You approach the raiders without caution. They knocked you down and took all your possessions and weapon.",
+            "playerData": {
+              "herbs": 0,
+              "food": 0,
+              "coins": 0,
+              "amour": "",
+              "weapon": [""],
+              "charm": -10,
+              "health": -10
             }
-          ]
+          }, {
+            "attribute": ["combat", 75],
+            "text": "You walked towards the raiders and used perfect martial art defeating them. You walked away with some of their possessions."
+          }, {
+            "attribute": ["experience", 75],
+            "text": "You used objects in the environment for you advantage and successfully went through the area without being seen."
+          }, {
+            "attribute": ["charm", 75],
+            "text": "You persuaded the raiders that you're a lonely traveller trying to pass. They let you pass with accpetance."
+          }]
         }]
       }, {
         "id": 2,
         "title": "IT'S AN AMBUSH",
-        "text": "A group of raiders ambushed you, and they demand half of your supplies.",
+        "text": "A group of raiders ambushed you, and they demand half of your valuable items.",
         "choices": [{
           "text": "Comply",
-          "result": [
-            {
-              "text": "The raiders quickly took off with half of your supplies.",
-              "playerData": {"meds": "/2", "food": "/2", "water": "/2", "charm": -10}
-            },{
-              "attribute": ["charm", 60],
-              "text": "You proposed a really compelling compromise. The raiders agreed to only take half of your meds and water.",
-              "playerData": {"meds": "/2", "water": "/2", "charm": -5}
-            },{
-              "attribute": ["experience", 75],
-              "text": "You suspected the ambush and gave them a decoy bag. While the raiders are searching for supplies, you already took off with all your stuff.",
-              "playerData": {"charm": 5}
+          "result": [{
+            "text": "The raiders quickly took off with half of your possesions.",
+            "playerData": {
+              "herbs": "/2",
+              "food": "/2",
+              "coins": "/2",
+              "charm": -10
             }
-          ]
+          }, {
+            "attribute": ["charm", 60],
+            "text": "You proposed a really compelling compromise. The raiders agreed to only take half of your food and coins.",
+            "playerData": {
+              "food": "/2",
+              "coins": "/2",
+              "charm": -5
+            }
+          }, {
+            "attribute": ["experience", 75],
+            "text": "You suspected the ambush and gave them a decoy bag. While the raiders are searching for valuable items, you already took off with all your stuff.",
+            "playerData": {
+              "charm": 5
+            }
+          }]
         }, {
           "text": "Refuse",
-          "result": [
-            {
-              "text": "The raiders beat ypu up before taking all of your stuff.",
-              "playerData": {"meds": 0, "food": 0, "water": 0, "weapon": [""], "charm": -10, "health": -10}
-            },{
-              "attribute": ["charm", 75],
-              "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
-              "playerData": {"charm": 5}
-            },{
-              "attribute": ["physique", 75],
-              "text": "You ran away with your full speed. The raiders couldn't even catch up with all their supplies and gave up very soon",
-              "playerData": {"charm": 10}
-            },{
-              "attribute": ["combat", 75],
-              "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
-              "playerData": {"charm": 10}
+          "result": [{
+            "text": "The raiders beat ypu up before taking all of your stuff.",
+            "playerData": {
+              "herbs": 0,
+              "food": 0,
+              "coins": 0,
+              "amour": "",
+              "weapon": [""],
+              "charm": -10,
+              "health": -10
             }
-          ]
+          }, {
+            "attribute": ["charm", 75],
+            "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
+            "playerData": {
+              "charm": 5
+            }
+          }, {
+            "attribute": ["physique", 75],
+            "text": "You ran away with your full speed. The raiders couldn't even catch up and gave up very soon",
+            "playerData": {
+              "charm": 10
+            }
+          }, {
+            "attribute": ["combat", 75],
+            "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
+            "playerData": {
+              "charm": 10
+            }
+          }]
         }]
       }, {
         "id": 3,
         "title": "IT'S AN AMBUSH",
-        "text": "A group of raiders ambushed you, and they demand all of your supplies.",
+        "text": "A group of raiders ambushed you, and they demand all of your valuable items.",
         "choices": [{
           "text": "Comply",
-          "result": [
-            {
-              "text": "The raiders quickly took off with all of your supplies.",
-              "playerData": {"meds": 0, "food": 0, "water": 0, "charm": -10}
-            },{
-              "attribute": ["charm", 75],
-              "text": "You proposed a really compelling compromise. The raiders agreed to only take all of your water.",
-              "playerData": {"water": 0, "charm": -5}
-            },{
-              "attribute": ["experience", 75],
-              "text": "You suspected the ambush and gave them a decoy bag. While the raiders are searching for supplies, you already took off with all your stuff.",
-              "playerData": {"charm": 10}
+          "result": [{
+            "text": "The raiders quickly took off with all of your possesions.",
+            "playerData": {
+              "herbs": 0,
+              "food": 0,
+              "coins": 0,
+              "charm": -10
             }
-          ]
+          }, {
+            "attribute": ["charm", 75],
+            "text": "You proposed a really compelling compromise. The raiders agreed to only take all of your coins.",
+            "playerData": {
+              "coins": 0,
+              "charm": -5
+            }
+          }, {
+            "attribute": ["experience", 75],
+            "text": "You suspected the ambush and gave them a decoy bag. While the raiders are searching for valuable items, you already took off with all your stuff.",
+            "playerData": {
+              "charm": 10
+            }
+          }]
         }, {
           "text": "Refuse",
-          "result": [
-            {
-              "text": "The raiders beat ypu up before taking all of your stuff.",
-              "playerData": {"meds": 0, "food": 0, "water": 0, "weapon": [""], "charm": -10, "health": -10}
-            },{
-              "attribute": ["charm", 75],
-              "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
-              "playerData": {"charm": 5}
-            },{
-              "attribute": ["physique", 75],
-              "text": "You ran away with your full speed. The raiders couldn't even catch up with all their supplies and gave up very soon",
-              "playerData": {"charm": 10}
-            },{
-              "attribute": ["combat", 75],
-              "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
-              "playerData": {"charm": 10}
+          "result": [{
+            "text": "The raiders beat ypu up before taking all of your stuff.",
+            "playerData": {
+              "meds": 0,
+              "food": 0,
+              "water": 0,
+              "weapon": [""],
+              "charm": -10,
+              "health": -10
             }
-          ]
+          }, {
+            "attribute": ["charm", 75],
+            "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
+            "playerData": {
+              "charm": 5
+            }
+          }, {
+            "attribute": ["physique", 75],
+            "text": "You ran away with your full speed. The raiders couldn't even catch up and gave up very soon",
+            "playerData": {
+              "charm": 10
+            }
+          }, {
+            "attribute": ["combat", 75],
+            "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
+            "playerData": {
+              "charm": 10
+            }
+          }]
         }]
       }, {
         "id": 4,
@@ -240,76 +298,60 @@
         "text": "A group of raiders ambushed you, and they demand to give up your weapon.",
         "choices": [{
           "text": "Comply",
-          "result": [
-            {
-              "text": "The raiders quickly took off with your weapon.",
-              "playerData": {"weapon": [""], "charm": -10}
-            },{
-              "attribute": ["experience", 75],
-              "text": "You suspected the ambush and gave them a decoy bag. While the raiders are searching for weapons, you already took off with all your stuff.",
-              "playerData": {"charm": 5}
+          "result": [{
+            "text": "The raiders quickly took off with your weapon.",
+            "playerData": {
+              "weapon": [""],
+              "charm": -10
             }
-          ]
+          }, {
+            "attribute": ["experience", 75],
+            "text": "You suspected the ambush and gave them a decoy weapon. While the raiders are testing the fake weapon, you already are nowhere to be found.",
+            "playerData": {
+              "charm": 5
+            }
+          }]
         }, {
           "text": "Refuse",
-          "result": [
-            {
-              "text": "The raiders beat ypu up before taking all of your stuff.",
-              "playerData": {"meds": 0, "food": 0, "water": 0, "weapon": [""], "charm": -10, "health": -10}
-            },{
-              "attribute": ["charm", 75],
-              "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
-              "playerData": {"charm": 5}
-            },{
-              "attribute": ["physique", 75],
-              "text": "You ran away with your full speed. The raiders couldn't even catch up with all their supplies and gave up very soon",
-              "playerData": {"charm": 10}
-            },{
-              "attribute": ["combat", 75],
-              "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
-              "playerData": {"charm": 10}
+          "result": [{
+            "text": "The raiders beat ypu up before taking all of your stuff.",
+            "playerData": {
+              "herbs": 0,
+              "food": 0,
+              "coins": 0,
+              "amour": "",
+              "weapon": [""],
+              "charm": -10,
+              "health": -10
             }
-          ]
+          }, {
+            "attribute": ["charm", 75],
+            "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
+            "playerData": {
+              "charm": 5
+            }
+          }, {
+            "attribute": ["physique", 75],
+            "text": "You ran away with your full speed. The raiders couldn't even catch up and gave up very soon",
+            "playerData": {
+              "charm": 10
+            }
+          }, {
+            "attribute": ["combat", 75],
+            "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
+            "playerData": {
+              "charm": 10
+            }
+          }]
         }]
       }, {
         "id": 5,
         "title": "A TRADER DOING BUSINESS",
-        "text": "A trader with a enormous backpack stands besides the road asking for a trade.",
+        "text": "A trader carrying a enormous backpack stands besides the road asking for a trade.",
         "choices": [{
           "text": ["item", -1]
         }, {
           "text": "Ignore them"
-        }]
-      }, {
-        "id": 6,
-        "title": "A HERD AHEAD",
-        "text": "There's a herd of infected moving in your direction. You decided to:",
-        "choices": [{
-          "text": "Take a detour",
-          "result": [
-            {
-              "text": "When you started to change your course, some infected already caught up.\n\nYou had to fight off some infected on your way."
-            },{
-              "attribute": ["physique", 55],
-              "text": "You left the area just in time before the swarm arrived. You could hear some gun shots from a distance.",
-              "playerData": {"charm": 5}
-            }
-          ]
-        }, {
-          "text": "Wait until they pass",
-          "result":[
-            {
-              "text": "Some infected found you. You tried to fight them off, but there were too many of them. You got hurt and had to left half of your supplies in order to live.",
-              "playerData": {"meds": "/2", "food": "/2", "water": "/2", "health": -10}
-            },{
-              "attribute": ["experience", 75],
-              "text": "You found a great hiding spot and waited until the swarm passed.\n\nYou found some supplies while you were hiding.",
-              "playerData": {"meds": "+", "food": "+", "water": "+", "charm": 5}
-            },{
-              "attribute": ["combat", 75],
-              "text": "Some infected found you, but you managed to knocked them out before more were alerted."
-            }
-          ]
         }]
       }
     ],
@@ -319,17 +361,25 @@
       "text": "You discovered a survivor looting the same place. They didn't see you though.",
       "choices": [{
         "text": "Loot with them",
-        "result": [
-          {
-            "text": "Everything went okay. You and the survivor even exchanged surviving tips!",
-            "playerData": {"med": "+", "food": "+", "water": "+", "experience": 5, "charm": 5}
-          },{
-            "attribute": ["experience", 90],
-            "text": "You couldn't trust the survivor, so you quickly took off without throughly looting the area.",
-            "playerData": {"food": 2, "water": 1, "charm": -5},
-            "next": "out"
+        "result": [{
+          "text": "Everything went okay. You and the survivor even exchanged surviving tips!",
+          "playerData": {
+            "med": "+",
+            "food": "+",
+            "water": "+",
+            "experience": 5,
+            "charm": 5
           }
-        ]
+        }, {
+          "attribute": ["experience", 90],
+          "text": "You couldn't trust the survivor, so you quickly took off without throughly looting the area.",
+          "playerData": {
+            "food": 2,
+            "water": 1,
+            "charm": -5
+          },
+          "next": "out"
+        }]
       }, {
         "text": "Ignore them"
       }]
@@ -339,125 +389,71 @@
       "text": "During your exploration, you noticed a raider a few meters from you without knowing you're there.",
       "choices": [{
         "text": "Rob them",
-        "result": [
-          {
-            "text": "The raider had the faster move and defeated you with ease. They took off with all your supplies.",
-            "playerData": {"meds": 0, "food": 0, "water": 0, "charm": -5}
-          },{
-            "attribute": ["combat", 75],
-            "text": "You knocked down the raider with one hit and took away their supplies.",
-            "playerData": {"food": "+", "water": "+"}
+        "result": [{
+          "text": "The raider had the faster move and defeated you with ease. They took off with all your valuables.",
+          "playerData": {
+            "herbs": 0,
+            "food": 0,
+            "coins": 0,
+            "charm": -5
           }
-        ]
+        }, {
+          "attribute": ["combat", 75],
+          "text": "You knocked down the raider with one hit and took away their valuables.",
+          "playerData": {
+            "food": "+",
+            "water": "+"
+          }
+        }]
       }, {
         "text": "Leave the place",
-        "result": [
-          {
-            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away.",
-            "playerData": {"health": -5}
-          },{
-            "attribute": ["experience", 25],
-            "text": "You walked away quietly.",
-            "next": "out"
+        "result": [{
+          "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away.",
+          "playerData": {
+            "health": -5
           }
-        ]
+        }, {
+          "attribute": ["experience", 25],
+          "text": "You walked away quietly.",
+          "next": "out"
+        }]
       }]
     }, {
       "id": 2,
-      "title": "A GROUP OF SURVIVOR",
-      "text": "You met a group of survivors looting the same place. They saw you and waved.",
-      "choices": [{
-        "text": "Loot with them",
-        "result": [
-          {
-            "text": "Everything went okay. You and the survivors even exchanged surviving tips!",
-            "playerData": {"med": "+", "food": "+", "water": "+", "experience": 10, "charm": 10}
-          },{
-            "attribute": ["experience", 90],
-            "text": "You couldn't trust the group, so you quickly took off without throughly looting the area.",
-            "playerData": {"food": 1, "water": 1, "charm": -5},
-            "next": "out"
-          }
-        ]
-      }, {
-        "text": "Ignore them"
-      }]
-    }, {
-      "id": 3,
-      "title": "THE PLACE IS ON FIRE",
-      "text": "You suddenly smell smoke coming from all directions. THE PLACE IS ON FIRE!!! Your only exit is surrounded by fire.",
-      "choices": [{
-        "text": "MAKE A RUN",
-        "result": [
-          {
-            "text": "When you decided to run, you didn't have enough time to pick up half of your stuff. But you made it out alive.",
-            "playerData": {"meds": "/2", "food": "/2", "water": "/2", "charm": -10},
-            "next": "out"
-          },{
-            "attribute": ["physique", 65],
-            "text": "You ran fast enough to avoid the devouring of the flames.",
-            "next": "out"
-          },{
-            "attribute": ["experience", 75],
-            "text": "You quickly planned out a route in your head, and executed it perfectly. You made it out without a burn.",
-            "next": "out"
-          }
-        ]
-      }, {
-        "text": "Go high up",
-        "result": [
-          {
-            "text": "You tried to go to the roof, but the supplies were slowing you down. You had to dispose half of them to make it in time. You went to the gorund through another route.",
-            "playerData": {"meds": "/2", "food": "/2", "water": "/2", "charm": -10},
-            "next": "out"
-          },{
-            "attribute": ["physique", 60],
-            "text": "Your fitness training is finally now useful. You went to the roof without a sweat and made it to the gorund through another route.",
-            "playerData": {"charm": 5},
-            "next": "out"
-          }
-        ]
-      }]
-    },{
-      "id": 4,
       "title": "A HERD IS COMING",
       "text": "A herd of infected are coming towards your building. You decide to:",
-      "choices": [
-        {
-          "text": "Hide inside",
-          "result": [
-            {
-              "text": "Your hiding spot is so obvious that the infected laughed at you and forgot to attack you."
-            },{
-              "attribute": ["experience", 75],
-              "text": "You were the hide-and-seek campion and knew what exactly where to hide. The infected searched the building and left without finding you."
-            },{
-              "attribute": ["physique", 75],
-              "text": "You used your acrobat skills and managed to hung from the ceiling. The infected didn't you and left."
-            },{
-              "attribute": ["combat", 75],
-              "text": "Some infected found you, but you managed to knocked them out before more were alerted."
-            }
-          ]
-        },{
-          "text": "Get out quickly",
-          "result": [
-            {
-              "text": "The infected caught you running out of the building and beat the heck out of you. But you managed to run away with some bruises.",
-              "playerData": {"health": -15},
-              "next": "out"
-            },{
-              "attribute": ["physique", 75],
-              "text": "You ran so fast that the infected gave up chasing you.",
-              "next": "out"
-            },{
-              "attribute": ["experience", 75],
-              "text": "You ran in a unpredictable snake route and confused all the infected. You got away when they were heading to find you in another building.",
-              "next": "out"
-            }
-          ]
-        }
-      ]
+      "choices": [{
+        "text": "Hide inside",
+        "result": [{
+          "text": "Your hiding spot is so obvious that the infected laughed at you and forgot to attack you."
+        }, {
+          "attribute": ["experience", 75],
+          "text": "You were the hide-and-seek campion and knew what exactly where to hide. The infected searched the building and left without finding you."
+        }, {
+          "attribute": ["physique", 75],
+          "text": "You used your acrobat skills and managed to hung from the ceiling. The infected didn't you and left."
+        }, {
+          "attribute": ["combat", 75],
+          "text": "Some infected found you, but you managed to knocked them out before more were alerted."
+        }]
+      }, {
+        "text": "Get out quickly",
+        "result": [{
+          "text": "The infected caught you running out of the building and beat the heck out of you. But you managed to run away with some bruises.",
+          "playerData": {
+            "health": -15
+          },
+          "next": "out"
+        }, {
+          "attribute": ["physique", 75],
+          "text": "You ran so fast that the infected gave up chasing you.",
+          "next": "out"
+        }, {
+          "attribute": ["experience", 75],
+          "text": "You ran in a unpredictable snake route and confused all the infected. You got away when they were heading to find you in another building.",
+          "next": "out"
+        }]
       }]
+    }]
   }
 }
