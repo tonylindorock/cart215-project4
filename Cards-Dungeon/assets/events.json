@@ -13,7 +13,7 @@
       }]
     }, {
       "id": 0,
-      "title": "TIP #1",
+      "title": "Tip #1",
       "text": "The last geartest hero has fallen, and the quest called for adventurers.\n\nYou're on a 7-day journey to the most challenging dungeon in the realm.",
       "choices": [{
         "text": "Let's go!",
@@ -25,7 +25,7 @@
       }]
     }, {
       "id": 1,
-      "title": "TIP #2",
+      "title": "Tip #2",
       "text": "On your journey, you'll meet a lot of obstacles. Dungeon is the last one for you to worry about.\n\nIt's always wise to do things within your abilities.",
       "choices": [{
         "text": "Let's go!",
@@ -37,7 +37,7 @@
       }]
     }, {
       "id": 2,
-      "title": "TIP #3",
+      "title": "Tip #3",
       "text": "Every outcome of an event is determined by your Combat, Physique, Wit, and Charm.\n\nYour possessions (Food, Herbs, Coins, Amour, and Weapon) sometimes also come into play.",
       "choices": [{
         "text": "Let's go!",
@@ -49,7 +49,7 @@
       }]
     }, {
       "id": 3,
-      "title": "TIP #4",
+      "title": "Tip #4",
       "text": "Combat affects how effective you can use melee and ranged weapons.\n\nPhysique decides your fitness and how well you can heal yourself.",
       "choices": [{
         "text": "Let's go!",
@@ -61,7 +61,7 @@
       }]
     }, {
       "id": 4,
-      "title": "TIP #5",
+      "title": "Tip #5",
       "text": "Wit reflects your knowledge and the level of magic practice.\n\nCharm influences your persuasion on others and morale.",
       "choices": [{
         "text": "Let's go!",
@@ -73,7 +73,7 @@
       }]
     }, {
       "id": 5,
-      "title": "TIP #6",
+      "title": "Tip #6",
       "text": "Once you deplete your weapon, you'll have to fight with your fists until you find another weapon.\n\nIf you're confident about your fight skills, you might never need a weapon!",
       "choices": [{
         "text": "Let's go!",
@@ -85,7 +85,7 @@
       }]
     }, {
       "id": 6,
-      "title": "TIP #7",
+      "title": "Tip #7",
       "text": "",
       "choices": [{
         "text": "Let's go!",
@@ -132,7 +132,7 @@
           "text": ["loc", -1],
           "caseText": [
             ["day", 1],
-            ["loc", 1]
+            ["loc", 0]
           ],
           "next": "loc"
         }, {
@@ -142,7 +142,7 @@
       },
       {
         "id": 1,
-        "title": "RAIDERS IN A DISTANCE",
+        "title": "Raiders In A Distance",
         "text": "You noticed some raiders are handing around in your route. You decide to:",
         "choices": [{
           "text": "Take a detour"
@@ -346,7 +346,7 @@
         }]
       }, {
         "id": 5,
-        "title": "A TRADER DOING BUSINESS",
+        "title": "A Trader Doing Bussiness",
         "text": "A trader carrying a enormous backpack stands besides the road asking for a trade.",
         "choices": [{
           "text": ["item", -1]
@@ -357,7 +357,7 @@
     ],
     "indoor": [{
       "id": 0,
-      "title": "A RANDOM SURVIVOR",
+      "title": "A Random Traveller",
       "text": "You discovered a survivor looting the same place. They didn't see you though.",
       "choices": [{
         "text": "Loot with them",
@@ -385,7 +385,7 @@
       }]
     }, {
       "id": 1,
-      "title": "AN UNWELCOME EXPLORER",
+      "title": "An Unwelcome Explorer",
       "text": "During your exploration, you noticed a raider a few meters from you without knowing you're there.",
       "choices": [{
         "text": "Rob them",
@@ -420,38 +420,17 @@
       }]
     }, {
       "id": 2,
-      "title": "A HERD IS COMING",
-      "text": "A herd of infected are coming towards your building. You decide to:",
+      "title": "The Storm Is Coming",
+      "text": "An unseasonably severe and perilous storm is now upon you. It's better to stay inside.",
       "choices": [{
-        "text": "Hide inside",
-        "result": [{
-          "text": "Your hiding spot is so obvious that the infected laughed at you and forgot to attack you."
-        }, {
-          "attribute": ["experience", 75],
-          "text": "You were the hide-and-seek campion and knew what exactly where to hide. The infected searched the building and left without finding you."
-        }, {
-          "attribute": ["physique", 75],
-          "text": "You used your acrobat skills and managed to hung from the ceiling. The infected didn't you and left."
-        }, {
-          "attribute": ["combat", 75],
-          "text": "Some infected found you, but you managed to knocked them out before more were alerted."
-        }]
+        "text": "Stay inside"
       }, {
-        "text": "Get out quickly",
+        "text": "Sleep",
         "result": [{
-          "text": "The infected caught you running out of the building and beat the heck out of you. But you managed to run away with some bruises.",
+          "text": "You set up a fire and waited until the storm passed.",
           "playerData": {
-            "health": -15
-          },
-          "next": "out"
-        }, {
-          "attribute": ["physique", 75],
-          "text": "You ran so fast that the infected gave up chasing you.",
-          "next": "out"
-        }, {
-          "attribute": ["experience", 75],
-          "text": "You ran in a unpredictable snake route and confused all the infected. You got away when they were heading to find you in another building.",
-          "next": "out"
+            "food": -2
+          }
         }]
       }]
     }]
