@@ -68,9 +68,9 @@ let THEME_COLORS;
 
 let HEART_FULL;
 let HEART_EMPTY;
-let ICON_MEDS;
+let ICON_HERB;
 let ICON_FOOD;
-let ICON_WATER;
+let ICON_COIN;
 
 var eventsJSON;
 var locationsJSON;
@@ -88,9 +88,9 @@ function preload() {
   //BG_PATTERNS = [BG_PATTERN_0, BG_PATTERN_1, BG_PATTERN_2, BG_PATTERN_3];
   HEART_FULL = loadImage("assets/images/heart_full.png");
   HEART_EMPTY = loadImage("assets/images/heart_empty.png");
-  ICON_MEDS = loadImage("assets/images/meds.png");
+  ICON_HERB = loadImage("assets/images/herb.png");
   ICON_FOOD = loadImage("assets/images/food.png");
-  ICON_WATER = loadImage("assets/images/water.png");
+  ICON_COIN = loadImage("assets/images/coin.png");
 
   THEME_COLORS = [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE];
 }

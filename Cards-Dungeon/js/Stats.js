@@ -12,8 +12,9 @@ class Stats {
 
     this.iconWidth = 32;
 
-    this.top_y = this.height / 1.25;
-    this.bottom_y = height - this.height / 1.25;
+    this.TOP_Y = this.height / 1.25;
+    this.BOTTOM_Y = height - this.height / 1.75;
+    this.MARGIN_EDGE = this.height / 1.25;
 
     this.CORNER_RADIUS = 8;
 
@@ -23,10 +24,10 @@ class Stats {
       wit: player.stats["wit"],
       charm: player.stats["charm"]
     };
-    this.possessions = {
-      herbs: 0,
-      food: 0,
-      coins: 0,
+    this.valuables = {
+      herbs: player.stats["herbs"],
+      food: player.stats["food"],
+      coins: player.stats["coins"],
       amour: player.stats["amour"],
       weapon: player.stats["weapon"]
     };
@@ -40,16 +41,28 @@ class Stats {
     }
   }
 
-  getSupplies(id) {
+  displayValuables(id) {
     let weaponName;
-    if (this.possessions.weapon.length === 1) {
-      weaponName = this.possessions.weapon[0];
-    } else if (this.possessions.weapon.length === 2) {
-      weaponName = this.possessions.weapon[0] + " (" + this.possessions.weapon[1] + ")";
+    if (this.valuables.weapon.length === 1) {
+      weaponName = this.valuables.weapon[0];
+    } else if (this.valuables.weapon.length === 2) {
+      weaponName = this.valuables.weapon[0] + " (" + this.valuables.weapon[1] + ")";
     }
     if (id = -1) {
-      return "Herbs: " + this.possessions.herbs + "\nFood: " + this.possessions.food +
-        "\nCoins: " + this.possessions.coins + "\nWeapon: " + weaponName;
+      return "Herbs: " + this.valuables.herbs + "\nFood: " + this.valuables.food +
+        "\nCoins: " + this.valuables.coins + "\nWeapon: " + weaponName;
+    }
+  }
+
+  getWeapons(id){
+    let weaponName;
+    if (this.valuables.weapon.length === 1) {
+      weaponName = this.valuables.weapon[0];
+    } else if (this.valuables.weapon.length === 2) {
+      weaponName = this.valuables.weapon[0] + " (" + this.valuables.weapon[1] + ")";
+    }
+    if (id === -1){
+      return "\nAmour:\n" + this.valuables.amour + "\nWeapon:\n" + weaponName;
     }
   }
 
@@ -58,38 +71,50 @@ class Stats {
     this.attributes.physique = player.stats["physique"];
     this.attributes.wit = player.stats["wit"];
     this.attributes.charm = player.stats["charm"];
-    this.possessions.herbs = player.stats["herbs"];
-    this.possessions.food = player.stats["food"];
-    this.possessions.coins = player.stats["coins"];
-    this.possessions.amour = player.stats["amour"];
-    this.possessions.weapon = player.stats["weapon"];
+    this.valuables.herbs = player.stats["herbs"];
+    this.valuables.food = player.stats["food"];
+    this.valuables.coins = player.stats["coins"];
+    this.valuables.amour = player.stats["amour"];
+    this.valuables.weapon = player.stats["weapon"];
     this.health = player.stats["health"];
   }
 
   display() {
     push();
-    //fill("#555");
-    //rect(this.x - width/3, height - this.height/3.5, this.width / 1.25, 32, this.CORNER_RADIUS);
-    //rect(this.x + width/3, height - this.height/3.5, this.width / 1.25, 32, this.CORNER_RADIUS);
     fill(WHITE);
-    textSize(16);
+    this.displayValuables();
+    textSize(18);
     textAlign(RIGHT);
     text(this.getAttributes(-1), this.x - width / 3.25, height - this.height);
-    text(this.getSupplies(-1), this.x + width / 2.75, height - this.height);
-    //text("[Z] SHOW ATTRITUBES",this.x - width/3, height - this.height/3.5);
-    //text("[X] SHOW RESOURCES",this.x + width/3, height - this.height/3.5);
+    textAlign(LEFT);
+    text(this.getWeapons(-1), this.x + width / 3.25, height - this.height);
     // top
     textAlign(CENTER);
     textSize(32);
-    text("DAY 1 | MORNING", this.x, this.top_y);
+    text("DAY 1 | MORNING", this.x, this.TOP_Y);
     // health
     this.displayHealth();
     pop();
   }
 
+  displayvaluables(){
+    push();
+    textSize(18);
+    translate(this.x - this.iconWidth/2, this.BOTTOM_Y - this.iconWidth * 1.25);
+    image(ICON_FOOD, -this.iconWidth * 2, 0, this.iconWidth, this.iconWidth);
+    text(this.valuables.food, -this.iconWidth * 2 + this.iconWidth, 0);
+
+    image(ICON_HERB, 0, 0, this.iconWidth, this.iconWidth);
+    text(this.valuables.herbs, this.iconWidth, 0);
+
+    image(ICON_COIN, this.iconWidth * 2, 0, this.iconWidth, this.iconWidth);
+    text(this.valuables.coins, this.iconWidth * 2 + this.iconWidth, 0);
+    pop();
+  }
+
   displayHealth() {
     push();
-    translate(this.x, this.bottom_y);
+    translate(this.x, this.BOTTOM_Y);
     if (this.health > 0) {
       push();
       this.heartTransparency(0);
