@@ -1,0 +1,21 @@
+{
+  "acc":[
+    {
+      "id": 0,
+      "name": "Shield",
+      "def": 30
+    },{
+      "id": 0,
+      "name": "Boots",
+      "def": 30
+    },{
+      "id": 0,
+      "name": "Gloves",
+      "def": 30
+    },{
+      "id": 0,
+      "name": "Necklace",
+      "def": 30
+    }
+  ]
+}

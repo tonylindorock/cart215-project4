@@ -14,7 +14,7 @@
     }, {
       "id": 0,
       "title": "Tip #1",
-      "text": "The last geartest hero has fallen, and the quest called for adventurers.\n\nYou're on a 7-day journey to the most challenging dungeon in the realm.",
+      "text": "The last greatest hero has fallen, and the quest called for adventurers.\n\nYou're on a 7-day journey to the most challenging dungeon in the realm.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -38,7 +38,7 @@
     }, {
       "id": 2,
       "title": "Tip #3",
-      "text": "Every outcome of an event is determined by your Combat, Physique, Wit, and Charm.\n\nYour possessions (Food, Herbs, Coins, Amour, and Weapon) sometimes also come into play.",
+      "text": "Every outcome of an event is determined by your Combat, Physique, Wit, and Charm.\n\nYour possessions (Food, Herbs, Coins, acc, and Weapon) sometimes also come into play.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -117,7 +117,7 @@
     }, {
       "id": 2,
       "title": "EXPLORING THE @LOC",
-      "text": "After some exploring, you found a piece of amour:",
+      "text": "After some exploring, you found a piece of acc:",
       "choices": [{
         "text": "Equip it"
       }, {
@@ -154,7 +154,7 @@
               "herbs": 0,
               "food": 0,
               "coins": 0,
-              "amour": "",
+              "acc": "",
               "weapon": [""],
               "charm": -10,
               "health": -10
@@ -207,7 +207,7 @@
               "herbs": 0,
               "food": 0,
               "coins": 0,
-              "amour": "",
+              "acc": "",
               "weapon": [""],
               "charm": -10,
               "health": -10
@@ -319,7 +319,7 @@
               "herbs": 0,
               "food": 0,
               "coins": 0,
-              "amour": "",
+              "acc": "",
               "weapon": [""],
               "charm": -10,
               "health": -10

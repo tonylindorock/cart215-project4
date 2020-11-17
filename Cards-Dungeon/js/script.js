@@ -59,6 +59,8 @@ let gameData = {
   eventObj: null
 };
 
+let FONT;
+
 let BG_PATTERN_0;
 let BG_PATTERN_1;
 let BG_PATTERN_2;
@@ -98,7 +100,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
-  textFont("Luminari");
+  textFont("Gill Sans");
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   angleMode(DEGREES)
@@ -175,7 +177,7 @@ function getMousePos() {
 
 function showChoices() {
   push();
-  textSize(20);
+  textSize(24);
   if (getMousePos() === MOUSE_ON_LEFT) {
     fill(WHITE);
   } else {

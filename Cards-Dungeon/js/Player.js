@@ -8,7 +8,7 @@ class Player{
       "herbs": 0,
       "food": 0,
       "coins": 0,
-      "amour": "",
+      "acc": "",
       "weapon": [""],
       "health": 30
     };

@@ -115,14 +115,14 @@ class Card{
     rect(0, 0, this.width - this.changeWidth, this.height, this.CORNER_RADIUS);
     noStroke();
     fill(BLACK);
-    textSize(18);
+    textSize(20);
     textStyle(BOLD);
     textAlign(CENTER, TOP);
     if (this.animationId != 2){
       // title
       text(this.title, 0, 0, this.textWidth, this.textHeight);
       // text
-      textSize(18);
+      textSize(20);
       textStyle(NORMAL);
       text("\n\n\n" + this.text, 0, 0, this.textWidth, this.textHeight);
     }

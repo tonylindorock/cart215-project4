@@ -28,7 +28,7 @@ class Stats {
       herbs: player.stats["herbs"],
       food: player.stats["food"],
       coins: player.stats["coins"],
-      amour: player.stats["amour"],
+      acc: player.stats["acc"],
       weapon: player.stats["weapon"]
     };
     this.health = 30;
@@ -62,7 +62,7 @@ class Stats {
       weaponName = this.valuables.weapon[0] + " (" + this.valuables.weapon[1] + ")";
     }
     if (id === -1){
-      return "\nAmour:\n" + this.valuables.amour + "\nWeapon:\n" + weaponName;
+      return "Accessory:\n" + this.valuables.acc + "\nWeapon:\n" + weaponName;
     }
   }
 
@@ -74,7 +74,7 @@ class Stats {
     this.valuables.herbs = player.stats["herbs"];
     this.valuables.food = player.stats["food"];
     this.valuables.coins = player.stats["coins"];
-    this.valuables.amour = player.stats["amour"];
+    this.valuables.acc = player.stats["acc"];
     this.valuables.weapon = player.stats["weapon"];
     this.health = player.stats["health"];
   }
@@ -83,7 +83,7 @@ class Stats {
     push();
     fill(WHITE);
     this.displayValuables();
-    textSize(18);
+    textSize(20);
     textAlign(RIGHT);
     text(this.getAttributes(-1), this.x - width / 3.25, height - this.height);
     textAlign(LEFT);
@@ -97,9 +97,9 @@ class Stats {
     pop();
   }
 
-  displayvaluables(){
+  displayValuables(){
     push();
-    textSize(18);
+    textSize(20);
     translate(this.x - this.iconWidth/2, this.BOTTOM_Y - this.iconWidth * 1.25);
     image(ICON_FOOD, -this.iconWidth * 2, 0, this.iconWidth, this.iconWidth);
     text(this.valuables.food, -this.iconWidth * 2 + this.iconWidth, 0);
