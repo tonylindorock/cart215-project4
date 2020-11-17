@@ -21,9 +21,11 @@ class Card{
     this.color = color;
     this.title = title;
     this.text = text;
+    this.transparency = 255;
 
     this.rotation = 0;
     this.MAX_DEGREE = 8;
+    this.tiltDir = -1;
 
     this.isPlayingAnimation = false;
     this.animationId = -1;
@@ -33,10 +35,12 @@ class Card{
   }
 
   tilt(){
+    this.transparency = lerp(this.transparency, 255, 0.2);
+
     translate(this.x + 2 * this.rotation, this.y);
-    if (mouseX > width/2 + card.width/2){
+    if (mouseX > width/2 + this.width/2 || this.tiltDir === 1){
       this.rotation = lerp(this.rotation, this.MAX_DEGREE, 0.1);
-    }else if (mouseX < width/2 - card.width/2){
+    }else if (mouseX < width/2 - this.width/2 || this.tiltDir === 0){
       this.rotation = lerp(this.rotation, -this.MAX_DEGREE, 0.1);
     }else{
       this.rotation = lerp(this.rotation, 0, 0.1);
@@ -51,13 +55,11 @@ class Card{
       this.change = lerp(this.change, -width/2 * 1.5, 0.06);
       if (this.change <= -width/2 * 1.25 + 1){
         this.reset();
-        //this.playAnimation(2);
       }
     }else if (this.animationId === 1){
       this.change = lerp(this.change, width/2 * 1.5, 0.06);
       if (this.change >= width/2 * 1.25 - 1){
         this.reset();
-        //this.playAnimation(2);
       }
     }
   }
@@ -66,8 +68,10 @@ class Card{
     translate(this.x, this.y - this.changeWidth/8);
     if (!this.flippedSideOne){
       this.changeWidth = lerp(this.changeWidth, this.width, 0.2);
+      this.transparency = lerp(this.transparency, 0, 0.2);
     }else{
       this.changeWidth = lerp(this.changeWidth, 0, 0.2);
+      this.transparency = lerp(this.transparency, 255, 0.2);
     }
     if(int(this.changeWidth) === int(this.height * 2.5/3.5)){
       this.flippedSideOne = true;
@@ -82,7 +86,9 @@ class Card{
   }
 
   reset(){
+    this.transparency = 0;
     this.rotation = 0;
+    this.tiltDir = -1;
     this.change = 0;
     this.animationId = -1;
     this.flippedSideOne = false;
@@ -114,15 +120,14 @@ class Card{
     strokeWeight(this.border);
     rect(0, 0, this.width - this.changeWidth, this.height, this.CORNER_RADIUS);
     noStroke();
-    fill(BLACK);
+    fill(68, 68, 68, this.transparency);
     textSize(20);
-    textStyle(BOLD);
     textAlign(CENTER, TOP);
     if (this.animationId != 2){
       // title
+      textStyle(BOLD);
       text(this.title, 0, 0, this.textWidth, this.textHeight);
       // text
-      textSize(20);
       textStyle(NORMAL);
       text("\n\n\n" + this.text, 0, 0, this.textWidth, this.textHeight);
     }

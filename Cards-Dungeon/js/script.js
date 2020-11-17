@@ -42,6 +42,7 @@ let player;
 
 let currentLoot;
 let conseqClickCount = 0;
+let disableArrowKey = false;
 
 let gameData = {
   status: STATUS_OUTDOOR,
@@ -177,7 +178,7 @@ function getMousePos() {
 
 function showChoices() {
   push();
-  textSize(24);
+  textSize(22);
   if (getMousePos() === MOUSE_ON_LEFT) {
     fill(WHITE);
   } else {
@@ -223,6 +224,27 @@ function mousePressed() {
   }
 }
 
+// Enables arrow key for playing the game
+function keyPressed() {
+  if (keyCode === LEFT_ARROW && !card.isPlayingAnimation && !disableArrowKey) {
+    card.tiltDir = 0;
+    if (getMousePos() != MOUSE_ON_LEFT){
+      setTimeout(makeChoice, 350, 0);
+    }else{
+      makeChoice(0);
+    }
+    disableArrowKey = true;
+  } else if (keyCode === RIGHT_ARROW && !card.isPlayingAnimation && !disableArrowKey) {
+    card.tiltDir = 1;
+    if (getMousePos() != MOUSE_ON_RIGHT){
+      setTimeout(makeChoice, 350, 1);
+    }else{
+      makeChoice(1);
+    }
+    disableArrowKey = true;
+  }
+}
+
 function makeChoice(id) {
   // if the choice has a consequence
   if (conseqClickCount === 0 && gameData.eventObj.choices[id].result != null) {
@@ -250,6 +272,7 @@ function makeChoice(id) {
     card.playAnimation(id);
   }
   setTimeout(parseChoice, 450, id);
+  disableArrowKey = false;
 }
 
 function updateEvent(type, id) {
