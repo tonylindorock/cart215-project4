@@ -70,6 +70,9 @@ let ICON_FOOD;
 let ICON_COIN;
 
 let MAP_VILLAGE;
+let MAP_SWAMP;
+let MAP_CASTLE;
+let MAP_LAND;
 
 var eventsJSON;
 var locationsJSON;
@@ -87,6 +90,9 @@ function preload() {
   ICON_COIN = loadImage("assets/images/icon_coin.png");
 
   MAP_VILLAGE = loadImage("assets/images/mm_village.png");
+  MAP_SWAMP = loadImage("assets/images/mm_swamp.png");
+  MAP_CASTLE = loadImage("assets/images/mm_castle.png");
+  MAP_LAND = loadImage("assets/images/mm_land.png");
 
   THEME_COLORS = [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE];
 }

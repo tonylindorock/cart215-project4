@@ -23,8 +23,8 @@ class Stats {
     this.CORNER_RADIUS = 8;
 
     this.sliderPos = - this.miniMapWidth * 3.5;
-    this.mapRevealed = 7;
-    this.sliderMoving = false;
+    this.mapRevealed = 1;
+    this.sliderMoving = true;
 
     this.attributes = {
       combat: player.stats["combat"],
@@ -159,41 +159,51 @@ class Stats {
     stroke(BLACK);
     strokeWeight(4);
     rect(0, 0, this.miniMapStripWidth + 16, this.height, this.CORNER_RADIUS/2);
+    fill(WHITE);
+    for(let i = 0; i < 4; i++){
+      ellipse(- this.miniMapWidth * i, 0, 8);
+      ellipse(this.miniMapWidth * i, 0, 8);
+    }
     // loc
-    image(MAP_VILLAGE, - this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
-    fill(BLACK);
-    if (this.mapRevealed < 1 ){
-      rect(- this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
+    if (this.mapRevealed >= 1 ){
+      image(MAP_VILLAGE, - this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
     }
-    if (this.mapRevealed < 2 ){
-      rect(- this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
+    if (this.mapRevealed >= 2 ){
+      image(MAP_SWAMP, - this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
     }
-    if (this.mapRevealed < 3 ){
-      rect(- this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
+    if (this.mapRevealed >= 3 ){
+      image(MAP_CASTLE, - this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
     }
-    if (this.mapRevealed < 4 ){
-      rect(0, 0, this.miniMapWidth, this.miniMapHeight);
+    if (this.mapRevealed >= 4 ){
+      image(MAP_LAND, 0, 0, this.miniMapWidth, this.miniMapHeight);
     }
-    if (this.mapRevealed < 5 ){
-      rect(this.miniMapWidth, 0, this.miniMapWidth,this.miniMapHeight);
+    if (this.mapRevealed >= 5 ){
+      image(MAP_VILLAGE, this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
     }
-    if (this.mapRevealed < 6 ){
-      rect(this.miniMapWidth * 2, 0, this.miniMapWidth,this.miniMapHeight);
+    if (this.mapRevealed >= 6 ){
+      image(MAP_VILLAGE, this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
     }
-    if (this.mapRevealed < 7 ){
-      rect(this.miniMapWidth * 3, 0, this.miniMapWidth,this.miniMapHeight);
+    if (this.mapRevealed >= 7 ){
+      image(MAP_VILLAGE, this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
     }
     //slider
-    fill(WHITE);
     translate(this.sliderPos, 0);
+    //rect(0, 0, 4, this.miniMapHeight * 1.5, 16);
     noStroke();
-    //ellipse(0, 0, 8);
-    rect(0, 0, 4, this.miniMapHeight * 1.5, 16);
+    fill(68, 68, 68, 200);
+    ellipse(0, 0, 34);
+    fill(themeColor);
+    stroke(WHITE);
+    strokeWeight(4);
+    ellipse(0, 0, 24);
+    fill(WHITE);
+    noStroke();
+    ellipse(0, 0, 12);
     pop();
-    if (this.sliderMoving){
+    if (this.sliderMoving && this.sliderPos <= this.miniMapWidth * 3.45){
       let time = frameCount;
-      if (time % 60 === 0){
-        this.sliderPos += this.miniMapWidth/14;
+      if (time % 30 === 0){
+        this.sliderPos += this.miniMapWidth/4;
       }
     }
   }
