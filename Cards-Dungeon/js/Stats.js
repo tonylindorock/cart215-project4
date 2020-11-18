@@ -22,9 +22,12 @@ class Stats {
 
     this.CORNER_RADIUS = 8;
 
+    this.maps = [];
+
     this.sliderPos = - this.miniMapWidth * 3.5;
-    this.mapRevealed = 1;
-    this.sliderMoving = true;
+    this.mapRevealed = 0;
+    this.step = 4;
+    this.currentStep = 0;
 
     this.attributes = {
       combat: player.stats["combat"],
@@ -85,6 +88,17 @@ class Stats {
     this.valuables.acc = player.stats["acc"];
     this.valuables.weapon = player.stats["weapon"];
     this.health = player.stats["health"];
+  }
+
+  updateMap(mapObj){
+    this.maps.push(MAPS[mapObj.id]);
+    this.step = mapObj.size;
+    this.mapRevealed += 1;
+  }
+
+  nextPos(){
+    this.sliderPos += this.miniMapWidth/this.step;
+    this.currentStep += 1;
   }
 
   display() {
@@ -166,25 +180,25 @@ class Stats {
     }
     // loc
     if (this.mapRevealed >= 1 ){
-      image(MAP_VILLAGE, - this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
+      image(this.maps[0], - this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
     }
     if (this.mapRevealed >= 2 ){
-      image(MAP_SWAMP, - this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
+      image(this.maps[1], - this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
     }
     if (this.mapRevealed >= 3 ){
-      image(MAP_CASTLE, - this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
+      image(this.maps[2], - this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
     }
     if (this.mapRevealed >= 4 ){
-      image(MAP_LAND, 0, 0, this.miniMapWidth, this.miniMapHeight);
+      image(this.maps[3], 0, 0, this.miniMapWidth, this.miniMapHeight);
     }
     if (this.mapRevealed >= 5 ){
-      image(MAP_VILLAGE, this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
+      image(this.maps[4], this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
     }
     if (this.mapRevealed >= 6 ){
-      image(MAP_VILLAGE, this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
+      image(this.maps[5], this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
     }
     if (this.mapRevealed >= 7 ){
-      image(MAP_VILLAGE, this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
+      image(this.maps[6], this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
     }
     //slider
     translate(this.sliderPos, 0);
@@ -200,11 +214,5 @@ class Stats {
     noStroke();
     ellipse(0, 0, 12);
     pop();
-    if (this.sliderMoving && this.sliderPos <= this.miniMapWidth * 3.45){
-      let time = frameCount;
-      if (time % 30 === 0){
-        this.sliderPos += this.miniMapWidth/4;
-      }
-    }
   }
 }

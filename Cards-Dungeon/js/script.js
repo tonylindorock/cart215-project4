@@ -47,7 +47,7 @@ let disableArrowKey = false;
 let gameData = {
   status: STATUS_OUTDOOR,
   state: {
-    "playing": true,
+    "playing": false,
     "day": 1
   },
   eventId: "other",
@@ -73,6 +73,7 @@ let MAP_VILLAGE;
 let MAP_SWAMP;
 let MAP_CASTLE;
 let MAP_LAND;
+let MAPS;
 
 var eventsJSON;
 var locationsJSON;
@@ -93,6 +94,7 @@ function preload() {
   MAP_SWAMP = loadImage("assets/images/mm_swamp.png");
   MAP_CASTLE = loadImage("assets/images/mm_castle.png");
   MAP_LAND = loadImage("assets/images/mm_land.png");
+  MAPS = [MAP_VILLAGE, MAP_SWAMP, MAP_CASTLE, MAP_LAND];
 
   THEME_COLORS = [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE];
 }
@@ -391,6 +393,7 @@ function parseChoice(id) {
         gameData.cardLimit = gameData.currentLoc.size;
         player.action = "EXPLORING";
         getIndoorEvent();
+        stats.updateMap(gameData.currentLoc);
       }
       // if null, it's a looting event
     } else {
@@ -490,6 +493,7 @@ function getIndoorEvent() {
     console.log("Location exploration is finished.");
     player.action = "";
   }
+  stats.nextPos();
 }
 
 function getLoot() {
