@@ -47,7 +47,7 @@ let disableArrowKey = false;
 let gameData = {
   status: STATUS_OUTDOOR,
   state: {
-    "playing": false,
+    "playing": true,
     "day": 1
   },
   eventId: "other",
@@ -61,12 +61,6 @@ let gameData = {
 };
 
 let FONT;
-
-let BG_PATTERN_0;
-let BG_PATTERN_1;
-let BG_PATTERN_2;
-let BG_PATTERN_3;
-let BG_PATTERNS;
 let THEME_COLORS;
 
 let HEART_FULL;
@@ -74,6 +68,8 @@ let HEART_EMPTY;
 let ICON_HERB;
 let ICON_FOOD;
 let ICON_COIN;
+
+let MAP_VILLAGE;
 
 var eventsJSON;
 var locationsJSON;
@@ -84,16 +80,13 @@ function preload() {
   locationsJSON = loadJSON("assets/locations.json");
   weaponsJSON = loadJSON("assets/weapons.json");
 
-  //BG_PATTERN_0 = loadImage("assets/images/BG_0.png");
-  //BG_PATTERN_1 = loadImage("assets/images/BG_1.png");
-  //BG_PATTERN_2 = loadImage("assets/images/BG_2.png");
-  //BG_PATTERN_3 = loadImage("assets/images/BG_3.png");
-  //BG_PATTERNS = [BG_PATTERN_0, BG_PATTERN_1, BG_PATTERN_2, BG_PATTERN_3];
   HEART_FULL = loadImage("assets/images/heart_full.png");
   HEART_EMPTY = loadImage("assets/images/heart_empty.png");
-  ICON_HERB = loadImage("assets/images/herb.png");
-  ICON_FOOD = loadImage("assets/images/food.png");
-  ICON_COIN = loadImage("assets/images/coin.png");
+  ICON_HERB = loadImage("assets/images/icon_herb.png");
+  ICON_FOOD = loadImage("assets/images/icon_food.png");
+  ICON_COIN = loadImage("assets/images/icon_coin.png");
+
+  MAP_VILLAGE = loadImage("assets/images/mm_village.png");
 
   THEME_COLORS = [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE];
 }
@@ -101,7 +94,8 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
-  textFont("Gill Sans");
+  textFont("Verdana");
+  textStyle(BOLD);
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   angleMode(DEGREES)
@@ -136,13 +130,11 @@ function randomizeBG() {
   bgColor.g = random(80, 100);
   bgColor.b = random(80, 100);
 
-  //bgColor.patternId = random(BG_PATTERNS);
   themeColor = random(THEME_COLORS);
 }
 
 function draw() {
   background(bgColor.r, bgColor.g, bgColor.b);
-  //image(bgColor.patternId, width / 2, height / 2, width, height);
   showChoices();
   card.display();
   if (gameData.state["playing"]) {
@@ -178,7 +170,7 @@ function getMousePos() {
 
 function showChoices() {
   push();
-  textSize(22);
+  textSize(18);
   if (getMousePos() === MOUSE_ON_LEFT) {
     fill(WHITE);
   } else {
@@ -202,7 +194,7 @@ function updateCard(id, loot = null) {
       break;
       // supplies
     case 1:
-      card.text = gameData.eventObj.text + "\n\n" + loot[0] + " Herbs" + "\n" + loot[1] + " Food" + "\n" + loot[2] + " Coins" + "\n\nPick any side to contine";
+      card.text = gameData.eventObj.text + "\n\n" + loot[0] + " Food" + "\n" + loot[1] + " Herbs" + "\n" + loot[2] + " Coins" + "\n\nPick any side to contine";
       break;
       // melee
     case 2:
@@ -497,16 +489,16 @@ function getIndoorEvent() {
 function getLoot() {
   let result = [];
   let temp = random();
-  // spawn random supplies
+  // spawn random loots
   if (temp >= 0.3) {
     let tempItem = random();
-    if (tempItem <= gameData.currentLoc.spawn.herbs) {
+    if (tempItem <= gameData.currentLoc.spawn.food) {
       append(result, int(random(1, 4)));
     } else {
       append(result, 0);
     }
     //tempItem = random();
-    if (tempItem <= gameData.currentLoc.spawn.food) {
+    if (tempItem <= gameData.currentLoc.spawn.herbs) {
       append(result, int(random(1, 4)));
     } else {
       append(result, 0);
@@ -551,8 +543,8 @@ function updatePlayerData(array) {
   if (array.length === 1 || array.length === 2) {
     player.stats["weapon"] = array;
   } else if (array.length === 3) {
-    player.stats["herbs"] += array[0];
-    player.stats["food"] += array[1];
+    player.stats["food"] += array[0];
+    player.stats["herbs"] += array[1];
     player.stats["coins"] += array[2];
   }
   stats.updateStats(player);

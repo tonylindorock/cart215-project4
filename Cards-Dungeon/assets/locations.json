@@ -16,60 +16,108 @@
     "name": "Foggy Swamp",
     "size": 6,
     "spawn": {
-      "herbs": 0.5,
-      "food": 0.5,
-      "coins": 0.5,
-      "acc": 0.5,
-      "melee": 0.7,
-      "ranged": 0.3
+      "herbs": 0.6,
+      "food": 0.4,
+      "coins": 0.4,
+      "acc": 0.6,
+      "melee": 0.6,
+      "ranged": 0.4
     }
   }, {
     "id": 2,
-    "name": "Fallen Castle",
-    "size": 8,
+    "name": "Ruined Castle",
+    "size": 6,
     "spawn": {
-      "herbs": 0.5,
-      "food": 0.5,
+      "herbs": 0.3,
+      "food": 0.3,
       "coins": 0.5,
-      "acc": 0.5,
+      "acc": 0.4,
       "melee": 0.7,
       "ranged": 0.3
     }
   }, {
     "id": 3,
-    "name": "Cave",
-    "size": 4,
+    "name": "Decaying City",
+    "size": 6,
     "spawn": {
-      "herbs": 0.5,
-      "food": 0.5,
-      "coins": 0.5,
+      "herbs": 0.2,
+      "food": 0.3,
+      "coins": 0.7,
       "acc": 0.5,
-      "melee": 0.7,
-      "ranged": 0.3
+      "melee": 0.5,
+      "ranged": 0.5
     }
   }, {
     "id": 4,
-    "name": "Dark Forest",
+    "name": "Dense Forest",
     "size": 8,
     "spawn": {
-      "herbs": 0.5,
+      "herbs": 0.7,
       "food": 0.5,
-      "coins": 0.5,
+      "coins": 0.4,
       "acc": 0.5,
-      "melee": 0.7,
-      "ranged": 0.3
+      "melee": 0.4,
+      "ranged": 0.6
     }
   }, {
     "id": 5,
-    "name": "Warlock's Tower",
+    "name": "High Tower",
+    "size": 4,
+    "spawn": {
+      "herbs": 0.2,
+      "food": 0.4,
+      "coins": 0.5,
+      "acc": 0.5,
+      "melee": 0.4,
+      "ranged": 0.6
+    }
+  }, {
+    "id": 6,
+    "name": "Golden Temple",
     "size": 6,
     "spawn": {
       "herbs": 0.5,
-      "food": 0.5,
+      "food": 0.2,
+      "coins": 0.8,
+      "acc": 0.7,
+      "melee": 0.6,
+      "ranged": 0.4
+    }
+  }, {
+    "id": 7,
+    "name": "Vast Desert",
+    "size": 8,
+    "spawn": {
+      "herbs": 0.1,
+      "food": 0.2,
+      "coins": 0.4,
+      "acc": 0.6,
+      "melee": 0.8,
+      "ranged": 0.4
+    }
+  }, {
+    "id": 8,
+    "name": "Enchanted Cave",
+    "size": 6,
+    "spawn": {
+      "herbs": 0.8,
+      "food": 0.3,
       "coins": 0.5,
-      "acc": 0.5,
-      "melee": 0.7,
-      "ranged": 0.3
+      "acc": 0.6,
+      "melee": 0.4,
+      "ranged": 0.6
+    }
+  }, {
+    "id": 9,
+    "name": "Barren Land",
+    "size": 8,
+    "spawn": {
+      "herbs": 0.1,
+      "food": 0.3,
+      "coins": 0.3,
+      "acc": 0.4,
+      "melee": 0.6,
+      "ranged": 0.4
     }
   }]
 }

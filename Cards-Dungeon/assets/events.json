@@ -38,7 +38,7 @@
     }, {
       "id": 2,
       "title": "Tip #3",
-      "text": "Every outcome of an event is determined by your Combat, Physique, Wit, and Charm.\n\nYour possessions (Food, Herbs, Coins, acc, and Weapon) sometimes also come into play.",
+      "text": "Every outcome of an event is determined by your Combat, Physique, Wit, and Charm.\n\nYour valuables (Food, Herbs, Coins, Accessory, and Weapon) sometimes also come into play.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -74,7 +74,7 @@
     }, {
       "id": 5,
       "title": "Tip #6",
-      "text": "Once you deplete your weapon, you'll have to fight with your fists until you find another weapon.\n\nIf you're confident about your fight skills, you might never need a weapon!",
+      "text": "Your weapon plays an important role on your survival on your journey.\n\nEvery weapon has a chance of breaking and limited usage.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],
@@ -86,7 +86,19 @@
     }, {
       "id": 6,
       "title": "Tip #7",
-      "text": "",
+      "text": "Once you deplete your weapon, you'll have to fight with your fists until you find another weapon.\n\nIf you're confident about your Combat skills, you might never need a weapon!",
+      "choices": [{
+        "text": "Let's go!",
+        "next": ["outdoor", 0],
+        "state": ["playing", true]
+      }, {
+        "text": "Next tip",
+        "next": ["other", 0]
+      }]
+    }, {
+      "id": 7,
+      "title": "Tip #8",
+      "text": "Your accessory will give you bonus attribute points or other magical benefits, such as doubling the amount of coins you can find.",
       "choices": [{
         "text": "Let's go!",
         "next": ["outdoor", 0],

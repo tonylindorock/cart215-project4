@@ -121,14 +121,13 @@ class Card{
     rect(0, 0, this.width - this.changeWidth, this.height, this.CORNER_RADIUS);
     noStroke();
     fill(68, 68, 68, this.transparency);
-    textSize(20);
+    textSize(16);
     textAlign(CENTER, TOP);
     if (this.animationId != 2){
       // title
-      textStyle(BOLD);
-      text(this.title, 0, 0, this.textWidth, this.textHeight);
-      // text
+      text(this.title.toUpperCase(), 0, 0, this.textWidth, this.textHeight);
       textStyle(NORMAL);
+      // text
       text("\n\n\n" + this.text, 0, 0, this.textWidth, this.textHeight);
     }
     pop();

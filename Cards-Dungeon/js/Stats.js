@@ -10,6 +10,10 @@ class Stats {
     this.height = height / 10;
     this.width = height * 0.6 * 2.5 / 3.5;
 
+    this.miniMapStripWidth = this.width * 2;
+    this.miniMapWidth = this.miniMapStripWidth / 7;
+    this.miniMapHeight = this.miniMapWidth/2;
+
     this.iconWidth = 32;
 
     this.TOP_Y = this.height / 1.25;
@@ -17,6 +21,10 @@ class Stats {
     this.MARGIN_EDGE = this.height / 1.25;
 
     this.CORNER_RADIUS = 8;
+
+    this.sliderPos = - this.miniMapWidth * 3.5;
+    this.mapRevealed = 7;
+    this.sliderMoving = false;
 
     this.attributes = {
       combat: player.stats["combat"],
@@ -83,15 +91,13 @@ class Stats {
     push();
     fill(WHITE);
     this.displayValuables();
-    textSize(20);
+    textSize(16);
     textAlign(RIGHT);
     text(this.getAttributes(-1), this.x - width / 3.25, height - this.height);
     textAlign(LEFT);
     text(this.getWeapons(-1), this.x + width / 3.25, height - this.height);
     // top
-    textAlign(CENTER);
-    textSize(32);
-    text("DAY 1 | MORNING", this.x, this.TOP_Y);
+    this.displayMiniMap()
     // health
     this.displayHealth();
     pop();
@@ -99,7 +105,7 @@ class Stats {
 
   displayValuables(){
     push();
-    textSize(20);
+    textSize(16);
     translate(this.x - this.iconWidth/2, this.BOTTOM_Y - this.iconWidth * 1.25);
     image(ICON_FOOD, -this.iconWidth * 2, 0, this.iconWidth, this.iconWidth);
     text(this.valuables.food, -this.iconWidth * 2 + this.iconWidth, 0);
@@ -117,19 +123,19 @@ class Stats {
     translate(this.x, this.BOTTOM_Y);
     if (this.health > 0) {
       push();
-      this.heartTransparency(0);
+      //this.heartTransparency(0);
       image(HEART_FULL, -this.iconWidth * 1.25, 0, this.iconWidth, this.iconWidth);
       pop();
     }
     if (this.health > 10) {
       push();
-      this.heartTransparency(1);
+      //this.heartTransparency(1);
       image(HEART_FULL, 0, 0, this.iconWidth, this.iconWidth);
       pop();
     }
     if (this.health > 20) {
       push();
-      this.heartTransparency(2);
+      //this.heartTransparency(2);
       image(HEART_FULL, this.iconWidth * 1.25, 0, this.iconWidth, this.iconWidth);
       pop();
     }
@@ -143,5 +149,52 @@ class Stats {
     let transparence = this.health;
     transparence = int(map(transparence, num * 10, num * 10 + 10, 0, 255));
     tint(255, transparence);
+  }
+
+  displayMiniMap(){
+    push();
+    fill(BLACK);
+    translate(this.x, this.TOP_Y);
+    // bg
+    stroke(BLACK);
+    strokeWeight(4);
+    rect(0, 0, this.miniMapStripWidth + 16, this.height, this.CORNER_RADIUS/2);
+    // loc
+    image(MAP_VILLAGE, - this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
+    fill(BLACK);
+    if (this.mapRevealed < 1 ){
+      rect(- this.miniMapWidth * 3, 0, this.miniMapWidth, this.miniMapHeight);
+    }
+    if (this.mapRevealed < 2 ){
+      rect(- this.miniMapWidth * 2, 0, this.miniMapWidth, this.miniMapHeight);
+    }
+    if (this.mapRevealed < 3 ){
+      rect(- this.miniMapWidth, 0, this.miniMapWidth, this.miniMapHeight);
+    }
+    if (this.mapRevealed < 4 ){
+      rect(0, 0, this.miniMapWidth, this.miniMapHeight);
+    }
+    if (this.mapRevealed < 5 ){
+      rect(this.miniMapWidth, 0, this.miniMapWidth,this.miniMapHeight);
+    }
+    if (this.mapRevealed < 6 ){
+      rect(this.miniMapWidth * 2, 0, this.miniMapWidth,this.miniMapHeight);
+    }
+    if (this.mapRevealed < 7 ){
+      rect(this.miniMapWidth * 3, 0, this.miniMapWidth,this.miniMapHeight);
+    }
+    //slider
+    fill(WHITE);
+    translate(this.sliderPos, 0);
+    noStroke();
+    //ellipse(0, 0, 8);
+    rect(0, 0, 4, this.miniMapHeight * 1.5, 16);
+    pop();
+    if (this.sliderMoving){
+      let time = frameCount;
+      if (time % 60 === 0){
+        this.sliderPos += this.miniMapWidth/14;
+      }
+    }
   }
 }
