@@ -72,7 +72,14 @@ let ICON_COIN;
 let MAP_VILLAGE;
 let MAP_SWAMP;
 let MAP_CASTLE;
+let MAP_CITY;
+let MAP_FOREST;
+let MAP_TOWER;
+let MAP_TEMPLE;
+let MAP_DESERT;
+let MAP_CAVE;
 let MAP_LAND;
+let MAP_DUNGEON;
 let MAPS;
 
 var eventsJSON;
@@ -93,8 +100,15 @@ function preload() {
   MAP_VILLAGE = loadImage("assets/images/mm_village.png");
   MAP_SWAMP = loadImage("assets/images/mm_swamp.png");
   MAP_CASTLE = loadImage("assets/images/mm_castle.png");
+  MAP_CITY = loadImage("assets/images/mm_city.png");
+  MAP_FOREST = loadImage("assets/images/mm_forest.png");
+  MAP_TOWER = loadImage("assets/images/mm_tower.png");
+  MAP_TEMPLE = loadImage("assets/images/mm_temple.png");
+  MAP_DESERT = loadImage("assets/images/mm_desert.png");
+  MAP_CAVE = loadImage("assets/images/mm_cave.png");
   MAP_LAND = loadImage("assets/images/mm_land.png");
-  MAPS = [MAP_VILLAGE, MAP_SWAMP, MAP_CASTLE, MAP_LAND];
+  MAP_DUNGEON = loadImage("assets/images/mm_dungeon.png");
+  MAPS = [MAP_VILLAGE, MAP_SWAMP, MAP_CASTLE, MAP_CITY, MAP_FOREST, MAP_TOWER, MAP_TEMPLE, MAP_DESERT, MAP_CAVE, MAP_LAND, MAP_DUNGEON];
 
   THEME_COLORS = [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE];
 }
@@ -249,13 +263,20 @@ function makeChoice(id) {
   // if the choice has a consequence
   if (conseqClickCount === 0 && gameData.eventObj.choices[id].result != null) {
     let hasAttribute = false;
-    let index = 0;
     for (let i = 1; i < gameData.eventObj.choices[id].result.length; i++) {
-      // if player has the attribute
-      if (player.stats[gameData.eventObj.choices[id].result[i].attribute[0]] >= gameData.eventObj.choices[id].result[i].attribute[1]) {
+      // if player has weapon
+      if (gameData.eventObj.choices[id].result[i].weapon != null){
         hasAttribute = true;
         gameData.consequenceId = i;
         break;
+      }
+      // if player has the attribute
+      if (gameData.eventObj.choices[id].result[i].attribute != null){
+        if (player.stats[gameData.eventObj.choices[id].result[i].attribute[0]] >= gameData.eventObj.choices[id].result[i].attribute[1]) {
+          hasAttribute = true;
+          gameData.consequenceId = i;
+          break;
+        }
       }
     }
     if (!hasAttribute) {
@@ -312,10 +333,10 @@ function getEvent() {
 
   if (gameData.eventId === "other") {
     targetArray = eventsJSON.events.other;
-  } else if (gameData.eventId === "outdoor") {
-    targetArray = eventsJSON.events.outdoor;
-  } else if (gameData.eventId === "indoor") {
-    targetArray = eventsJSON.events.indoor;
+  } else if (gameData.eventId === "travel") {
+    targetArray = eventsJSON.events.travel;
+  } else if (gameData.eventId === "explore") {
+    targetArray = eventsJSON.events.explore;
   } else if (gameData.eventId === "looting") {
     targetArray = eventsJSON.events.looting;
   }
@@ -389,11 +410,15 @@ function parseChoice(id) {
         updateEvent(gameData.eventObj.choices[id].next[0], gameData.eventObj.choices[id].next[1]);
         updateCard(0);
       } else if (gameData.eventObj.choices[id].next === "loc") {
+        player.action = "EXPLORING";
+
         gameData.currentLoc = getLocation(gameData.choices[id]);
         gameData.cardLimit = gameData.currentLoc.size;
-        player.action = "EXPLORING";
-        getIndoorEvent();
+
         stats.updateMap(gameData.currentLoc);
+        gameData.state["day"] = stats.mapRevealed;
+        console.log("Day " + gameData.state["day"]);
+        getExploreEvent();
       }
       // if null, it's a looting event
     } else {
@@ -411,10 +436,10 @@ function parseChoice(id) {
       }
       switch (player.action) {
         case "EXPLORING":
-          getIndoorEvent();
+          getExploreEvent();
           break;
         default:
-          getOutdoorEvent();
+          getTravelEvent();
       }
     }
   }
@@ -439,7 +464,8 @@ function getLocation(id) {
   } else if (typeof(id) == 'number') {
     // -1 random
     if (id < 0) {
-      return random(locationsJSON.loc).name;
+      let tempId = int(random(locationsJSON.loc.length - 1));
+      return locationsJSON.loc[tempId].name;
       // a specified loc
     } else {
       for (let i = 0; i < locationsJSON.loc.length; i++) {
@@ -459,14 +485,14 @@ function getLocation(id) {
   return null;
 }
 
-function getOutdoorEvent() {
-  let randomOutdoorEv = random(eventsJSON.events.outdoor);
-  updateEvent("outdoor", randomOutdoorEv.id);
+function getTravelEvent() {
+  let randomTravelEv = random(eventsJSON.events.travel);
+  updateEvent("travel", randomTravelEv.id);
   updateCard(0);
-  console.log(randomOutdoorEv.title);
+  console.log(randomTravelEv.title);
 }
 
-function getIndoorEvent() {
+function getExploreEvent() {
   let temp = random();
   if (temp >= 0.15) {
     updateEvent("looting", 0);
@@ -483,10 +509,10 @@ function getIndoorEvent() {
       updateCard(2, loot);
     }
   } else {
-    let randomIndoorEv = random(eventsJSON.events.indoor);
-    updateEvent("indoor", randomIndoorEv.id);
+    let randomExploreEv = random(eventsJSON.events.explore);
+    updateEvent("explore", randomExploreEv.id);
     updateCard(0);
-    console.log(randomIndoorEv.title);
+    console.log(randomExploreEv.title);
   }
   gameData.cardLimit -= 1;
   if (gameData.cardLimit <= 0) {

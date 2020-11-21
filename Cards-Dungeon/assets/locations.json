@@ -119,5 +119,17 @@
       "melee": 0.6,
       "ranged": 0.4
     }
+  }, {
+    "id": 10,
+    "name": "Final Dungeon",
+    "size": 12,
+    "spawn": {
+      "herbs": 0.1,
+      "food": 0.1,
+      "coins": 0,
+      "acc": 0.5,
+      "melee": 0.5,
+      "ranged": 0.5
+    }
   }]
 }
