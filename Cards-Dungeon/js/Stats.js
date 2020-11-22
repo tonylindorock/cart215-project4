@@ -137,20 +137,17 @@ class Stats {
     translate(this.x, this.BOTTOM_Y);
     if (this.health > 0) {
       push();
-      //this.heartTransparency(0);
-      image(HEART_FULL, -this.iconWidth * 1.25, 0, this.iconWidth, this.iconWidth);
+      image(HEART_FULL, -this.iconWidth * 1.25, 0, this.heartSize(0), this.heartSize(0));
       pop();
     }
     if (this.health > 10) {
       push();
-      //this.heartTransparency(1);
-      image(HEART_FULL, 0, 0, this.iconWidth, this.iconWidth);
+      image(HEART_FULL, 0, 0, this.heartSize(1), this.heartSize(1));
       pop();
     }
     if (this.health > 20) {
       push();
-      //this.heartTransparency(2);
-      image(HEART_FULL, this.iconWidth * 1.25, 0, this.iconWidth, this.iconWidth);
+      image(HEART_FULL, this.iconWidth * 1.25, 0, this.heartSize(2), this.heartSize(2));
       pop();
     }
     image(HEART_EMPTY, -this.iconWidth * 1.25, 0, this.iconWidth, this.iconWidth);
@@ -159,10 +156,8 @@ class Stats {
     pop();
   }
 
-  heartTransparency(num){
-    let transparence = this.health;
-    transparence = int(map(transparence, num * 10, num * 10 + 10, 0, 255));
-    tint(255, transparence);
+  heartSize(num){
+    return int(map(this.health, num * 10, num * 10 + 10, 0, this.iconWidth, true));
   }
 
   displayMiniMap(){

@@ -6,7 +6,7 @@
       "text": "Cards\nDungeon\n\n",
       "choices": [{
         "text": "Pick any side",
-        "next": ["other", 0]
+        "next": ["travel", 1]
       }, {
         "text": "And click to start",
         "next": ["other", 0]
@@ -38,7 +38,7 @@
     }, {
       "id": 2,
       "title": "Tip #3",
-      "text": "Every outcome of an event is determined by your Combat, Physique, Wit, and Charm.\n\nYour valuables (Food, Herbs, Coins, Accessory, and Weapon) sometimes also come into play.",
+      "text": "Every outcome of an event can be determined by your Combat, Physique, Wit, and Charm.\n\nYour valuables (Food, Herbs, Coins, Accessory, and Weapon) sometimes also come into play.",
       "choices": [{
         "text": "Let's go!",
         "next": ["travel", 0],
@@ -74,7 +74,7 @@
     }, {
       "id": 5,
       "title": "Tip #6",
-      "text": "Your weapon plays an important role on your survival on your journey.\n\nEvery weapon has a chance of breaking and limited usage.",
+      "text": "Your weapon plays an important role on your survival on your journey.\n\nWhen you choose to fight your enemy, the more damage you can do, the more likely you'll win.",
       "choices": [{
         "text": "Let's go!",
         "next": ["travel", 0],
@@ -86,18 +86,30 @@
     }, {
       "id": 6,
       "title": "Tip #7",
-      "text": "Once you deplete your weapon, you'll have to fight with your fists until you find another weapon.\n\nIf you're confident about your Combat skills, you might never need a weapon!",
+      "text": "All of your weapons have limited usage and a chance of breaking.\n\nIt's wise when not to engage your enemies when your weapon is close to its end.",
       "choices": [{
         "text": "Let's go!",
         "next": ["travel", 0],
         "state": ["playing", true]
       }, {
         "text": "Next tip",
-        "next": ["other", 0]
+        "next": ["other", 7]
       }]
     }, {
       "id": 7,
       "title": "Tip #8",
+      "text": "Once you deplete your weapon, you'll have to fight with your fists until you find another weapon.\n\nIf you're confident about your Combat skills, losing a weapon might not bother you.",
+      "choices": [{
+        "text": "Let's go!",
+        "next": ["travel", 0],
+        "state": ["playing", true]
+      }, {
+        "text": "Next tip",
+        "next": ["other", 8]
+      }]
+    }, {
+      "id": 8,
+      "title": "Tip #9",
       "text": "Your accessory will give you bonus attribute points or other magical benefits, such as doubling the amount of coins you can find.",
       "choices": [{
         "text": "Let's go!",
@@ -156,6 +168,7 @@
         "id": 1,
         "title": "Raiders In A Distance",
         "text": "You noticed some raiders are handing around in your route. You decide to:",
+        "enemy": ["HUMAN", 3],
         "choices": [{
           "text": "Take a detour"
         }, {
@@ -168,8 +181,14 @@
               "coins": 0,
               "acc": "",
               "weapon": [""],
-              "charm": -10,
-              "health": -10
+              "charm": -10
+            }
+          },{
+            "text": "You won the fight.",
+            "playerData": {
+              "food": "+",
+              "coins": "+",
+              "charm": 10
             }
           }, {
             "attribute": ["combat", 75],
@@ -277,9 +296,9 @@
           "result": [{
             "text": "The raiders beat ypu up before taking all of your stuff.",
             "playerData": {
-              "meds": 0,
+              "herbs": 0,
               "food": 0,
-              "water": 0,
+              "coins": 0,
               "weapon": [""],
               "charm": -10,
               "health": -10
@@ -376,9 +395,9 @@
           "result": [{
             "text": "Everything went okay. You and the adventurer even exchanged dungeon tips!",
             "playerData": {
-              "med": "+",
+              "herbs": "+",
               "food": "+",
-              "water": "+",
+              "coins": "+",
               "experience": 10,
               "charm": 10
             }
@@ -387,7 +406,7 @@
             "text": "You couldn't trust the adventurer, so you quickly took off without throughly exploring the area.",
             "playerData": {
               "food": 2,
-              "water": 1,
+              "coins": 1,
               "charm": -5
             },
             "next": "out"
@@ -400,81 +419,82 @@
         "title": "An Unwelcome Explorer",
         "text": "During your exploration, you noticed a raider a few meters from you without knowing you're there.",
         "choices": [{
-            "text": "Rob them",
-            "result": [{
-              "text": "The raider had the faster move and defeated you with ease. They took off with all your valuables.",
-              "playerData": {
-                "herbs": 0,
-                "food": 0,
-                "coins": 0,
-                "charm": -5
-              }
-            }, {
-              "weapon": -1,
-              "text": "",
-              "playerData": {
-                "food": "+",
-                "water": "+"
-              }
-            }, {
-              "attribute": ["combat", 75],
-              "text": "You knocked down the raider with one hit and took away their valuables.",
-              "playerData": {
-                "food": "+",
-                "water": "+"
-              }
-            }]
+          "text": "Rob them",
+          "result": [{
+            "text": "The raider had the faster move and defeated you with ease. They took off with all your valuables.",
+            "playerData": {
+              "herbs": 0,
+              "food": 0,
+              "coins": 0,
+              "charm": -5
+            }
+          },{
+            "text": "You won the fight.",
+            "playerData": {
+              "food": "+",
+              "water": "+",
+              "charm": 5
+            }
           }, {
-            "text": "Leave the place",
-            "result": [{
-                "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away.",
-                "playerData": {
-                  "health": -5
-                }
-              }, {
-                "weapon": -1,
-                "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. You and the raider started a duo.",
-                "playerData": {
-                  "food": "+",
-                  "water": "+"
-                }
-                },{
-                  "attribute": ["experience", 25],
-                  "text": "You walked away quietly.",
-                  "next": "out"
-                }]
-            }]
-        },
-        {
-          "id": 2,
-          "title": "The Storm Is Coming",
-          "text": "An unseasonably severe and perilous storm is now upon you. It's better to stay inside.",
-          "choices": [{
-            "text": "Keeping going",
-            "result": [{
-                "text": "You were not prepared for this storm. The wind blew away half of your valuables.",
-                "playerData": {
-                  "herbs": "/2",
-                  "food": "/2",
-                  "coins": "/2",
-                  "charm": -10
-                }
-              },{
-                "attribute": ["experience", 75],
-                "text": "You know exactly what to do during a storm. You tied yourself and your valuables to a tree. And the wind had no chance ruinning your adventure.",
-                "playerData":{
-                  "charm": 5
-                }
-                }]
+            "attribute": ["combat", 75],
+            "text": "You knocked down the raider with one hit and took away their valuables.",
+            "playerData": {
+              "food": "+",
+              "water": "+"
+            }
+          }]
+        }, {
+          "text": "Leave the place",
+          "result": [{
+            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away.",
+            "playerData": {
+              "health": -5
+            }
           }, {
-            "text": "Stay inside",
-            "result": [{
-              "text": "You set up a fire and waited until the storm passed.",
-              "playerData": {
-                "food": -2
-              }
-            }]
+            "weapon": -1,
+            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. You and the raider started a duo.",
+            "playerData": {
+              "food": "+",
+              "water": "+"
+            }
+          }, {
+            "attribute": ["experience", 25],
+            "text": "You walked away quietly.",
+            "next": "out"
           }]
         }]
-    }
+      },
+      {
+        "id": 2,
+        "title": "The Storm Is Coming",
+        "text": "An unseasonably severe and perilous storm is now upon you. It's better to stay inside.",
+        "choices": [{
+          "text": "Keeping going",
+          "result": [{
+            "text": "You were not prepared for this storm. The wind blew away half of your valuables.",
+            "playerData": {
+              "herbs": "/2",
+              "food": "/2",
+              "coins": "/2",
+              "charm": -10
+            }
+          }, {
+            "attribute": ["experience", 75],
+            "text": "You know exactly what to do during a storm. You tied yourself and your valuables to a tree. And the wind had no chance ruinning your adventure.",
+            "playerData": {
+              "charm": 5
+            }
+          }]
+        }, {
+          "text": "Stay inside",
+          "result": [{
+            "text": "You set up a fire and waited until the storm passed.",
+            "playerData": {
+              "food": -2
+            }
+          }]
+        }]
+      }
+    ]
   }
+}

@@ -13,7 +13,10 @@ class Player{
       "health": 30
     };
 
+    this.baseDamage = 7;
+    this.critical = 0.3;
     this.action = "";
+    this.dead = false;
   }
 
   randomAttribute(){
@@ -26,6 +29,34 @@ class Player{
       return int(random(25, 50));
     }else{
       return int(random(1, 25));
+    }
+  }
+
+  getWeaponDamage(){
+    let weaponDam = 0;
+    let targetArray;
+    if (this.stats["weapon"].length === 1) {
+      targetArray = weaponsJSON.weapons.melee;
+    } else if (this.stats["weapon"].length === 2) {
+      targetArray = weaponsJSON.weapons.ranged;
+    }
+    for (let i = 0; i < targetArray.length; i++) {
+      if (targetArray[i].name === this.stats["weapon"][0]) {
+        weaponDam = targetArray[i].dam;
+      }
+    }
+    return weaponDam;
+  }
+
+  outputDamage(){
+    return int(this.baseDamage * (1 + this.stats["combat"] * 0.01) * (1 + this.getWeaponDamage() * 0.01));
+  }
+
+  receiveDamage(dam){
+    this.stats["health"] -= dam;
+    this.stats["health"] = constrain(this.stats["health"], 0, 30);
+    if (this.stats["health"] === 0){
+      this.dead = true;
     }
   }
 }

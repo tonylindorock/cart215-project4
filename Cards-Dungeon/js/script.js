@@ -47,7 +47,7 @@ let disableArrowKey = false;
 let gameData = {
   status: STATUS_OUTDOOR,
   state: {
-    "playing": false,
+    "playing": true,
     "day": 1
   },
   eventId: "other",
@@ -264,12 +264,6 @@ function makeChoice(id) {
   if (conseqClickCount === 0 && gameData.eventObj.choices[id].result != null) {
     let hasAttribute = false;
     for (let i = 1; i < gameData.eventObj.choices[id].result.length; i++) {
-      // if player has weapon
-      if (gameData.eventObj.choices[id].result[i].weapon != null){
-        hasAttribute = true;
-        gameData.consequenceId = i;
-        break;
-      }
       // if player has the attribute
       if (gameData.eventObj.choices[id].result[i].attribute != null){
         if (player.stats[gameData.eventObj.choices[id].result[i].attribute[0]] >= gameData.eventObj.choices[id].result[i].attribute[1]) {
@@ -281,6 +275,11 @@ function makeChoice(id) {
     }
     if (!hasAttribute) {
       gameData.consequenceId = 0;
+      if (gameData.eventObj.enemy != null){
+        if(battle(gameData.eventObj.enemy[0], gameData.eventObj.enemy[1])){
+          gameData.consequenceId = 1;
+        }
+      }
     }
     gameData.hasConsequence = true;
     gameData.choices[0] = "";
@@ -364,9 +363,14 @@ function parseChoice(id) {
         if (typeof(value) == 'number') {
           // neg or pos
           if (value != 0) {
-            change += "\n" + str(value) + " " + key;
+            let prev = player.stats[key];
             player.stats[key] += value;
             player.stats[key] = constrain(player.stats[key], 0, 100);
+            if (value < 0){
+              change += "\n-" + str(-(player.stats[key] - prev)) + " " + key;
+            }else{
+              change += "\n+" + str(value) + " " + key;
+            }
             // 0
           } else {
             change += "\n-" + str(player.stats[key]) + " " + key;
@@ -374,8 +378,8 @@ function parseChoice(id) {
           }
           // if adding random num
         } else if (value.includes("+")) {
-          let randTemp = int(random(0, 4));
-          change += "\n" + str(randTemp) + " " + key;
+          let randTemp = int(random(1, 4));
+          change += "\n+" + str(randTemp) + " " + key;
           player.stats[key] += randTemp;
           // if supplies cut to half
         } else if (value.includes("/2")) {
@@ -487,6 +491,9 @@ function getLocation(id) {
 
 function getTravelEvent() {
   let randomTravelEv = random(eventsJSON.events.travel);
+  while (gameData.currentEvent === randomTravelEv.id){
+    randomTravelEv = random(eventsJSON.events.travel);
+  }
   updateEvent("travel", randomTravelEv.id);
   updateCard(0);
   console.log(randomTravelEv.title);
@@ -584,4 +591,29 @@ function updatePlayerData(array) {
     player.stats["coins"] += array[2];
   }
   stats.updateStats(player);
+}
+
+function battle(enemyType, num){
+  let enemy;
+  for(let i = 0; i < num; i++){
+    enemy = new Enemy(enemyType, gameData.state["day"]);
+    while(!enemy.dead){
+      console.log("Enemy " + i + ": " + enemy.health);
+      console.log("Player: " + player.stats["health"]);
+      let p = random();
+      if (p >= 0.3){
+        enemy.receiveDamage(player.outputDamage());
+      }
+      p = random();
+      if (p >= 0.5){
+        player.receiveDamage(enemy.getDamage());
+      }
+      if (player.dead){
+        break;
+      }
+    }
+    stats.updateStats(player);
+
+  }
+  return(!player.dead);
 }

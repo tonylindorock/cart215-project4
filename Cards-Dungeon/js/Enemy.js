@@ -4,11 +4,11 @@ class Enemy{
     this.type = type;
     this.level = level;
 
-    this.baseHealth = 20;
-    this.baseDamage = 10;
+    this.baseHealth = 10;
+    this.baseDamage = 3;
 
     this.health = int(this.baseHealth * (1 + this.level * 0.1));
-    this.damage = this.baseDamage * (1 + this.level * 0.1);
+    this.damage = int(this.baseDamage * (1 + this.level * 0.1));
 
     this.dead = false;
   }
