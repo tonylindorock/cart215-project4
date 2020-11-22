@@ -7,7 +7,7 @@ class Card{
     this.x = width/2;
     this.y = height/2;
     // size
-    this.height = height * 0.6;
+    this.height = 2160/5;
     this.width = this.height * 2.5/3.5;
 
     this.CORNER_RADIUS = 24;
@@ -22,10 +22,13 @@ class Card{
     this.title = title;
     this.text = text;
     this.transparency = 255;
+    this.showClock = false;
 
     this.rotation = 0;
     this.MAX_DEGREE = 8;
     this.tiltDir = -1;
+
+    this.rotationClock = 0;
 
     this.isPlayingAnimation = false;
     this.animationId = -1;
@@ -67,7 +70,7 @@ class Card{
   flip(){
     translate(this.x, this.y - this.changeWidth/8);
     if (!this.flippedSideOne){
-      this.changeWidth = lerp(this.changeWidth, this.width, 0.2);
+      this.changeWidth = lerp(this.changeWidth, this.width, 0.3);
       this.transparency = lerp(this.transparency, 0, 0.2);
     }else{
       this.changeWidth = lerp(this.changeWidth, 0, 0.2);
@@ -93,6 +96,22 @@ class Card{
     this.animationId = -1;
     this.flippedSideOne = false;
     this.isPlayingAnimation = false;
+  }
+
+  displayClock(){
+    push();
+    translate(this.x, this.y);
+    rotate(this.rotationClock);
+    this.rotationClock += 10;
+    if (this.rotationClock >= 360){
+      this.rotationClock = 0;
+    }
+    fill(68, 68, 68, 200);
+    ellipse(0, 0, 64);
+    stroke(WHITE);
+    strokeWeight(3);
+    line(0, 0, 24, 0);
+    pop();
   }
 
   display(){
@@ -131,5 +150,8 @@ class Card{
       text("\n\n\n" + this.text, 0, 0, this.textWidth, this.textHeight);
     }
     pop();
+    if (this.showClock){
+      this.displayClock();
+    }
   }
 }

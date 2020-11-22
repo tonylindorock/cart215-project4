@@ -4,50 +4,50 @@
       {
         "id": 0,
         "name": "Dagger",
-        "dam": 10
+        "dam": 2
       },{
         "id": 1,
         "name": "Sword",
-        "dam": 30
+        "dam": 5
       },{
         "id": 2,
         "name": "Spear",
-        "dam": 25
+        "dam": 6
       },{
         "id": 3,
         "name": "Axe",
-        "dam": 25
+        "dam": 8
       },{
         "id": 4,
         "name": "Mace",
-        "dam": 25
+        "dam": 7
       }
     ],
     "ranged":[
       {
         "id": 0,
         "name": "Bow",
-        "dam": 20,
+        "dam": 5,
         "ammo": 10
       },{
         "id": 1,
         "name": "Crossbow",
-        "dam": 40,
+        "dam": 8,
         "ammo": 6
       },{
         "id": 2,
         "name": "Musket",
-        "dam": 80,
-        "ammo": 6
+        "dam": 10,
+        "ammo": 4
       },{
         "id": 3,
         "name": "Magic Staff",
-        "dam": 80,
+        "dam": 9,
         "ammo": 8
       },{
         "id": 4,
         "name": "Crystal Wand",
-        "dam": 60,
+        "dam": 7,
         "ammo": 10
       }
     ]

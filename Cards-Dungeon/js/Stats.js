@@ -157,7 +157,7 @@ class Stats {
   }
 
   heartSize(num){
-    return int(map(this.health, num * 10, num * 10 + 10, 0, this.iconWidth, true));
+    return int(map(this.health, num * 10, num * 10 + 10, 10, this.iconWidth, true));
   }
 
   displayMiniMap(){

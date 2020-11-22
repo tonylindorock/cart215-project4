@@ -155,12 +155,15 @@
         "choices": [{
           "text": ["loc", -1],
           "caseText": [
-            ["day", 1],
-            ["loc", 0]
+            ["day", 1, ["loc", 0]],
+            ["day", 7, ["loc", 10]]
           ],
           "next": "loc"
         }, {
           "text": ["loc", -1],
+          "caseText": [
+            ["day", 7, ["loc", 10]]
+          ],
           "next": "loc"
         }]
       },
@@ -205,6 +208,7 @@
         "id": 2,
         "title": "IT'S AN AMBUSH",
         "text": "A group of raiders ambushed you, and they demand half of your valuable items.",
+        "enemy": ["HUMAN", 3],
         "choices": [{
           "text": "Comply",
           "result": [{
@@ -243,6 +247,14 @@
               "charm": -10,
               "health": -10
             }
+          },{
+            "text": "You won the fight",
+            "playerData": {
+              "food": "+",
+              "coins": "+",
+              "combat": 5,
+              "charm": 5
+            }
           }, {
             "attribute": ["charm", 75],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
@@ -267,6 +279,7 @@
         "id": 3,
         "title": "IT'S AN AMBUSH",
         "text": "A group of raiders ambushed you, and they demand all of your valuable items.",
+        "enemy": ["HUMAN", 3],
         "choices": [{
           "text": "Comply",
           "result": [{
@@ -303,6 +316,14 @@
               "charm": -10,
               "health": -10
             }
+          },{
+            "text": "You won the fight",
+            "playerData": {
+              "food": "+",
+              "coins": "+",
+              "combat": 5,
+              "charm": 5
+            }
           }, {
             "attribute": ["charm", 75],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
@@ -327,6 +348,7 @@
         "id": 4,
         "title": "IT'S AN AMBUSH",
         "text": "A group of raiders ambushed you, and they demand to give up your weapon.",
+        "enemy": ["HUMAN", 3],
         "choices": [{
           "text": "Comply",
           "result": [{
@@ -354,6 +376,14 @@
               "weapon": [""],
               "charm": -10,
               "health": -10
+            }
+          },{
+            "text": "You won the fight",
+            "playerData": {
+              "food": "+",
+              "coins": "+",
+              "combat": 5,
+              "charm": 5
             }
           }, {
             "attribute": ["charm", 75],
@@ -418,6 +448,7 @@
         "id": 1,
         "title": "An Unwelcome Explorer",
         "text": "During your exploration, you noticed a raider a few meters from you without knowing you're there.",
+        "enemy": ["HUMAN", 1],
         "choices": [{
           "text": "Rob them",
           "result": [{
@@ -433,6 +464,7 @@
             "playerData": {
               "food": "+",
               "water": "+",
+              "combat": 5,
               "charm": 5
             }
           }, {

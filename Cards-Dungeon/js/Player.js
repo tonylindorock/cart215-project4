@@ -14,7 +14,8 @@ class Player{
     };
 
     this.baseDamage = 7;
-    this.critical = 0.3;
+    this.critical = 0.15;
+    this.weaponCond = 100;
     this.action = "";
     this.dead = false;
   }
@@ -49,7 +50,19 @@ class Player{
   }
 
   outputDamage(){
-    return int(this.baseDamage * (1 + this.stats["combat"] * 0.01) * (1 + this.getWeaponDamage() * 0.01));
+    let final = 0;
+    let damage = this.baseDamage * (1 + this.stats["combat"] * 0.01);
+    let weaponBonus = (1 + this.getWeaponDamage() * 0.1);
+    final += damage * weaponBonus;
+    let p = random();
+    if (p < this.critical){
+      final *= 2;
+    }
+    if(this.stats["weapon"].length === 2){
+      this.stats["weapon"][1] -= 1;
+    }
+    console.log(int(final));
+    return int(final);
   }
 
   receiveDamage(dam){

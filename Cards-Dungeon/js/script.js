@@ -24,9 +24,6 @@ const MOUSE_ON_MIDDLE = -1;
 const EVENT_TYPE_CONTENT = "CONTENT";
 const EVENT_TYPE_CHOICES = "CHOICES";
 
-const STATUS_OUTDOOR = 0;
-const STATUS_INDOOR = 1;
-
 let themeColor;
 
 let bgColor = {
@@ -43,21 +40,25 @@ let player;
 let currentLoot;
 let conseqClickCount = 0;
 let disableArrowKey = false;
+let preBattleHealth = 30;
 
 let gameData = {
-  status: STATUS_OUTDOOR,
   state: {
     "playing": true,
     "day": 1
   },
+
   eventId: "other",
   currentEvent: -1,
   choices: ["Pick any side", "And click to start"],
   currentLoc: null,
+  eventObj: null,
+
   cardLimit: 4,
+
   consequenceId: 0,
   hasConsequence: false,
-  eventObj: null
+  hasBattle: false
 };
 
 let FONT;
@@ -260,6 +261,7 @@ function keyPressed() {
 }
 
 function makeChoice(id) {
+  let delay = 450;
   // if the choice has a consequence
   if (conseqClickCount === 0 && gameData.eventObj.choices[id].result != null) {
     let hasAttribute = false;
@@ -276,9 +278,13 @@ function makeChoice(id) {
     if (!hasAttribute) {
       gameData.consequenceId = 0;
       if (gameData.eventObj.enemy != null){
+        preBattleHealth = player.stats["health"];
         if(battle(gameData.eventObj.enemy[0], gameData.eventObj.enemy[1])){
           gameData.consequenceId = 1;
         }
+        gameData.hasBattle = true;
+        card.showClock = true;
+        delay += 200;
       }
     }
     gameData.hasConsequence = true;
@@ -288,10 +294,11 @@ function makeChoice(id) {
     card.playAnimation(2);
   } else {
     gameData.hasConsequence = false;
+    gameData.hasBattle = false;
     conseqClickCount = 0;
     card.playAnimation(id);
   }
-  setTimeout(parseChoice, 450, id);
+  setTimeout(parseChoice, delay, id);
   disableArrowKey = false;
 }
 
@@ -304,14 +311,22 @@ function updateEvent(type, id) {
   choices.push(gameData.eventObj.choices[1].text);
 
   // if has special cases
-  if (gameData.eventObj.choices[0].caseText != null) {
-    if (gameData.state[gameData.eventObj.choices[0].caseText[0][0]] === gameData.eventObj.choices[0].caseText[0][1]) {
-      choices[0] = gameData.eventObj.choices[0].caseText[1];
+  let specialCase = gameData.eventObj.choices[0].caseText;
+  if (specialCase != null) {
+    for(let i = 0; i < specialCase.length; i++){
+      if (gameData.state[specialCase[i][0]] === specialCase[i][1]) {
+        choices[0] = specialCase[i][2];
+        break;
+      }
     }
   }
-  if (gameData.eventObj.choices[1].caseText != null) {
-    if (gameData.state[gameData.eventObj.choices[1].caseText[0][0]] === gameData.eventObj.choices[1].caseText[0][1]) {
-      choices[1] = gameData.eventObj.choices[1].caseText[1];
+  specialCase = gameData.eventObj.choices[1].caseText;
+  if (specialCase != null) {
+    for(let i = 0; i < specialCase.length; i++){
+      if (gameData.state[specialCase[i][0]] === specialCase[i][1]) {
+        choices[1] = specialCase[i][2];
+        break;
+      }
     }
   }
 
@@ -400,6 +415,14 @@ function parseChoice(id) {
       }
       stats.updateStats(player);
     }
+    if (gameData.hasBattle){
+      let healthChange = player.stats["health"] - preBattleHealth;
+      if (healthChange > 0){
+        change += "\n+" + str(healthChange) + " health";
+      }else{
+        change += "\n-" + str(-healthChange) + " health";
+      }
+    }
     if (conseqObj.next != null) {
       if (conseqObj.next === "out") {
         gameData.cardLimit = 0;
@@ -449,6 +472,8 @@ function parseChoice(id) {
   }
   // update event on the card
   card.title = gameData.eventObj.title;
+  stats.updateStats(player);
+  card.showClock = false;
 }
 
 function parseChoiceArray(array) {
@@ -601,19 +626,17 @@ function battle(enemyType, num){
       console.log("Enemy " + i + ": " + enemy.health);
       console.log("Player: " + player.stats["health"]);
       let p = random();
-      if (p >= 0.3){
+      if (p >= 0.3 * (1 - player.stats["combat"] * 0.01)){
         enemy.receiveDamage(player.outputDamage());
       }
-      p = random();
-      if (p >= 0.5){
+      //p = random();
+      if (p >= 0.5 * (1 + player.stats["physique"] * 0.01)){
         player.receiveDamage(enemy.getDamage());
       }
       if (player.dead){
         break;
       }
     }
-    stats.updateStats(player);
-
   }
   return(!player.dead);
 }
