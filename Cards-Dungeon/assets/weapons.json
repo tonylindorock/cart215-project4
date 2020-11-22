@@ -21,6 +21,10 @@
         "id": 4,
         "name": "Mace",
         "dam": 7
+      },{
+        "id": 5,
+        "name": "Staff",
+        "dam": 5
       }
     ],
     "ranged":[

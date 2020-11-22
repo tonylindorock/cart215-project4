@@ -6,7 +6,7 @@
       "text": "Cards\nDungeon\n\n",
       "choices": [{
         "text": "Pick any side",
-        "next": ["travel", 1]
+        "next": ["other", 0]
       }, {
         "text": "And click to start",
         "next": ["other", 0]
@@ -186,7 +186,7 @@
               "weapon": [""],
               "charm": -10
             }
-          },{
+          }, {
             "text": "You won the fight.",
             "playerData": {
               "food": "+",
@@ -247,7 +247,7 @@
               "charm": -10,
               "health": -10
             }
-          },{
+          }, {
             "text": "You won the fight",
             "playerData": {
               "food": "+",
@@ -316,7 +316,7 @@
               "charm": -10,
               "health": -10
             }
-          },{
+          }, {
             "text": "You won the fight",
             "playerData": {
               "food": "+",
@@ -377,7 +377,7 @@
               "charm": -10,
               "health": -10
             }
-          },{
+          }, {
             "text": "You won the fight",
             "playerData": {
               "food": "+",
@@ -459,7 +459,7 @@
               "coins": 0,
               "charm": -5
             }
-          },{
+          }, {
             "text": "You won the fight.",
             "playerData": {
               "food": "+",
@@ -527,6 +527,65 @@
           }]
         }]
       }
-    ]
+    ],
+    "rest": [{
+      "id": 0,
+      "title": "Another Day In A Quiet Place",
+      "text": "As the sun is going down, you find a quiet spot for resting throught the night. There's no sign of other dangers, but you can't be so sure of it.\n\nYou decided to: ",
+      "choices": [{
+        "text": "Go to sleep",
+        "result":[
+          {
+            "text": "You ate some food and went to sleep. The next day will be full of challenges again.",
+            "playerData": {"food": -2}
+          }
+        ]
+      }, {
+        "text": "Watch for danger",
+        "result":[
+          {
+            "text": "You stayed up all night, but there was nothing from the dark trying to harm you. You feel very tired the next day.\n\nHowever, it gave you time to think about all your mistakes.",
+            "playerData": {"food": -3, "combat": -8, "physique": -8, "wit": 8, "charm": -5}
+          }
+        ]
+      }]
+    },{
+      "id": 1,
+      "title": "A Busy Tavern",
+      "text": "Just before the sun falls, you find a crowded tavern in a nearby town. It's full of people. There's also a room for rent. 8 coins a night.",
+      "choices": [{
+        "text": "Rent the room",
+        "result":[
+          {
+            "text": "You didn't have enough money to rent the room. You left the tavern when it was closed. You couldn't find somewhere to sleep and stayed up all night. You feel tired the next day.",
+            "playerData": {"food": -3, "combat": -8, "physique": -8, "wit": 8, "charm": -5}
+          },{
+            "attribute": ["charm", 75],
+            "text": "The owner saw you as an inspiring, selfless adventure, doing good deeds for others and sacrificing yourself. They gave you the room for free.",
+            "playerData": {"food": -2}
+          },{
+            "attribute": ["coins", 8],
+            "text": "You went to the room, ate some food and went to sleep. The next day will be full of challenges again.",
+            "playerData": {"food": -2, "coins": -8}
+          }
+        ]
+      }, {
+        "text": "Have fun all night",
+        "result":[
+          {
+            "text": "You didn't have enough money to buy anything. You left the tavern when it was closed. You couldn't find somewhere to sleep and stayed up all night. You feel tired the next day.",
+            "playerData": {"food": -3, "combat": -8, "physique": -8, "wit": 8, "charm": -5}
+          },{
+            "attributes": ["wit", 60],
+            "text": "You know your limit and didn't have fun all night. You went to your room when you felt tired. The next day will be full of challenges again.",
+            "playerData": {"food": -2, "coins": -10}
+          },{
+            "attribute": ["coins", 8],
+            "text": "You drank some beer and gambled until the tavern was closed. You fell asleep in the tavern. But you still feel very tired the next day.",
+            "playerData": {"food": -3, "coins": -8, "combat": -8, "physique": -8, "charm": 10}
+          }
+        ]
+      }]
+    }]
   }
 }

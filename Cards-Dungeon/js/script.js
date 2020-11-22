@@ -24,6 +24,8 @@ const MOUSE_ON_MIDDLE = -1;
 const EVENT_TYPE_CONTENT = "CONTENT";
 const EVENT_TYPE_CHOICES = "CHOICES";
 
+const DAILY_CARD_COUNT = 6;
+
 let themeColor;
 
 let bgColor = {
@@ -55,6 +57,7 @@ let gameData = {
   eventObj: null,
 
   cardLimit: 4,
+  cardDayCount: 1,
 
   consequenceId: 0,
   hasConsequence: false,
@@ -86,11 +89,13 @@ let MAPS;
 var eventsJSON;
 var locationsJSON;
 var weaponsJSON;
+var accessoriesJSON;
 
 function preload() {
   eventsJSON = loadJSON("assets/events.json");
   locationsJSON = loadJSON("assets/locations.json");
   weaponsJSON = loadJSON("assets/weapons.json");
+  accessoriesJSON = loadJSON("assets/accessories.json");
 
   HEART_FULL = loadImage("assets/images/heart_full.png");
   HEART_EMPTY = loadImage("assets/images/heart_empty.png");
@@ -353,6 +358,8 @@ function getEvent() {
     targetArray = eventsJSON.events.explore;
   } else if (gameData.eventId === "looting") {
     targetArray = eventsJSON.events.looting;
+  }else if (gameData.eventId === "rest") {
+    targetArray = eventsJSON.events.rest;
   }
 
   for (let i = 0; i < targetArray.length; i++) {
@@ -408,6 +415,7 @@ function parseChoice(id) {
             // size 2/1, changing the weapon
             if (value.length === 2 || value.length === 1) {
               player.stats["weapon"] = value;
+              player.weaponCond = 100;
               // size 4, change weapon stats
             }
           }
@@ -443,7 +451,6 @@ function parseChoice(id) {
         gameData.cardLimit = gameData.currentLoc.size;
 
         stats.updateMap(gameData.currentLoc);
-        gameData.state["day"] = stats.mapRevealed;
         console.log("Day " + gameData.state["day"]);
         getExploreEvent();
       }
@@ -465,6 +472,9 @@ function parseChoice(id) {
         case "EXPLORING":
           getExploreEvent();
           break;
+        case "RESTING":
+          getRestEvent();
+          break;
         default:
           getTravelEvent();
       }
@@ -474,6 +484,7 @@ function parseChoice(id) {
   card.title = gameData.eventObj.title;
   stats.updateStats(player);
   card.showClock = false;
+  console.log("Day card: " + gameData.cardDayCount);
 }
 
 function parseChoiceArray(array) {
@@ -516,12 +527,37 @@ function getLocation(id) {
 
 function getTravelEvent() {
   let randomTravelEv = random(eventsJSON.events.travel);
-  while (gameData.currentEvent === randomTravelEv.id){
+  while (gameData.currentEvent === randomTravelEv.id || (gameData.cardDayCount != 0 && randomTravelEv.id === 0)){
     randomTravelEv = random(eventsJSON.events.travel);
+  }
+  if(gameData.cardDayCount === 0){
+    randomTravelEv = eventsJSON.events.travel[0];
   }
   updateEvent("travel", randomTravelEv.id);
   updateCard(0);
   console.log(randomTravelEv.title);
+  gameData.cardDayCount += 1;
+  if (gameData.cardDayCount >= DAILY_CARD_COUNT - 1) {
+    console.log("Player will be resting.");
+    player.action = "RESTING";
+  }
+}
+
+function getRestEvent(){
+  let randomRestEv = random(eventsJSON.events.rest);
+  while (gameData.currentEvent === randomRestEv.id){
+    randomRestEv = random(eventsJSON.events.rest);
+  }
+  updateEvent("rest", randomRestEv.id);
+  updateCard(0);
+  console.log(randomRestEv.title);
+  gameData.cardDayCount += 1;
+  if (gameData.cardDayCount >= DAILY_CARD_COUNT) {
+    console.log("Player will be traveling.");
+    player.action = "";
+    gameData.cardDayCount = 0;
+    gameData.state["day"] += 1;
+  }
 }
 
 function getExploreEvent() {
@@ -605,6 +641,10 @@ function getWeapon(type, id) {
       return targetArray[i];
     }
   }
+}
+
+function getAccessory(id){
+
 }
 
 function updatePlayerData(array) {

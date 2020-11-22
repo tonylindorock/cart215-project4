@@ -60,8 +60,21 @@ class Player{
     }
     if(this.stats["weapon"].length === 2){
       this.stats["weapon"][1] -= 1;
+      if(this.stats["weapon"][1] <= 0){
+        console.log(this.stats["weapon"][0] + " depleted");
+        this.stats["weapon"] = [""];
+      }
+    }else if (this.stats["weapon"][0] != ""){
+      this.weaponCond *= (1 - (this.getWeaponDamage() * 0.1 * 1.3));
+      this.weaponCond = int(this.weaponCond);
+      if(this.weaponCond < 25){
+        let p = random();
+        if (p < (this.getWeaponDamage() * 0.1 * 1.3)){
+          console.log(this.stats["weapon"][0] + " broken");
+          this.stats["weapon"] = [""];
+        }
+      }
     }
-    console.log(int(final));
     return int(final);
   }
 
