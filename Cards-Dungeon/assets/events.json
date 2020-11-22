@@ -132,7 +132,7 @@
     }, {
       "id": 1,
       "title": "EXPLORING THE @LOC",
-      "text": "After some exploring, you found a wpeaon:",
+      "text": "After some exploring, you found a weapon:",
       "choices": [{
         "text": "Take it"
       }, {
@@ -141,7 +141,7 @@
     }, {
       "id": 2,
       "title": "EXPLORING THE @LOC",
-      "text": "After some exploring, you found a piece of acc:",
+      "text": "After some exploring, you found a piece of accessory:",
       "choices": [{
         "text": "Equip it"
       }, {
@@ -171,7 +171,7 @@
         "id": 1,
         "title": "Raiders In A Distance",
         "text": "You noticed some raiders are handing around in your route. You decide to:",
-        "enemy": ["HUMAN", 3],
+        "enemy": ["GUARDIAN", 3],
         "choices": [{
           "text": "Take a detour"
         }, {
@@ -193,9 +193,6 @@
               "coins": "+",
               "charm": 10
             }
-          }, {
-            "attribute": ["combat", 75],
-            "text": "You walked towards the raiders and used perfect martial art defeating them. You walked away with some of their possessions."
           }, {
             "attribute": ["experience", 75],
             "text": "You used objects in the environment for you advantage and successfully went through the area without being seen."
@@ -526,6 +523,37 @@
             }
           }]
         }]
+      },{
+        "id": 3,
+        "title": "Unexpected Crawler",
+        "text": "A wondering crawler discovers you around the corner and prepares to charge. You decide to: ",
+        "enemy": ["CRAWLER", 1],
+        "choices": [{
+          "text": "Run away",
+          "result":[
+            {
+              "text": "You ",
+              "playerData": {"food": "/2", "herbs": "/2", "coins": "/2", "charm": -5}
+            },{
+              "attribute": ["Physique", 75],
+              "text": "You outran the "
+            },{
+              "attribute": ["Wit", 75],
+              "text": ""
+            }
+          ]
+        },{
+          "text": "Fight",
+          "result":[
+            {
+              "text": "You lost.",
+              "playerData":{"food": 2, "charm": -5}
+            },{
+              "text": "You won.",
+              "playerData":{"food": 2, "charm": 5}
+            }
+          ]
+          }]
       }
     ],
     "rest": [{

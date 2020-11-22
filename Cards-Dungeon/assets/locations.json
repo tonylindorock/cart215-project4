@@ -9,7 +9,8 @@
       "coins": 0.5,
       "acc": 0.5,
       "melee": 0.7,
-      "ranged": 0.3
+      "ranged": 0.3,
+      "enemy": ["HUMAN", "UNDEAD", "CRAWLER", "BEAST"]
     }
   }, {
     "id": 1,
@@ -21,7 +22,8 @@
       "coins": 0.4,
       "acc": 0.6,
       "melee": 0.6,
-      "ranged": 0.4
+      "ranged": 0.4,
+      "enemy": ["UNDEAD", "CRAWLER", "BEAST"]
     }
   }, {
     "id": 2,
@@ -33,7 +35,8 @@
       "coins": 0.5,
       "acc": 0.4,
       "melee": 0.7,
-      "ranged": 0.3
+      "ranged": 0.3,
+      "enemy": ["HUMAN", "WARLOCK", "UNDEAD", "CRAWLER", "BEAST"]
     }
   }, {
     "id": 3,
@@ -45,7 +48,8 @@
       "coins": 0.7,
       "acc": 0.5,
       "melee": 0.5,
-      "ranged": 0.5
+      "ranged": 0.5,
+      "enemy": ["HUMAN", "WARLOCK", "UNDEAD", "CRAWLER", "BEAST"]
     }
   }, {
     "id": 4,
@@ -57,7 +61,8 @@
       "coins": 0.4,
       "acc": 0.5,
       "melee": 0.4,
-      "ranged": 0.6
+      "ranged": 0.6,
+      "enemy": ["HUMAN", "WARLOCK", "CRAWLER", "BEAST"]
     }
   }, {
     "id": 5,
@@ -69,7 +74,8 @@
       "coins": 0.5,
       "acc": 0.5,
       "melee": 0.4,
-      "ranged": 0.6
+      "ranged": 0.6,
+      "enemy": ["WARLOCK", "UNDEAD", "CRAWLER"]
     }
   }, {
     "id": 6,
@@ -81,7 +87,8 @@
       "coins": 0.8,
       "acc": 0.7,
       "melee": 0.6,
-      "ranged": 0.4
+      "ranged": 0.4,
+      "enemy": ["HUMAN", "WARLOCK", "UNDEAD", "CRAWLER"]
     }
   }, {
     "id": 7,
@@ -93,7 +100,8 @@
       "coins": 0.4,
       "acc": 0.6,
       "melee": 0.8,
-      "ranged": 0.4
+      "ranged": 0.4,
+      "enemy": ["HUMAN", "UNDEAD", "CRAWLER"]
     }
   }, {
     "id": 8,
@@ -105,7 +113,8 @@
       "coins": 0.5,
       "acc": 0.6,
       "melee": 0.4,
-      "ranged": 0.6
+      "ranged": 0.6,
+      "enemy": ["HUMAN", "WARLOCK", "UNDEAD", "CRAWLER", "BEAST"]
     }
   }, {
     "id": 9,
@@ -117,7 +126,8 @@
       "coins": 0.3,
       "acc": 0.4,
       "melee": 0.6,
-      "ranged": 0.4
+      "ranged": 0.4,
+      "enemy": ["HUMAN", "UNDEAD", "CRAWLER"]
     }
   }, {
     "id": 10,
@@ -129,7 +139,8 @@
       "coins": 0,
       "acc": 0.5,
       "melee": 0.5,
-      "ranged": 0.5
+      "ranged": 0.5,
+      "enemy": ["WARLOCK", "UNDEAD", "CRAWLER", "GUARDIAN"]
     }
   }]
 }

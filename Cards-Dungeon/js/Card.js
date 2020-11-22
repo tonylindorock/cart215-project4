@@ -7,7 +7,7 @@ class Card{
     this.x = width/2;
     this.y = height/2;
     // size
-    this.height = 2160/5;
+    this.height = height * 0.6;
     this.width = this.height * 2.5/3.5;
 
     this.CORNER_RADIUS = 24;
@@ -140,7 +140,7 @@ class Card{
     rect(0, 0, this.width - this.changeWidth, this.height, this.CORNER_RADIUS);
     noStroke();
     fill(68, 68, 68, this.transparency);
-    textSize(16);
+    textSize(16 * height/720);
     textAlign(CENTER, TOP);
     if (this.animationId != 2){
       // title

@@ -8,14 +8,17 @@ class Player{
       "herbs": 0,
       "food": 0,
       "coins": 0,
-      "acc": "",
+      "acc": [""],
       "weapon": [""],
       "health": 30
     };
 
     this.baseDamage = 7;
+    this.weaponDam = 0;
+    this.defence = 0;
     this.critical = 0.15;
     this.weaponCond = 100;
+    this.accEffect = 0;
     this.action = "";
     this.dead = false;
   }
@@ -33,26 +36,10 @@ class Player{
     }
   }
 
-  getWeaponDamage(){
-    let weaponDam = 0;
-    let targetArray;
-    if (this.stats["weapon"].length === 1) {
-      targetArray = weaponsJSON.weapons.melee;
-    } else if (this.stats["weapon"].length === 2) {
-      targetArray = weaponsJSON.weapons.ranged;
-    }
-    for (let i = 0; i < targetArray.length; i++) {
-      if (targetArray[i].name === this.stats["weapon"][0]) {
-        weaponDam = targetArray[i].dam;
-      }
-    }
-    return weaponDam;
-  }
-
   outputDamage(){
     let final = 0;
     let damage = this.baseDamage * (1 + this.stats["combat"] * 0.01);
-    let weaponBonus = (1 + this.getWeaponDamage() * 0.1);
+    let weaponBonus = (1 + this.weaponDam * 0.1);
     final += damage * weaponBonus;
     let p = random();
     if (p < this.critical){
@@ -63,15 +50,17 @@ class Player{
       if(this.stats["weapon"][1] <= 0){
         console.log(this.stats["weapon"][0] + " depleted");
         this.stats["weapon"] = [""];
+        this.weaponDam = 0;
       }
     }else if (this.stats["weapon"][0] != ""){
-      this.weaponCond *= (1 - (this.getWeaponDamage() * 0.1 * 1.3));
+      this.weaponCond *= (1 - this.weaponDam * 0.01);
       this.weaponCond = int(this.weaponCond);
       if(this.weaponCond < 25){
         let p = random();
-        if (p < (this.getWeaponDamage() * 0.1 * 1.3)){
+        if (p > (this.weaponDam * 0.1 * 1.7)){
           console.log(this.stats["weapon"][0] + " broken");
           this.stats["weapon"] = [""];
+          this.weaponDam = 0;
         }
       }
     }

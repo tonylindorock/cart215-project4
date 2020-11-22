@@ -43,6 +43,7 @@ class Stats {
       weapon: player.stats["weapon"]
     };
     this.health = 30;
+    this.weaponCond = 100;
   }
 
   getAttributes(id) {
@@ -52,28 +53,24 @@ class Stats {
     }
   }
 
-  displayValuables(id) {
-    let weaponName;
-    if (this.valuables.weapon.length === 1) {
-      weaponName = this.valuables.weapon[0];
-    } else if (this.valuables.weapon.length === 2) {
-      weaponName = this.valuables.weapon[0] + " (" + this.valuables.weapon[1] + ")";
-    }
-    if (id = -1) {
-      return "Herbs: " + this.valuables.herbs + "\nFood: " + this.valuables.food +
-        "\nCoins: " + this.valuables.coins + "\nWeapon: " + weaponName;
-    }
-  }
-
   getWeapons(id){
     let weaponName;
     if (this.valuables.weapon.length === 1) {
       weaponName = this.valuables.weapon[0];
+      if (this.valuables.weapon[0] != ""){
+        weaponName += " (" + this.weaponCond + "%)";
+      }
     } else if (this.valuables.weapon.length === 2) {
       weaponName = this.valuables.weapon[0] + " (" + this.valuables.weapon[1] + ")";
     }
+    let accName;
+    if(this.valuables.acc.length === 2){
+      accName = this.valuables.acc[1] + " " + this.valuables.acc[0];
+    }else{
+      accName = "";
+    }
     if (id === -1){
-      return "Accessory:\n" + this.valuables.acc + "\nWeapon:\n" + weaponName;
+      return "Accessory:\n" + accName + "\nWeapon:\n" + weaponName;
     }
   }
 
@@ -88,6 +85,7 @@ class Stats {
     this.valuables.acc = player.stats["acc"];
     this.valuables.weapon = player.stats["weapon"];
     this.health = player.stats["health"];
+    this.weaponCond = player.weaponCond;
   }
 
   updateMap(mapObj){
@@ -105,7 +103,7 @@ class Stats {
     push();
     fill(WHITE);
     this.displayValuables();
-    textSize(16);
+    textSize(16 * height/720);
     textAlign(RIGHT);
     text(this.getAttributes(-1), this.x - width / 3.25, height - this.height);
     textAlign(LEFT);
@@ -119,7 +117,7 @@ class Stats {
 
   displayValuables(){
     push();
-    textSize(16);
+    textSize(16 * height/720);
     translate(this.x - this.iconWidth/2, this.BOTTOM_Y - this.iconWidth * 1.25);
     image(ICON_FOOD, -this.iconWidth * 2, 0, this.iconWidth, this.iconWidth);
     text(this.valuables.food, -this.iconWidth * 2 + this.iconWidth, 0);

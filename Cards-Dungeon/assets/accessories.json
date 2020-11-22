@@ -3,15 +3,15 @@
     {
       "id": 0,
       "name": "Shield",
-      "def": 30
+      "def": 10
     },{
       "id": 1,
       "name": "Boots",
-      "def": 10
+      "def": 3
     },{
       "id": 2,
       "name": "Gloves",
-      "def": 5
+      "def": 2
     },{
       "id": 3,
       "name": "Necklace",
@@ -19,7 +19,7 @@
     },{
       "id": 4,
       "name": "Chestpiece",
-      "def": 25
+      "def": 8
     },{
       "id": 5,
       "name": "Ring",
@@ -31,10 +31,19 @@
     }
   ],
   "adj":[
+    "",
     "Battle",
     "Protecting",
     "Resourceful",
     "Healing",
     "Lucky"
+  ],
+  "effect":[
+    "Just very regular",
+    "You'll gain 25% Combat.",
+    "You'll receive 35% less damage.",
+    "You'll find 50% more food and herbs.",
+    "You'll get 10 healing during every battle.",
+    "You'll find 35% more coins."
   ]
 }

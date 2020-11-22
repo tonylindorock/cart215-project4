@@ -26,6 +26,8 @@ const EVENT_TYPE_CHOICES = "CHOICES";
 
 const DAILY_CARD_COUNT = 6;
 
+const ENEMY_TYPE = ["HUMAN", "WARLOCK", "UNDEAD", "CRAWLER", "BEAST", "GUARDIAN"];
+
 let themeColor;
 
 let bgColor = {
@@ -146,6 +148,7 @@ function setupGame() {
   player = new Player();
   let firstWeapon = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
   player.stats["weapon"][0] = firstWeapon.name;
+  player.weaponDam = getWeaponDamage(player.stats["weapon"]);
   // creat ui object
   stats = new Stats(player);
 }
@@ -198,7 +201,7 @@ function getMousePos() {
 
 function showChoices() {
   push();
-  textSize(18);
+  textSize(18 * height/720);
   if (getMousePos() === MOUSE_ON_LEFT) {
     fill(WHITE);
   } else {
@@ -226,11 +229,14 @@ function updateCard(id, loot = null) {
       break;
       // melee
     case 2:
-      card.text = gameData.eventObj.text + "\n\na " + loot[0] + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
+      card.text = gameData.eventObj.text + "\n\na " + loot[0] + "\n\n" + compareWeaponsDam(loot) + " damage\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
       break;
-      // gun
+      // ranged
     case 3:
-      card.text = gameData.eventObj.text + "\n\na " + loot[0] + " (" + loot[1] + ")" + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
+      card.text = gameData.eventObj.text + "\n\na " + loot[0] + " (" + loot[1] + ")" + "\n\n" + compareWeaponsDam(loot) + " damage\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
+      break;
+    case 4:
+      card.text = gameData.eventObj.text + "\n\na " + loot[1] + " " + loot[0] + "\n\n" + compareAccessories(loot) + " defence\n" + accessoriesJSON.effect[getAccEffectId(loot)] + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
   }
 }
 
@@ -282,9 +288,10 @@ function makeChoice(id) {
     }
     if (!hasAttribute) {
       gameData.consequenceId = 0;
-      if (gameData.eventObj.enemy != null){
+      if (gameData.eventObj.enemy != null && id === 1){
         preBattleHealth = player.stats["health"];
-        if(battle(gameData.eventObj.enemy[0], gameData.eventObj.enemy[1])){
+        let enemyArray = getEnemy(gameData.eventObj.enemy);
+        if(battle(enemyArray[0], enemyArray[1])){
           gameData.consequenceId = 1;
         }
         gameData.hasBattle = true;
@@ -414,9 +421,7 @@ function parseChoice(id) {
           if (typeof(value) == 'object') {
             // size 2/1, changing the weapon
             if (value.length === 2 || value.length === 1) {
-              player.stats["weapon"] = value;
-              player.weaponCond = 100;
-              // size 4, change weapon stats
+              updatePlayerData(value);
             }
           }
         }
@@ -458,7 +463,7 @@ function parseChoice(id) {
     } else {
       if (gameData.eventId === "looting") {
         // if finding weapon
-        if (gameData.currentEvent === 1) {
+        if (gameData.currentEvent === 1 || gameData.currentEvent === 2) {
           // taking the weapon
           if (id === 0) {
             updatePlayerData(currentLoot);
@@ -481,9 +486,13 @@ function parseChoice(id) {
     }
   }
   // update event on the card
-  card.title = gameData.eventObj.title;
-  stats.updateStats(player);
+  let title = gameData.eventObj.title;
+  if (title.includes("@LOC")){
+    title = title.replace("@LOC", gameData.currentLoc.name);
+  }
+  card.title = title;
   card.showClock = false;
+  stats.updateStats(player);
   console.log("Day card: " + gameData.cardDayCount);
 }
 
@@ -570,8 +579,13 @@ function getExploreEvent() {
     if (loot.length === 3) {
       updateCard(1, loot);
     } else if (loot.length === 2) {
-      updateEvent("looting", 1);
-      updateCard(3, loot);
+      if(!isAccessory(loot)){
+        updateEvent("looting", 1);
+        updateCard(3, loot);
+      }else{
+        updateEvent("looting", 2);
+        updateCard(4, loot);
+      }
     } else {
       updateEvent("looting", 1);
       updateCard(2, loot);
@@ -615,14 +629,22 @@ function getLoot() {
     }
     // spawn random weapon
   } else {
-    let tempWeapon = random();
-    if (tempWeapon <= gameData.currentLoc.spawn.ranged) {
-      let tempRanged = getWeapon("ranged", int(random(weaponsJSON.weapons.ranged.length)))
-      append(result, tempRanged.name);
-      append(result, tempRanged.ammo);
-    } else {
-      let tempMelee = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
-      append(result, tempMelee.name);
+    let temp2 = random();
+    if (temp2 < gameData.currentLoc.spawn.acc){
+      let randWeapon = random();
+      if (randWeapon <= gameData.currentLoc.spawn.ranged) {
+        let tempRanged = getWeapon("ranged", int(random(weaponsJSON.weapons.ranged.length)))
+        append(result, tempRanged.name);
+        append(result, tempRanged.ammo);
+      } else {
+        let tempMelee = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
+        append(result, tempMelee.name);
+      }
+    }else{
+      let randAcc = random(accessoriesJSON.acc);
+      let randAdj = random(accessoriesJSON.adj);
+      append(result, randAcc.name);
+      append(result, randAdj);
     }
     return result;
   }
@@ -643,19 +665,117 @@ function getWeapon(type, id) {
   }
 }
 
-function getAccessory(id){
+function getWeaponDamage(weapon){
+  let weaponDam = 0;
+  let targetArray;
+  if (weapon.length === 1) {
+    if (weapon[0] === ""){
+      return weaponDam;
+    }
+    targetArray = weaponsJSON.weapons.melee;
+  } else if (weapon.length === 2) {
+    targetArray = weaponsJSON.weapons.ranged;
+  }
+  for (let i = 0; i < targetArray.length; i++) {
+    if (targetArray[i].name === weapon[0]) {
+      weaponDam = targetArray[i].dam;
+    }
+  }
+  return weaponDam;
+}
 
+function compareWeaponsDam(weapon){
+  let result;
+  let num = player.weaponDam - getWeaponDamage(weapon);
+  if (num <= 0){
+    result = "+" + (-num);
+  }else{
+    result = "-" + num;
+  }
+  return result;
+}
+
+function compareAccessories(acc){
+  let result;
+  let num = player.defence - getAccessory(acc).def;
+  if (num <= 0){
+    result = "+" + (-num);
+  }else{
+    result = "-" + num;
+  }
+  return result;
+}
+
+function getAccessory(id){
+  if(typeof(id) == 'string'){
+    for (let i = 0; i < accessoriesJSON.acc.length; i++) {
+      if (id === accessoriesJSON.acc[i].name) {
+        return accessoriesJSON.acc[i];
+      }
+    }
+  }else if(typeof(id) == 'number'){
+    for (let i = 0; i < accessoriesJSON.acc.length; i++) {
+      if (id === accessoriesJSON.acc[i].id) {
+        return accessoriesJSON.acc[i];
+      }
+    }
+  }else if(typeof(id) == 'object'){
+    return getAccessory(id[0]);
+  }
+}
+
+function getAccEffectId(array){
+  for (let i = 0; i < accessoriesJSON.adj.length; i++) {
+    if (array[1] === accessoriesJSON.adj[i]) {
+      return i;
+    }
+  }
+}
+
+function isAccessory(array){
+  for (let i = 0; i < accessoriesJSON.acc.length; i++) {
+    if (array[0] === accessoriesJSON.acc[i].name) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function updatePlayerData(array) {
   if (array.length === 1 || array.length === 2) {
-    player.stats["weapon"] = array;
+    if (isAccessory(array)){
+      player.stats["acc"] = array;
+      player.accEffect = array[1];
+      player.defence = getAccessory(array);
+      console.log("Player accessory changed.");
+    }else{
+      player.stats["weapon"] = array;
+      player.weaponCond = 100;
+      player.weaponDam = getWeaponDamage(array);
+      console.log("Player weapon changed.");
+    }
   } else if (array.length === 3) {
     player.stats["food"] += array[0];
     player.stats["herbs"] += array[1];
     player.stats["coins"] += array[2];
   }
   stats.updateStats(player);
+}
+
+function getEnemy(array){
+  let result = [];
+  // specified enemy type
+  if(ENEMY_TYPE.includes(array[0])){
+    result.push(array[0]);
+  }else{
+    result.push(random(gameData.currentLoc.spawn.enemy));
+  }
+  if (array[1] < 0){
+    result.push(int(random(1, 4)));
+  }else{
+    result.push(array[1]);
+  }
+  return result;
 }
 
 function battle(enemyType, num){
@@ -669,14 +789,20 @@ function battle(enemyType, num){
       if (p >= 0.3 * (1 - player.stats["combat"] * 0.01)){
         enemy.receiveDamage(player.outputDamage());
       }
-      //p = random();
+      p = random();
       if (p >= 0.5 * (1 + player.stats["physique"] * 0.01)){
         player.receiveDamage(enemy.getDamage());
       }
+      // player dies
       if (player.dead){
-        break;
+        return false;
+      }
+      // player loses
+      if (preBattleHealth - player.stats["health"] >= int(preBattleHealth / 2)){
+        console.log("Player lost the battle");
+        return false;
       }
     }
   }
-  return(!player.dead);
+  return true;
 }

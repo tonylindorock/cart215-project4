@@ -4,7 +4,7 @@
       {
         "id": 0,
         "name": "Dagger",
-        "dam": 2
+        "dam": 3
       },{
         "id": 1,
         "name": "Sword",
@@ -31,17 +31,17 @@
       {
         "id": 0,
         "name": "Bow",
-        "dam": 5,
-        "ammo": 10
+        "dam": 9,
+        "ammo": 8
       },{
         "id": 1,
         "name": "Crossbow",
-        "dam": 8,
+        "dam": 10,
         "ammo": 6
       },{
         "id": 2,
         "name": "Musket",
-        "dam": 10,
+        "dam": 12,
         "ammo": 4
       },{
         "id": 3,
@@ -51,7 +51,7 @@
       },{
         "id": 4,
         "name": "Crystal Wand",
-        "dam": 7,
+        "dam": 9,
         "ammo": 10
       }
     ]

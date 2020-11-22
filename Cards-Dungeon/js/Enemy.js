@@ -13,13 +13,13 @@ class Enemy{
         this.baseHealth = 10;
         this.baseDamage = 6;
         break;
-      case "CRAWLER":
-        this.baseHealth = 8;
-        this.baseDamage = 5;
-        break;
       case "UNDEAD":
         this.baseHealth = 7;
         this.baseDamage = 2;
+        break;
+      case "CRAWLER":
+        this.baseHealth = 8;
+        this.baseDamage = 5;
         break;
       case "BEAST":
         this.baseHealth = 12;
@@ -28,9 +28,7 @@ class Enemy{
       case "GUARDIAN":
         this.baseHealth = 14;
         this.baseDamage = 6;
-        break;
     }
-
 
     this.health = int(this.baseHealth * (1 + this.level * 0.1));
     this.damage = int(this.baseDamage * (1 + this.level * 0.1));
