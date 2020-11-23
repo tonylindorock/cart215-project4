@@ -407,7 +407,7 @@
         "title": "A Trader Doing Bussiness",
         "text": "A trader carrying a enormous backpack stands besides the road asking for a trade.",
         "choices": [{
-          "text": ["item", -1]
+          "text": "Buy the item"
         }, {
           "text": "Ignore them"
         }]

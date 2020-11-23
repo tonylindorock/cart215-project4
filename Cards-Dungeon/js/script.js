@@ -26,6 +26,9 @@ const EVENT_TYPE_CHOICES = "CHOICES";
 
 const DAILY_CARD_COUNT = 6;
 
+const TRADING_EVENT_ID = 5;
+const TRADING_ITEMS = ["food", "herbs", "weapon", "acc"];
+
 const ENEMY_TYPE = ["HUMAN", "WARLOCK", "UNDEAD", "CRAWLER", "BEAST", "GUARDIAN"];
 
 let themeColor;
@@ -45,6 +48,8 @@ let currentLoot;
 let conseqClickCount = 0;
 let disableArrowKey = false;
 let preBattleHealth = 30;
+let traderOffer;
+let traderPrice = 0;
 
 let gameData = {
   state: {
@@ -237,6 +242,9 @@ function updateCard(id, loot = null) {
       break;
     case 4:
       card.text = gameData.eventObj.text + "\n\na " + loot[1] + " " + loot[0] + "\n\n" + compareAccessories(loot) + " defence\n" + accessoriesJSON.effect[getAccEffectId(loot)] + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
+      break;
+    case 5:
+      card.text = gameData.eventObj.text + "\n\n" + getTradingItem() + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
   }
 }
 
@@ -472,6 +480,15 @@ function parseChoice(id) {
         } else if (gameData.currentEvent === 0) {
           updatePlayerData(currentLoot);
         }
+      }else if (gameData.eventId === "travel" && gameData.currentEvent === TRADING_EVENT_ID && id === 0){
+        if (traderPrice <= player.stats["coins"]){
+          player.stats["coins"] -= traderPrice;
+          if (traderOffer[0] === "food" || traderOffer[0] === "herbs"){
+            player.stats[traderOffer[0]] += traderOffer[1];
+          }else{
+            updatePlayerData(traderOffer);
+          }
+        }
       }
       switch (player.action) {
         case "EXPLORING":
@@ -493,7 +510,6 @@ function parseChoice(id) {
   card.title = title;
   card.showClock = false;
   stats.updateStats(player);
-  console.log("Day card: " + gameData.cardDayCount);
 }
 
 function parseChoiceArray(array) {
@@ -543,7 +559,11 @@ function getTravelEvent() {
     randomTravelEv = eventsJSON.events.travel[0];
   }
   updateEvent("travel", randomTravelEv.id);
-  updateCard(0);
+  if(gameData.currentEvent === TRADING_EVENT_ID){
+    updateCard(5);
+  }else{
+    updateCard(0);
+  }
   console.log(randomTravelEv.title);
   gameData.cardDayCount += 1;
   if (gameData.cardDayCount >= DAILY_CARD_COUNT - 1) {
@@ -642,12 +662,66 @@ function getLoot() {
       }
     }else{
       let randAcc = random(accessoriesJSON.acc);
-      let randAdj = random(accessoriesJSON.adj);
+      let randAdj = 0;
+      let temp3 = random();
+      if (temp3 < 0.25){
+        randAdj = int(random(1, accessoriesJSON.adj.length));
+      }
       append(result, randAcc.name);
-      append(result, randAdj);
+      append(result, accessoriesJSON.adj[randAdj]);
     }
     return result;
   }
+  return result;
+}
+
+function getTradingItem(){
+  let item = [];
+  let price = 0;
+  let result;
+  let type = random(TRADING_ITEMS);
+  switch(type){
+    case "food":
+      append(item, "food");
+      append(item, int(random(5, 11)));
+      price = item[1];
+      result = item[1] + " food for " + price + " coins.";
+      break;
+    case "herbs":
+      append(item, "herbs");
+      append(item, int(random(2, 5)));
+      price = item[1] * 2;
+      result = item[1] + " herbs for " + price + " coins.";
+      break;
+    case "weapon":
+      let randWeapon = random();
+      if (randWeapon < 0.5) {
+        let tempRanged = getWeapon("ranged", int(random(weaponsJSON.weapons.ranged.length)))
+        append(item, tempRanged.name);
+        append(item, tempRanged.ammo);
+        price = tempRanged.dam;
+        result = "a " + item[0] + " (" + item[1] + ")" + " for " + price + " coins.";
+      } else {
+        let tempMelee = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
+        append(item, tempMelee.name);
+        price = tempMelee.dam;
+        result = "a " + item[0] + " for " + price + " coins.";
+      }
+      break;
+    case "acc":
+      let randAcc = random(accessoriesJSON.acc);
+      let randAdj = int(random(1, accessoriesJSON.adj.length));
+      append(item, randAcc.name);
+      append(item, randAdj);
+      price = 2 + randAcc.def + int(randAcc.def/2);
+      result = "a " + item[1] + " " + item[0] + " for " + price + " coins.";
+  }
+  traderPrice = price;
+  traderOffer = item;
+  if(traderPrice > player.stats["coins"]){
+    gameData.choices[0] = "\"No money means no offer for you.\"";
+  }
+  console.log(traderOffer + " " + traderPrice);
   return result;
 }
 
@@ -697,7 +771,7 @@ function compareWeaponsDam(weapon){
 
 function compareAccessories(acc){
   let result;
-  let num = player.defence - getAccessory(acc).def;
+  let num = player.defence - getAccessory(acc)["def"];
   if (num <= 0){
     result = "+" + (-num);
   }else{
@@ -746,7 +820,7 @@ function updatePlayerData(array) {
     if (isAccessory(array)){
       player.stats["acc"] = array;
       player.accEffect = array[1];
-      player.defence = getAccessory(array);
+      player.defence = getAccessory(array)["def"];
       console.log("Player accessory changed.");
     }else{
       player.stats["weapon"] = array;

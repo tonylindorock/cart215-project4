@@ -65,7 +65,11 @@ class Stats {
     }
     let accName;
     if(this.valuables.acc.length === 2){
-      accName = this.valuables.acc[1] + " " + this.valuables.acc[0];
+      if (this.valuables.acc[1] === ""){
+        accName = this.valuables.acc[0];
+      }else{
+        accName = this.valuables.acc[1] + " " + this.valuables.acc[0];
+      }
     }else{
       accName = "";
     }

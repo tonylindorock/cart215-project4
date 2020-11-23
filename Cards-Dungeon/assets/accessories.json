@@ -3,7 +3,7 @@
     {
       "id": 0,
       "name": "Shield",
-      "def": 10
+      "def": 8
     },{
       "id": 1,
       "name": "Boots",
@@ -19,7 +19,7 @@
     },{
       "id": 4,
       "name": "Chestpiece",
-      "def": 8
+      "def": 5
     },{
       "id": 5,
       "name": "Ring",
