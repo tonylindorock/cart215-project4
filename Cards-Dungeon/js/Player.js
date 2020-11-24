@@ -48,6 +48,7 @@ class Player{
     if(this.stats["weapon"].length === 2){
       this.stats["weapon"][1] -= 1;
       if(this.stats["weapon"][1] <= 0){
+        note.update(this.stats["weapon"][0] + " depleted");
         console.log(this.stats["weapon"][0] + " depleted");
         this.stats["weapon"] = [""];
         this.weaponDam = 0;
@@ -58,6 +59,7 @@ class Player{
       if(this.weaponCond < 25){
         let p = random();
         if (p > (this.weaponDam * 0.1 * 1.7)){
+          note.update(this.stats["weapon"][0] + " broken");
           console.log(this.stats["weapon"][0] + " broken");
           this.stats["weapon"] = [""];
           this.weaponDam = 0;
@@ -69,9 +71,14 @@ class Player{
 
   receiveDamage(dam){
     this.stats["health"] -= dam;
-    this.stats["health"] = constrain(this.stats["health"], 0, 30);
-    if (this.stats["health"] === 0){
+    this.stats["health"] = int(constrain(this.stats["health"], 0, 30));
+    if (this.stats["health"] <= 0){
       this.dead = true;
     }
+  }
+
+  heal(health){
+    this.stats["health"] += health;
+    this.stats["health"] = int(constrain(this.stats["health"], 0, 30));
   }
 }

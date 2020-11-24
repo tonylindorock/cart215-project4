@@ -150,8 +150,9 @@ class Card{
       text("\n\n\n" + this.text, 0, 0, this.textWidth, this.textHeight);
     }
     pop();
+    /*
     if (this.showClock){
       this.displayClock();
-    }
+    }*/
   }
 }

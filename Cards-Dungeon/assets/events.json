@@ -119,6 +119,28 @@
         "text": "Next tip",
         "next": ["other", 0]
       }]
+    }, {
+      "id": 9,
+      "title": "- The End -",
+      "text": "You have died on the journey to defeat the dungeon. Your remains are soon to be found by other adventurers. May what you left help the next conquer the greatest dungeon.",
+      "choices": [{
+        "text": "Damnit",
+        "next": ["other", 0]
+      }, {
+        "text": "Try again and change theme",
+        "next": ["other", 0]
+      }]
+    }, {
+      "id": 10,
+      "title": "- The End -",
+      "text": "You have defeated the most dangerous dungeon and returned in one piece. More adventurers are inspired by your victory and determination. They are soon to be on the journey to the greatest dungeon.",
+      "choices": [{
+        "text": "Another round",
+        "next": ["other", 0]
+      }, {
+        "text": "Another round and change theme",
+        "next": ["other", 0]
+      }]
     }],
     "looting": [{
       "id": 0,
@@ -191,7 +213,7 @@
             "playerData": {
               "food": "+",
               "coins": "+",
-              "charm": 10
+              "charm": 2
             }
           }, {
             "attribute": ["experience", 75],
@@ -228,7 +250,7 @@
             "attribute": ["experience", 75],
             "text": "You suspected the ambush and gave them a decoy bag. While the raiders are searching for valuable items, you already took off with all your stuff.",
             "playerData": {
-              "charm": 5
+              "charm": 2
             }
           }]
         }, {
@@ -241,34 +263,33 @@
               "coins": 0,
               "acc": "",
               "weapon": [""],
-              "charm": -10,
-              "health": -10
+              "charm": -10
             }
           }, {
             "text": "You won the fight",
             "playerData": {
               "food": "+",
               "coins": "+",
-              "combat": 5,
-              "charm": 5
+              "combat": 2,
+              "charm": 2
             }
           }, {
             "attribute": ["charm", 75],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
-            "playerData": {
-              "charm": 5
+            "playerData":{
+              "charm": 2
             }
           }, {
             "attribute": ["physique", 75],
             "text": "You ran away with your full speed. The raiders couldn't even catch up and gave up very soon",
             "playerData": {
-              "charm": 10
+              "charm": 2
             }
           }, {
             "attribute": ["combat", 75],
             "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
             "playerData": {
-              "charm": 10
+              "charm": 2
             }
           }]
         }]
@@ -298,7 +319,7 @@
             "attribute": ["experience", 75],
             "text": "You suspected the ambush and gave them a decoy bag. While the raiders are searching for valuable items, you already took off with all your stuff.",
             "playerData": {
-              "charm": 10
+              "charm": 2
             }
           }]
         }, {
@@ -310,34 +331,33 @@
               "food": 0,
               "coins": 0,
               "weapon": [""],
-              "charm": -10,
-              "health": -10
+              "charm": -10
             }
           }, {
             "text": "You won the fight",
             "playerData": {
               "food": "+",
               "coins": "+",
-              "combat": 5,
-              "charm": 5
+              "combat": 2,
+              "charm": 2
             }
           }, {
             "attribute": ["charm", 75],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
             "playerData": {
-              "charm": 5
+              "charm": 2
             }
           }, {
             "attribute": ["physique", 75],
             "text": "You ran away with your full speed. The raiders couldn't even catch up and gave up very soon",
             "playerData": {
-              "charm": 10
+              "charm": 2
             }
           }, {
             "attribute": ["combat", 75],
             "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
             "playerData": {
-              "charm": 10
+              "charm": 2
             }
           }]
         }]
@@ -358,7 +378,7 @@
             "attribute": ["experience", 75],
             "text": "You suspected the ambush and gave them a decoy weapon. While the raiders are testing the fake weapon, you already are nowhere to be found.",
             "playerData": {
-              "charm": 5
+              "charm": 2
             }
           }]
         }, {
@@ -371,34 +391,33 @@
               "coins": 0,
               "acc": "",
               "weapon": [""],
-              "charm": -10,
-              "health": -10
+              "charm": -10
             }
           }, {
             "text": "You won the fight",
             "playerData": {
               "food": "+",
               "coins": "+",
-              "combat": 5,
-              "charm": 5
+              "combat": 2,
+              "charm": 2
             }
           }, {
             "attribute": ["charm", 75],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
             "playerData": {
-              "charm": 5
+              "charm": 2
             }
           }, {
             "attribute": ["physique", 75],
             "text": "You ran away with your full speed. The raiders couldn't even catch up and gave up very soon",
             "playerData": {
-              "charm": 10
+              "charm": 2
             }
           }, {
             "attribute": ["combat", 75],
             "text": "You demonstrated a few karate moves and didn't impress the raiders. They tried to take you down, but GUESS WHAT? The raiders couldn't stand a chance against you.",
             "playerData": {
-              "charm": 10
+              "charm": 2
             }
           }]
         }]
@@ -425,8 +444,8 @@
               "herbs": "+",
               "food": "+",
               "coins": "+",
-              "experience": 10,
-              "charm": 10
+              "experience": 5,
+              "charm": 5
             }
           }, {
             "attribute": ["experience", 90],
@@ -461,8 +480,8 @@
             "playerData": {
               "food": "+",
               "water": "+",
-              "combat": 5,
-              "charm": 5
+              "combat": 2,
+              "charm": 2
             }
           }, {
             "attribute": ["combat", 75],
@@ -475,12 +494,8 @@
         }, {
           "text": "Leave the place",
           "result": [{
-            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away.",
-            "playerData": {
-              "health": -5
-            }
+            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away."
           }, {
-            "weapon": -1,
             "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. You and the raider started a duo.",
             "playerData": {
               "food": "+",
@@ -511,7 +526,7 @@
             "attribute": ["experience", 75],
             "text": "You know exactly what to do during a storm. You tied yourself and your valuables to a tree. And the wind had no chance ruinning your adventure.",
             "playerData": {
-              "charm": 5
+              "charm": 2
             }
           }]
         }, {

@@ -43,6 +43,7 @@ let bgColor = {
 let card;
 let stats;
 let player;
+let note;
 
 let currentLoot;
 let conseqClickCount = 0;
@@ -136,7 +137,7 @@ function setup() {
   angleMode(DEGREES)
   imageMode(CENTER);
 
-  //noCursor();
+  noCursor();
   randomizeBG();
 
   setupGame();
@@ -154,8 +155,9 @@ function setupGame() {
   let firstWeapon = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
   player.stats["weapon"][0] = firstWeapon.name;
   player.weaponDam = getWeaponDamage(player.stats["weapon"]);
-  // creat ui object
+  // creat ui objects
   stats = new Stats(player);
+  note = new Notification();
 }
 
 // randomizeBG()
@@ -176,6 +178,7 @@ function draw() {
   if (gameData.state["playing"]) {
     stats.display();
   }
+  note.display();
   drawCursor();
 }
 
@@ -241,7 +244,13 @@ function updateCard(id, loot = null) {
       card.text = gameData.eventObj.text + "\n\na " + loot[0] + " (" + loot[1] + ")" + "\n\n" + compareWeaponsDam(loot) + " damage\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
       break;
     case 4:
-      card.text = gameData.eventObj.text + "\n\na " + loot[1] + " " + loot[0] + "\n\n" + compareAccessories(loot) + " defence\n" + accessoriesJSON.effect[getAccEffectId(loot)] + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
+      let accName;
+      if (loot[1] === ""){
+        accName = loot[0];
+      }else{
+        accName = loot[1] + " " + loot[0];
+      }
+      card.text = gameData.eventObj.text + "\n\na " + accName + "\n\n" + compareAccessories(loot) + " defence\n" + accessoriesJSON.effect[getAccEffectId(loot)] + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
       break;
     case 5:
       card.text = gameData.eventObj.text + "\n\n" + getTradingItem() + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
@@ -303,7 +312,7 @@ function makeChoice(id) {
           gameData.consequenceId = 1;
         }
         gameData.hasBattle = true;
-        card.showClock = true;
+        //card.showClock = true;
         delay += 200;
       }
     }
@@ -404,7 +413,21 @@ function parseChoice(id) {
             player.stats[key] += value;
             player.stats[key] = constrain(player.stats[key], 0, 100);
             if (value < 0){
-              change += "\n-" + str(-(player.stats[key] - prev)) + " " + key;
+              change += "\n" + str(player.stats[key] - prev) + " " + key;
+              // player don't have enough food
+              if(key === "food"){
+                if (prev + value < 0){
+                  console.log("Player out of food");
+                  change += "\nRunnning out of food:\n" + "-5 charm";
+                  player.stats["charm"] -= 5;
+                }
+              }
+              if(key === "herbs"){
+                if (prev + value < 0){
+                  console.log("Player out of herbs");
+                  change += "\nRunnning out of herbs";
+                }
+              }
             }else{
               change += "\n+" + str(value) + " " + key;
             }
@@ -429,6 +452,9 @@ function parseChoice(id) {
           if (typeof(value) == 'object') {
             // size 2/1, changing the weapon
             if (value.length === 2 || value.length === 1) {
+              if (player.stats["weapon"] != value && value[0] != ""){
+                change += "\nYou lost your weapon";
+              }
               updatePlayerData(value);
             }
           }
@@ -457,6 +483,9 @@ function parseChoice(id) {
       if (gameData.eventObj.choices[id].next.constructor === Array) {
         updateEvent(gameData.eventObj.choices[id].next[0], gameData.eventObj.choices[id].next[1]);
         updateCard(0);
+        if(player.dead){
+          resetGame(id);
+        }
       } else if (gameData.eventObj.choices[id].next === "loc") {
         player.action = "EXPLORING";
 
@@ -508,8 +537,13 @@ function parseChoice(id) {
     title = title.replace("@LOC", gameData.currentLoc.name);
   }
   card.title = title;
-  card.showClock = false;
+  //card.showClock = false;
   stats.updateStats(player);
+  if(player.dead){
+    updateEvent("other", 9);
+    card.title = gameData.eventObj.title;
+    updateCard(0);
+  }
 }
 
 function parseChoiceArray(array) {
@@ -587,6 +621,7 @@ function getRestEvent(){
     gameData.cardDayCount = 0;
     gameData.state["day"] += 1;
   }
+  healPlayer();
 }
 
 function getExploreEvent() {
@@ -719,7 +754,7 @@ function getTradingItem(){
   traderPrice = price;
   traderOffer = item;
   if(traderPrice > player.stats["coins"]){
-    gameData.choices[0] = "\"No money means no offer for you.\"";
+    gameData.choices[0] = "\"I don't have enough coins\"";
   }
   console.log(traderOffer + " " + traderPrice);
   return result;
@@ -821,11 +856,23 @@ function updatePlayerData(array) {
       player.stats["acc"] = array;
       player.accEffect = array[1];
       player.defence = getAccessory(array)["def"];
+      if (!player.dead){
+        if(array[1] === ""){
+          note.update("You equipped the " + array[0]);
+        }else{
+          note.update("You equipped the " + array[1] + " " + array[0]);
+        }
+      }
       console.log("Player accessory changed.");
     }else{
       player.stats["weapon"] = array;
       player.weaponCond = 100;
       player.weaponDam = getWeaponDamage(array);
+      if (!player.dead){
+        if (player.weaponDam != 0){
+          note.update("You equipped the " + array[0]);
+        }
+      }
       console.log("Player weapon changed.");
     }
   } else if (array.length === 3) {
@@ -854,6 +901,7 @@ function getEnemy(array){
 
 function battle(enemyType, num){
   let enemy;
+  console.log("******** BATTLE STARTED ********");
   for(let i = 0; i < num; i++){
     enemy = new Enemy(enemyType, gameData.state["day"]);
     while(!enemy.dead){
@@ -868,15 +916,48 @@ function battle(enemyType, num){
         player.receiveDamage(enemy.getDamage());
       }
       // player dies
-      if (player.dead){
+      if (player.dead || player.stats["health"] <= 0){
+        console.log("Player died " + player.dead + " " + player.stats["health"]);
+        console.log("******** BATTLE ENDED ********");
         return false;
       }
       // player loses
       if (preBattleHealth - player.stats["health"] >= int(preBattleHealth / 2)){
         console.log("Player lost the battle");
+        console.log("******** BATTLE ENDED ********");
         return false;
       }
     }
   }
+  console.log("******** BATTLE ENDED ********");
   return true;
+}
+
+function healPlayer(){
+  let herbUsed = 0;
+  if (player.stats["herbs"] >= 1 && player.stats["health"] <= 20){
+    while(player.stats["herbs"] != 0){
+      player.heal(10);
+      player.stats["herbs"] -= 1;
+      herbUsed += 1;
+    }
+  }
+  note.update("You healed yourself with " + herbUsed + " herbs");
+}
+
+function resetGame(id){
+  gameData.state["playing"] = false;
+  gameData.state["day"] = 1;
+  // reset player
+  player = new Player();
+  let firstWeapon = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
+  player.stats["weapon"][0] = firstWeapon.name;
+  player.weaponDam = getWeaponDamage(player.stats["weapon"]);
+  // reset stats ui
+  stats = new Stats(player);
+  stats.updateStats(player);
+  if(id === 1){
+    randomizeBG();
+    card.color = themeColor;
+  }
 }
