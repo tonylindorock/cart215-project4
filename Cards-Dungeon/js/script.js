@@ -647,6 +647,9 @@ function getExploreEvent() {
     }
   } else {
     let randomExploreEv = random(eventsJSON.events.explore);
+    while (randomExploreEv.enemy != null && !gameData.currentLoc.spawn.enemy.includes(randomExploreEv.enemy[0])){
+      randomExploreEv = random(eventsJSON.events.explore);
+    }
     updateEvent("explore", randomExploreEv.id);
     updateCard(0);
     console.log(randomExploreEv.title);
@@ -935,14 +938,16 @@ function battle(enemyType, num){
 
 function healPlayer(){
   let herbUsed = 0;
-  if (player.stats["herbs"] >= 1 && player.stats["health"] <= 20){
-    while(player.stats["herbs"] != 0){
-      player.heal(10);
+  if (player.stats["herbs"] >= 1 && player.stats["health"] <= 25){
+    console.log("Player started healing " + player.stats["health"] + " Herbs: " + player.stats["herbs"]);
+    while(player.stats["herbs"] != 0 && player.stats["health"] + 5 <= 30){
+      player.heal(5);
       player.stats["herbs"] -= 1;
       herbUsed += 1;
     }
+    note.update("You healed yourself with " + herbUsed + " herbs");
+    console.log("Player started healing " + player.stats["health"] + " Herbs: " + player.stats["herbs"]);
   }
-  note.update("You healed yourself with " + herbUsed + " herbs");
 }
 
 function resetGame(id){

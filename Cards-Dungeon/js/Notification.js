@@ -22,7 +22,7 @@ class Notification {
     var thisNote = this;
     setTimeout(function() {
       thisNote.notify = false;
-    }, 3000);
+    }, 3500);
   }
 
   display() {

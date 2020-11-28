@@ -195,7 +195,13 @@
         "text": "You noticed some raiders are handing around in your route. You decide to:",
         "enemy": ["GUARDIAN", 3],
         "choices": [{
-          "text": "Take a detour"
+          "text": "Take a detour",
+          "result": [{
+            "text": "The detour took longer than you expected.",
+            "playerData": {
+              "food": -2
+            }
+          }]
         }, {
           "text": "Continue this route anyway",
           "result": [{
@@ -276,7 +282,7 @@
           }, {
             "attribute": ["charm", 75],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed.",
-            "playerData":{
+            "playerData": {
               "charm": 2
             }
           }, {
@@ -430,6 +436,31 @@
         }, {
           "text": "Ignore them"
         }]
+      }, {
+        "id": 6,
+        "title": "Villagers In Nesd",
+        "text": "A village is under attack by a spawn of undeads. They're asking for help. You decide to:",
+        "choices": [{
+          "text": "Walk away"
+          "result": [{
+            "text": "You walked away.",
+            "playerData": {"charm" : -5}
+            }]
+        }, {
+          "text": "Help them",
+          "result":[{
+            "text": "You helped the villagers defend the village, but they had lost too much. They couldn't offer you anything.",
+            "playerData": {"charm": 2}
+            },{
+              "attribute": ["Wit", 75],
+              "text": "You gave the villagers an effective plan and evacuted everyone to safety. They offered you some coins.",
+              "playerData": {"coins": 10, "charm": 2}
+            },{
+              "attribute": ["Combat", 75],
+              "text": "You were unstoppable. You fought off all the undeads and most of the villagers survived. They offered you some food and coins.",
+              "playerData": {"food": 5, "coins": 10, "charm": 2}
+            }]
+        }]
       }
     ],
     "explore": [{
@@ -520,7 +551,7 @@
               "herbs": "/2",
               "food": "/2",
               "coins": "/2",
-              "charm": -10
+              "charm": -5
             }
           }, {
             "attribute": ["experience", 75],
@@ -538,37 +569,250 @@
             }
           }]
         }]
-      },{
+      }, {
         "id": 3,
         "title": "Unexpected Crawler",
         "text": "A wondering crawler discovers you around the corner and prepares to charge. You decide to: ",
         "enemy": ["CRAWLER", 1],
         "choices": [{
           "text": "Run away",
-          "result":[
-            {
-              "text": "You ",
-              "playerData": {"food": "/2", "herbs": "/2", "coins": "/2", "charm": -5}
-            },{
-              "attribute": ["Physique", 75],
-              "text": "You outran the "
-            },{
-              "attribute": ["Wit", 75],
-              "text": ""
+          "result": [{
+            "text": "You tried to run away, but the crawler was too fast. You had to give up half of your valuables to get away.",
+            "playerData": {
+              "food": "/2",
+              "herbs": "/2",
+              "coins": "/2",
+              "charm": -5
             }
-          ]
-        },{
-          "text": "Fight",
-          "result":[
-            {
-              "text": "You lost.",
-              "playerData":{"food": 2, "charm": -5}
-            },{
-              "text": "You won.",
-              "playerData":{"food": 2, "charm": 5}
-            }
-          ]
+          }, {
+            "attribute": ["Physique", 60],
+            "text": "You outran the the crawler. It soon gave up chasing you."
+          }, {
+            "attribute": ["Wit", 60],
+            "text": "You tossed a rock, and it distracted the crawler. You managed to get away."
           }]
+        }, {
+          "text": "Fight",
+          "result": [{
+            "text": "You initiated the fight with the crawler.\n\nYou lost.",
+            "playerData": {
+              "charm": -5
+            }
+          }, {
+            "text": "You initiated the fight with the crawler.\n\nYou won.",
+            "playerData": {
+              "food": 2,
+              "coins": "+",
+              "charm": 5
+            }
+          }]
+        }]
+      }, {
+        "id": 4,
+        "title": "It's A Crawler Nest",
+        "text": "You discover a crawler nest. It's better not to distrub them. You decide to: ",
+        "enemy": ["CRAWLER", 3],
+        "choices": [{
+          "text": "Walk away"
+        }, {
+          "text": "Disturb",
+          "result": [{
+            "text": "You wake up the resting crawlers. You initiated a fight with crawlers.\n\nYou lost.",
+            "playerData": {
+              "charm": -5
+            }
+          }, {
+            "text": "You wake up the resting crawlers. You initiated a fight with crawlers.\n\nYou won.",
+            "playerData": {
+              "food": 2,
+              "coins": "+",
+              "charm": 5
+            }
+          }]
+        }]
+      }, {
+        "id": 5,
+        "title": "Unwelcome Explorers",
+        "text": "During your exploration, you noticed a group of raiders a few meters from you without knowing you're there.",
+        "enemy": ["HUMAN", 3],
+        "choices": [{
+          "text": "Greet them",
+          "result": [{
+            "text": "The raiders worked together and taclked you. They took off with all your valuables.",
+            "playerData": {
+              "herbs": 0,
+              "food": 0,
+              "coins": 0,
+              "charm": -5
+            }
+          }, {
+            "text": "You initiated a fight with the raiders.\n\nYou won the fight.",
+            "playerData": {
+              "food": "+",
+              "water": "+",
+              "combat": 2,
+              "charm": 2
+            }
+          }, {
+            "attribute": ["combat", 75],
+            "text": "You knocked down the raider with one hit and took away their valuables.",
+            "playerData": {
+              "food": "+",
+              "water": "+"
+            }
+          }]
+        }, {
+          "text": "Leave the place",
+          "result": [{
+            "text": "You walked away quietly.",
+            "next": "out"
+          }]
+        }]
+      }, {
+        "id": 6,
+        "title": "An Lonely Undead",
+        "text": "You discover an undead wondering around in the area. You decide to: ",
+        "enemy": ["UNDEAD", 1],
+        "choices": [{
+          "text": "Walk pass it"
+        }, {
+          "text": "Fight",
+          "result": [{
+            "text": "You initiated the fight with the undead.\n\nYou lost.",
+            "playerData": {
+              "charm": -5
+            }
+          }, {
+            "text": "You initiated the fight with the undead.\n\nYou won.",
+            "playerData": {
+              "food": 2,
+              "coins": "+",
+              "charm": 5
+            }
+          }]
+        }]
+      }, {
+        "id": 7,
+        "title": "Undeads Ahead",
+        "text": "You discover an undead nest. It's better not to distrub them. You decide to: ",
+        "enemy": ["UNDEAD", 3],
+        "choices": [{
+          "text": "Walk away"
+        }, {
+          "text": "Disturb",
+          "result": [{
+            "text": "You wake up the sleeping undeads. You initiated a fight with undeads.\n\nYou lost.",
+            "playerData": {
+              "charm": -5
+            }
+          }, {
+            "text": "You wake up the sleeping undeads. You initiated a fight with undeads.\n\nYou won.",
+            "playerData": {
+              "food": 2,
+              "coins": "+",
+              "charm": 5
+            }
+          }]
+        }]
+      }, {
+        "id": 8,
+        "title": "Wondering Beast",
+        "text": "You discover a beast wondering around in the area. You decide to: ",
+        "enemy": ["BEAST", 1],
+        "choices": [{
+          "text": "Sneak past it",
+          "result": [{
+            "text": "The beast smelled your scent and found you sneaking. When you started to run, it tore your bag with a big hole. You lost half of your valuables.",
+            "playerData": {
+              "food": "/2",
+              "herbs": "/2",
+              "coins": "/2",
+              "charm": -5
+            }
+          }, {
+            "attribute": ["Wit", 60],
+            "text": "You know how to cover your scent around the beast. You sneaked past it."
+          }]
+        }, {
+          "text": "Fight",
+          "result": [{
+            "text": "You initiated the fight with the beast.\n\nYou lost.",
+            "playerData": {
+              "charm": -5
+            }
+          }, {
+            "text": "You initiated the fight with the beast.\n\nYou won.",
+            "playerData": {
+              "food": 3,
+              "coins": "+",
+              "charm": 5
+            }
+          }]
+        }]
+      }, {
+        "id": 9,
+        "title": "A Pack of Beasts",
+        "text": "You discover a beast pack hunting for prey. It's better not to distrub them. You decide to: ",
+        "enemy": ["BEAST", 3],
+        "choices": [{
+          "text": "Sneak past it",
+          "result": [{
+            "text": "The beasts smelled your scent and found you sneaking. When you started to run, it got your bag. You lost all of your valuables.",
+            "playerData": {
+              "food": "0",
+              "herbs": "0",
+              "coins": "0",
+              "charm": -5
+            }
+          }, {
+            "attribute": ["Wit", 60],
+            "text": "You know how to cover your scent around the beasts. You sneaked past them."
+          }]
+        }, {
+          "text": "Fight",
+          "result": [{
+            "text": "You initiated the fight with the beasts.\n\nYou lost.",
+            "playerData": {
+              "charm": -5
+            }
+          }, {
+            "text": "You initiated the fight with the beasts.\n\nYou won.",
+            "playerData": {
+              "food": 6,
+              "coins": "+",
+              "charm": 5
+            }
+          }]
+        }]
+      }, {
+        "id": 10,
+        "title": "Warlock's Space",
+        "text": "You walk in a hostile warlock performing a ritual. You decide to: ",
+        "enemy": ["WARLOCK", 1],
+        "choices": [{
+          "text": "Back off",
+          "result": [{
+            "text": "The warlock said you were a coward.",
+            "playerData": {
+              "charm": -5
+            }
+            }]
+        }, {
+          "text": "Intervene",
+          "result": [{
+            "text": "You initiated a fight with the warlock.\n\nYou lost.",
+            "playerData": {
+              "charm": -5
+            }
+          }, {
+            "text": "You initiated a fight with the warlock.\n\nYou won.",
+            "playerData": {
+              "herbs": "+",
+              "coins": "+",
+              "charm": 5
+            }
+          }]
+        }]
       }
     ],
     "rest": [{
@@ -577,57 +821,83 @@
       "text": "As the sun is going down, you find a quiet spot for resting throught the night. There's no sign of other dangers, but you can't be so sure of it.\n\nYou decided to: ",
       "choices": [{
         "text": "Go to sleep",
-        "result":[
-          {
-            "text": "You ate some food and went to sleep. The next day will be full of challenges again.",
-            "playerData": {"food": -2}
+        "result": [{
+          "text": "You ate some food and went to sleep. The next day will be full of challenges again.",
+          "playerData": {
+            "food": -2
           }
-        ]
+        }]
       }, {
         "text": "Watch for danger",
-        "result":[
-          {
-            "text": "You stayed up all night, but there was nothing from the dark trying to harm you. You feel very tired the next day.\n\nHowever, it gave you time to think about all your mistakes.",
-            "playerData": {"food": -3, "combat": -8, "physique": -8, "wit": 8, "charm": -5}
+        "result": [{
+          "text": "You stayed up all night, but there was nothing from the dark trying to harm you. You feel very tired the next day.\n\nHowever, it gave you time to think about all your mistakes.",
+          "playerData": {
+            "food": -3,
+            "combat": -8,
+            "physique": -8,
+            "wit": 8,
+            "charm": -5
           }
-        ]
+        }]
       }]
-    },{
+    }, {
       "id": 1,
       "title": "A Busy Tavern",
       "text": "Just before the sun falls, you find a crowded tavern in a nearby town. It's full of people. There's also a room for rent. 8 coins a night.",
       "choices": [{
         "text": "Rent the room",
-        "result":[
-          {
-            "text": "You didn't have enough money to rent the room. You left the tavern when it was closed. You couldn't find somewhere to sleep and stayed up all night. You feel tired the next day.",
-            "playerData": {"food": -3, "combat": -8, "physique": -8, "wit": 8, "charm": -5}
-          },{
-            "attribute": ["charm", 75],
-            "text": "The owner saw you as an inspiring, selfless adventure, doing good deeds for others and sacrificing yourself. They gave you the room for free.",
-            "playerData": {"food": -2}
-          },{
-            "attribute": ["coins", 8],
-            "text": "You went to the room, ate some food and went to sleep. The next day will be full of challenges again.",
-            "playerData": {"food": -2, "coins": -8}
+        "result": [{
+          "text": "You didn't have enough money to rent the room. You left the tavern when it was closed. You couldn't find somewhere to sleep and stayed up all night. You feel tired the next day.",
+          "playerData": {
+            "food": -3,
+            "combat": -8,
+            "physique": -8,
+            "wit": 8,
+            "charm": -5
           }
-        ]
+        }, {
+          "attribute": ["charm", 75],
+          "text": "The owner saw you as an inspiring, selfless adventure, doing good deeds for others and sacrificing yourself. They gave you the room for free.",
+          "playerData": {
+            "food": -2
+          }
+        }, {
+          "attribute": ["coins", 8],
+          "text": "You went to the room, ate some food and went to sleep. The next day will be full of challenges again.",
+          "playerData": {
+            "food": -2,
+            "coins": -8
+          }
+        }]
       }, {
         "text": "Have fun all night",
-        "result":[
-          {
-            "text": "You didn't have enough money to buy anything. You left the tavern when it was closed. You couldn't find somewhere to sleep and stayed up all night. You feel tired the next day.",
-            "playerData": {"food": -3, "combat": -8, "physique": -8, "wit": 8, "charm": -5}
-          },{
-            "attributes": ["wit", 60],
-            "text": "You know your limit and didn't have fun all night. You went to your room when you felt tired. The next day will be full of challenges again.",
-            "playerData": {"food": -2, "coins": -10}
-          },{
-            "attribute": ["coins", 8],
-            "text": "You drank some beer and gambled until the tavern was closed. You fell asleep in the tavern. But you still feel very tired the next day.",
-            "playerData": {"food": -3, "coins": -8, "combat": -8, "physique": -8, "charm": 10}
+        "result": [{
+          "text": "You didn't have enough money to buy anything. You left the tavern when it was closed. You couldn't find somewhere to sleep and stayed up all night. You feel tired the next day.",
+          "playerData": {
+            "food": -3,
+            "combat": -8,
+            "physique": -8,
+            "wit": 8,
+            "charm": -5
           }
-        ]
+        }, {
+          "attributes": ["wit", 60],
+          "text": "You know your limit and didn't have fun all night. You went to your room when you felt tired. The next day will be full of challenges again.",
+          "playerData": {
+            "food": -2,
+            "coins": -10
+          }
+        }, {
+          "attribute": ["coins", 8],
+          "text": "You drank some beer and gambled until the tavern was closed. You fell asleep in the tavern. But you still feel very tired the next day.",
+          "playerData": {
+            "food": -3,
+            "coins": -8,
+            "combat": -8,
+            "physique": -8,
+            "charm": 10
+          }
+        }]
       }]
     }]
   }
