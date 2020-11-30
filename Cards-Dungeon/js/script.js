@@ -51,10 +51,19 @@ let disableArrowKey = false;
 let preBattleHealth = 30;
 let traderOffer;
 let traderPrice = 0;
+let accEffect = -1;
+
+let accBonus = {
+  damageBonus: 1,
+  damageReduction: 1,
+  foodHerbsBonus: 1,
+  healingBonus: false,
+  coinsBonus: 1
+};
 
 let gameData = {
   state: {
-    "playing": true,
+    "playing": false,
     "day": 1
   },
 
@@ -141,7 +150,6 @@ function setup() {
   randomizeBG();
 
   setupGame();
-  //let person = prompt("Please enter your name", "Unnamed");
 }
 
 function setupGame() {
@@ -253,7 +261,7 @@ function updateCard(id, loot = null) {
       card.text = gameData.eventObj.text + "\n\na " + accName + "\n\n" + compareAccessories(loot) + " defence\n" + accessoriesJSON.effect[getAccEffectId(loot)] + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
       break;
     case 5:
-      card.text = gameData.eventObj.text + "\n\n" + getTradingItem() + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
+      card.text = gameData.eventObj.text + "\n\n" + getTradingItem() + "\n\n" + compareItem(traderOffer) + "\n\n- " + gameData.choices[0] + "\n- " + gameData.choices[1];
   }
 }
 
@@ -669,19 +677,19 @@ function getLoot() {
   if (temp >= 0.3) {
     let tempItem = random();
     if (tempItem <= gameData.currentLoc.spawn.food) {
-      append(result, int(random(1, 4)));
+      append(result, int(random(1, 4) * accBonus.foodHerbsBonus));
     } else {
       append(result, 0);
     }
     //tempItem = random();
     if (tempItem <= gameData.currentLoc.spawn.herbs) {
-      append(result, int(random(1, 4)));
+      append(result, int(random(1, 4) * accBonus.foodHerbsBonus));
     } else {
       append(result, 0);
     }
     //tempItem = random();
     if (tempItem <= gameData.currentLoc.spawn.coins) {
-      append(result, int(random(1, 4)));
+      append(result, int(random(1, 4) * accBonus.coinsBonus));
     } else {
       append(result, 0);
     }
@@ -751,13 +759,13 @@ function getTradingItem(){
       let randAdj = int(random(1, accessoriesJSON.adj.length));
       append(item, randAcc.name);
       append(item, randAdj);
-      price = 2 + randAcc.def + int(randAcc.def/2);
-      result = "a " + item[1] + " " + item[0] + " for " + price + " coins.";
+      price = 4 + randAcc.def;
+      result = "a " + accessoriesJSON.adj[item[1]] + " " + item[0] + " for " + price + " coins.";
   }
   traderPrice = price;
   traderOffer = item;
   if(traderPrice > player.stats["coins"]){
-    gameData.choices[0] = "\"I don't have enough coins\"";
+    gameData.choices[0] = "\"I don't have enough coins.\"";
   }
   console.log(traderOffer + " " + traderPrice);
   return result;
@@ -794,6 +802,17 @@ function getWeaponDamage(weapon){
     }
   }
   return weaponDam;
+}
+
+function compareItem(item){
+  if (isAccessory(item)){
+    return compareAccessories(item) + " defence\n" + accessoriesJSON.effect[item[1]];
+  }else{
+    if (item[0] != "food" && item[0] != "herbs"){
+      return compareWeaponsDam(item) + " damage";
+    }
+  }
+  return "";
 }
 
 function compareWeaponsDam(weapon){
@@ -866,6 +885,8 @@ function updatePlayerData(array) {
           note.update("You equipped the " + array[1] + " " + array[0]);
         }
       }
+      setAccessoryEffect(0);
+      setAccessoryEffect(getAccEffectId(array));
       console.log("Player accessory changed.");
     }else{
       player.stats["weapon"] = array;
@@ -905,6 +926,9 @@ function getEnemy(array){
 function battle(enemyType, num){
   let enemy;
   console.log("******** BATTLE STARTED ********");
+  if (accBonus.healingBonus){
+    player.heal(10);
+  }
   for(let i = 0; i < num; i++){
     enemy = new Enemy(enemyType, gameData.state["day"]);
     while(!enemy.dead){
@@ -912,11 +936,11 @@ function battle(enemyType, num){
       console.log("Player: " + player.stats["health"]);
       let p = random();
       if (p >= 0.3 * (1 - player.stats["combat"] * 0.01)){
-        enemy.receiveDamage(player.outputDamage());
+        enemy.receiveDamage(player.outputDamage() * accBonus.damageBonus);
       }
       p = random();
       if (p >= 0.5 * (1 + player.stats["physique"] * 0.01)){
-        player.receiveDamage(enemy.getDamage());
+        player.receiveDamage(enemy.getDamage() * accBonus.damageReduction);
       }
       // player dies
       if (player.dead || player.stats["health"] <= 0){
@@ -940,14 +964,46 @@ function healPlayer(){
   let herbUsed = 0;
   if (player.stats["herbs"] >= 1 && player.stats["health"] <= 25){
     console.log("Player started healing " + player.stats["health"] + " Herbs: " + player.stats["herbs"]);
-    while(player.stats["herbs"] != 0 && player.stats["health"] + 5 <= 30){
-      player.heal(5);
+    while(player.stats["herbs"] != 0 && player.stats["health"] + (5 * (1 + player.stats["physique"] * 0.01)) <= 30){
+      player.heal(4 * (1 + player.stats["physique"] * 0.01));
       player.stats["herbs"] -= 1;
       herbUsed += 1;
     }
     note.update("You healed yourself with " + herbUsed + " herbs");
     console.log("Player started healing " + player.stats["health"] + " Herbs: " + player.stats["herbs"]);
   }
+}
+
+function setAccessoryEffect(id){
+  switch(id){
+    // reset
+    case 0:
+      accBonus.damageBonus = 1;
+      accBonus.damageReduction = 1;
+      accBonus.foodHerbsBonus = 1;
+      accBonus.healingBonus = false;
+      accBonus.coinsBonus = 1;
+    case 1:
+      accBonus.damageBonus = 1.25;
+      console.log("Player now has combat bonus.");
+      break;
+    case 2:
+      accBonus.damageReduction = (1 - 0.35);
+      console.log("Player now has damage reduction.");
+      break;
+    case 3:
+      accBonus.foodHerbsBonus = 1.5;
+      console.log("Player now has food & herbs bonus.");
+      break;
+    case 4:
+      accBonus.healingBonus = true;
+      console.log("Player now has healing bonus.");
+      break;
+    case 5:
+      accBonus.coinsBonus = 1.35;
+      console.log("Player now has coins bonus.");
+  }
+  accEffect = id;
 }
 
 function resetGame(id){

@@ -62,7 +62,7 @@
     }, {
       "id": 4,
       "title": "Tip #5",
-      "text": "Wit reflects your knowledge and the level of magic practice.\n\nCharm influences your persuasion on others and morale.",
+      "text": "Wit reflects your knowledge and your level of paranoia.\n\nCharm influences your persuasion on others and morale.",
       "choices": [{
         "text": "Let's go!",
         "next": ["travel", 0],
@@ -110,7 +110,7 @@
     }, {
       "id": 8,
       "title": "Tip #9",
-      "text": "Your accessory will give you bonus attribute points or other magical benefits, such as doubling the amount of coins you can find.",
+      "text": "Your accessory will give you bonus attribute points or other magical benefits, such as increase the amount of coins you can find.",
       "choices": [{
         "text": "Let's go!",
         "next": ["travel", 0],
@@ -173,7 +173,7 @@
     "travel": [{
         "id": 0,
         "title": "The Death Crossroad",
-        "text": "In front of you presents two separate paths to different destinations. You decide to go to: ",
+        "text": "In front of you presents two separate paths to different destinations.\n\nYou decide to go to: ",
         "choices": [{
           "text": ["loc", -1],
           "caseText": [
@@ -336,6 +336,7 @@
               "herbs": 0,
               "food": 0,
               "coins": 0,
+              "acc": [""],
               "weapon": [""],
               "charm": -10
             }
@@ -438,29 +439,107 @@
         }]
       }, {
         "id": 6,
-        "title": "Villagers In Nesd",
-        "text": "A village is under attack by a spawn of undeads. They're asking for help. You decide to:",
+        "title": "Villagers In Need",
+        "text": "A village is under attack by a spawn of undeads. They're asking for help.\n\nYou decide to:",
         "choices": [{
-          "text": "Walk away"
+          "text": "Walk away",
           "result": [{
             "text": "You walked away.",
-            "playerData": {"charm" : -5}
-            }]
+            "playerData": {
+              "charm": -2
+            }
+          }]
         }, {
           "text": "Help them",
-          "result":[{
+          "result": [{
             "text": "You helped the villagers defend the village, but they had lost too much. They couldn't offer you anything.",
-            "playerData": {"charm": 2}
-            },{
-              "attribute": ["Wit", 75],
-              "text": "You gave the villagers an effective plan and evacuted everyone to safety. They offered you some coins.",
-              "playerData": {"coins": 10, "charm": 2}
-            },{
-              "attribute": ["Combat", 75],
-              "text": "You were unstoppable. You fought off all the undeads and most of the villagers survived. They offered you some food and coins.",
-              "playerData": {"food": 5, "coins": 10, "charm": 2}
-            }]
+            "playerData": {
+              "charm": 2
+            }
+          }, {
+            "attribute": ["Wit", 75],
+            "text": "You gave the villagers an effective plan and evacuted everyone to safety. They offered you some coins.",
+            "playerData": {
+              "coins": 10,
+              "charm": 2
+            }
+          }, {
+            "attribute": ["Combat", 75],
+            "text": "You were unstoppable. You fought off all the undeads and most of the villagers survived. They offered you some food and coins.",
+            "playerData": {
+              "food": 5,
+              "coins": 10,
+              "charm": 2
+            }
+          }]
         }]
+      },{
+        "id": 7,
+        "title": "A Deadly Creature",
+        "text": "As you're walking, you get bitten by a venomous snake. It is no time to be careless. Any wrong  step could increase the damage has been done to your body.",
+        "choices":[{
+          "text": "Take care of yourself",
+          "result": [{
+              "text": "You didn't know anything about treating a snake bite. Luckily, the venom was not so deadly. You lost some health but you'll be fine.",
+              "playerData": {"physique": -8, "charm": -5, "health": -15}
+            },{
+              "attribute": ["wit", 75],
+              "text": "You knew what exactly had to be done. You successfully remove the venom from your system.\n\nYou'll be on the road for no time.",
+              "playerData": {"health": -5}
+              },{
+                "attribute": ["herbs", 4],
+                "text": "You tried to use the herbs to combat the venom. And it worked!\n\nYou'll be on the road for no time.",
+                "playerData": {"herbs": -4, "health": -5}
+                }]
+          },{
+            "text": "Cry for help",
+            "result": [{
+              "text": "No one came to help you. Luckily, the venom was not so deadly. You lost some health but you'll be fine.",
+              "playerData": {"physique": -8, "charm": -5, "health": -15}
+              },{
+                "attribute": ["charm", 60],
+                "text": "An adventure heard your help and came. They treated you professionally. You also learned a few things. You'll be on the road for no time.",
+                "playerData": {"wit": 5, "health": -5}
+                }]
+            }]
+      },{
+        "id": 8,
+        "title": "The Bag Under the Tree",
+        "text": "You discover a bag sitting under the tree. There's no one around. Could it be abandoned or left by someone who's nearby?\n\nYou decide to:",
+        "enemy": ["HUMAN", 1],
+        "choices":[{
+          "text": "Leave it"
+          },{
+            "text": "Take it",
+            "result":[{
+              "text": "As soon as you picked up the bag, the owner returned. They were not happy about it. You initiated a fight with an adventurer.\n\nYou lost and ran away.",
+              "playerData": {"charm": -5}
+              },{
+                "text": "As soon as you picked up the bag, the owner returned. They were not happy about it. You initiated a fight with an adventurer.\n\nYou won and took the bag.",
+                "playerData": {"food": "+", "herbs": "+", "coins": "+", "charm": 2}
+                },{
+                  "attribute": ["physique", 75],
+                  "text": "As soon as you picked up the bag, the owner returned. They tried to catch you, but you ran so fast that they lost you in a minute. You found some valuables in the bag.",
+                  "playerData": {"food": "+", "herbs": "+", "coins": "+", "charm": 2}
+                  }]
+            }]
+      },{
+        "id": 9,
+        "title": "Adventurer's Treasure",
+        "text": "As you're walking, you find a stash of valuables left by a previous adventurer.\n\nYou find:",
+        "choices":[{
+          "text": "Some herbs and coins",
+          "result":[{
+            "text": "You obtained some herbs and coins!",
+            "playerData":{"herbs": "+", "coins": "+", "charm": 2}
+            }]
+          },{
+            "text": "An adventure guide book",
+            "result":[{
+              "text": "You read the book and learned a little bit of everything.",
+              "playerData":{"combat": "+", "physique": "+", "wit": "+", "charm": 2}
+              }]
+            }]
       }
     ],
     "explore": [{
@@ -497,6 +576,12 @@
         "text": "During your exploration, you noticed a raider a few meters from you without knowing you're there.",
         "enemy": ["HUMAN", 1],
         "choices": [{
+          "text": "Leave the place",
+          "result": [{
+            "text": "You walked away quietly.",
+            "next": "out"
+          }]
+        }, {
           "text": "Rob them",
           "result": [{
             "text": "The raider had the faster move and defeated you with ease. They took off with all your valuables.",
@@ -510,7 +595,7 @@
             "text": "You won the fight.",
             "playerData": {
               "food": "+",
-              "water": "+",
+              "coins": "+",
               "combat": 2,
               "charm": 2
             }
@@ -519,23 +604,8 @@
             "text": "You knocked down the raider with one hit and took away their valuables.",
             "playerData": {
               "food": "+",
-              "water": "+"
+              "coins": "+"
             }
-          }]
-        }, {
-          "text": "Leave the place",
-          "result": [{
-            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. They attacked you and ran away."
-          }, {
-            "text": "As you were trying to walk away, you knocked something down to the floor and alerted the raider. You and the raider started a duo.",
-            "playerData": {
-              "food": "+",
-              "water": "+"
-            }
-          }, {
-            "attribute": ["experience", 25],
-            "text": "You walked away quietly.",
-            "next": "out"
           }]
         }]
       },
@@ -572,7 +642,7 @@
       }, {
         "id": 3,
         "title": "Unexpected Crawler",
-        "text": "A wondering crawler discovers you around the corner and prepares to charge. You decide to: ",
+        "text": "A wondering crawler discovers you around the corner and prepares to charge.\n\nYou decide to: ",
         "enemy": ["CRAWLER", 1],
         "choices": [{
           "text": "Run away",
@@ -610,7 +680,7 @@
       }, {
         "id": 4,
         "title": "It's A Crawler Nest",
-        "text": "You discover a crawler nest. It's better not to distrub them. You decide to: ",
+        "text": "You discover a crawler nest. It's better not to distrub them.\n\nYou decide to: ",
         "enemy": ["CRAWLER", 3],
         "choices": [{
           "text": "Walk away"
@@ -649,7 +719,7 @@
             "text": "You initiated a fight with the raiders.\n\nYou won the fight.",
             "playerData": {
               "food": "+",
-              "water": "+",
+              "coins": "+",
               "combat": 2,
               "charm": 2
             }
@@ -658,7 +728,7 @@
             "text": "You knocked down the raider with one hit and took away their valuables.",
             "playerData": {
               "food": "+",
-              "water": "+"
+              "coins": "+"
             }
           }]
         }, {
@@ -671,7 +741,7 @@
       }, {
         "id": 6,
         "title": "An Lonely Undead",
-        "text": "You discover an undead wondering around in the area. You decide to: ",
+        "text": "You discover an undead wondering around in the area.\n\nYou decide to: ",
         "enemy": ["UNDEAD", 1],
         "choices": [{
           "text": "Walk pass it"
@@ -694,7 +764,7 @@
       }, {
         "id": 7,
         "title": "Undeads Ahead",
-        "text": "You discover an undead nest. It's better not to distrub them. You decide to: ",
+        "text": "You discover an undead nest. It's better not to distrub them.\n\nYou decide to: ",
         "enemy": ["UNDEAD", 3],
         "choices": [{
           "text": "Walk away"
@@ -752,7 +822,7 @@
       }, {
         "id": 9,
         "title": "A Pack of Beasts",
-        "text": "You discover a beast pack hunting for prey. It's better not to distrub them. You decide to: ",
+        "text": "You discover a beast pack hunting for prey. It's better not to distrub them.\n\nYou decide to: ",
         "enemy": ["BEAST", 3],
         "choices": [{
           "text": "Sneak past it",
@@ -787,7 +857,7 @@
       }, {
         "id": 10,
         "title": "Warlock's Space",
-        "text": "You walk in a hostile warlock performing a ritual. You decide to: ",
+        "text": "You walk in a hostile warlock performing a ritual.\n\nYou decide to: ",
         "enemy": ["WARLOCK", 1],
         "choices": [{
           "text": "Back off",
@@ -796,7 +866,7 @@
             "playerData": {
               "charm": -5
             }
-            }]
+          }]
         }, {
           "text": "Intervene",
           "result": [{
@@ -896,6 +966,138 @@
             "combat": -8,
             "physique": -8,
             "charm": 10
+          }
+        }]
+      }]
+    }, {
+      "id": 2,
+      "title": "An Abandoned Cabin",
+      "text": "Just right before the nightfall, you find a cabin. It appears to be unoccupied and great for one night. You decided to:",
+      "choices": [{
+        "text": "Stay for the night",
+        "result": [{
+            "text": "During the night, you heard some scary sounds. Suddenly, some funitures started to move by themselves. The cabin is haunted! You got so scary that you couldn't have a good sleep.",
+            "playerData": {
+              "food": -2,
+              "combat": -8,
+              "physique": -8,
+              "charm": -5
+            }
+          },
+          {
+            "attribute": ["combat", 60],
+            "text": "During the night, you heard some scary sounds. Suddenly, some funitures started to move by themselves. The cabin is haunted!\n\nBut you couldn't care less, you had a decent sleep.",
+            "playerData": {
+              "food": -2
+            }
+          }
+        ]
+      }, {
+        "text": "Find somewhere else",
+        "result": [{
+          "text": "You decided not to go in the cabin. However, you couldn't find anywhere suitable for resting outside. You spent all night searching for a place.\n\nYou're very tired the next day.",
+          "playerData": {
+            "food": -2,
+            "combat": -8,
+            "physique": -8,
+            "charm": -5
+          }
+        }, {
+          "attribute": ["wit", 75],
+          "text": "You decided not to go in the cabin. However, you couldn't find anywhere suitable for resting. Luckily, you found a great camping spot under a tree and slept through the night.",
+          "playerData": {
+            "food": -2
+          }
+        }]
+      }]
+    }, {
+      "id": 3,
+      "title": "Someone's House",
+      "text": "As the night falls, you find a light up house in front of you. The owner agrees to allow you to stay for one night in a room for 10 coins. You decided to:",
+      "choices": [{
+        "text": "Stay",
+        "result": [{
+          "text": "You couldn't pay the owner, so they left you outside. However, they did give you some food. You stayed outside without a sleep until the next morning.",
+          "playerData": {
+            "food": 2,
+            "combat": -8,
+            "physique": -8,
+            "charm": -5
+          }
+        }, {
+          "attribute": ["charm", 75],
+          "text": "You convinced the owner to allow you to sleep on the floor for free. It was not very comfortable, but at least you had some sleep.",
+          "playerData": {
+            "food": -2
+          }
+        }, {
+          "attribute": ["coins", 10],
+          "text": "You paid the owner, and they invited you inside. They prepared some food for you and gave you some leftovers.\n\nThe room was really nice. You had a good sleep.",
+          "playerData": {
+            "food": 2,
+            "coins": -10,
+            "charm": 2
+          }
+        }]
+      }, {
+        "text": "Leave",
+        "result": [{
+          "text": "You decided not to stay in the house.\n\nYou stayed outside without a sleep until the next morning.",
+          "playerData": {
+            "food": -2,
+            "combat": -8,
+            "physique": -8,
+            "charm": -5
+          }
+        }, {
+          "attribute": ["charm", 75],
+          "text": "The owner was nice enough to give you some food.\n\nYou stayed outside without a sleep until the next morning.",
+          "playerData": {
+            "food": 2,
+            "combat": -8,
+            "physique": -8,
+            "charm": -5
+          }
+        }]
+      }]
+    }, {
+      "id": 4,
+      "title": "An Inn in the Town",
+      "text": "Just before the sun falls, you find a popular inn in a nearby town. It's fancy. There's also a room for rent. 12 coins a night.",
+      "choices": [{
+        "text": "Stay for the night",
+        "result": [{
+          "text": "You didn't have the money for one night. You slept outside of the inn.\n\nYou feel very tired the next day.",
+          "playerData": {
+            "food": -2,
+            "combat": -8,
+            "physique": -8,
+            "charm": -5
+          }
+        }, {
+          "attribute": ["charm", 80],
+          "text": "The owner saw you as an inspiring, selfless adventure, doing good deeds for others and sacrificing yourself. They gave you the room for free.",
+          "playerData": {
+            "food": -2
+          }
+        }, {
+          "attribute": ["coins", 12],
+          "text": "The room was really fancy. You ate some food and went to sleep. The next day will be full of challenges again.",
+          "playerData": {
+            "food": 2,
+            "coins": -12,
+            "charm": 5
+          }
+        }]
+      }, {
+        "text": "Find somewhere else",
+        "result": [{
+          "text": "You didn't enter the inn. However, there was no place for you to sleep in this town. You stayed outside without a sleep until the next morning.",
+          "playerData": {
+            "food": -2,
+            "combat": -8,
+            "physique": -8,
+            "charm": -5
           }
         }]
       }]

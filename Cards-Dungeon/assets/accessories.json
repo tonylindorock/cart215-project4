@@ -40,10 +40,10 @@
   ],
   "effect":[
     "Just very regular",
-    "You'll gain 25% Combat.",
+    "You'll deal 25% more damage in combat.",
     "You'll receive 35% less damage.",
     "You'll find 50% more food and herbs.",
-    "You'll get 10 healing during every battle.",
+    "You'll get 10 healing before every battle.",
     "You'll find 35% more coins."
   ]
 }
