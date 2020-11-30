@@ -1,5 +1,15 @@
 class Player{
   constructor(){
+    this.baseHealth = 30;
+    this.baseDamage = 7;
+    this.weaponDam = 0;
+    this.defence = 0;
+    this.critical = 0.15;
+    this.weaponCond = 100;
+    this.accEffect = 0;
+    this.action = "";
+    this.dead = false;
+
     this.stats = {
       "combat": this.randomAttribute(),
       "physique": this.randomAttribute(),
@@ -10,17 +20,8 @@ class Player{
       "coins": 0,
       "acc": [""],
       "weapon": [""],
-      "health": 30
+      "health": this.baseHealth
     };
-
-    this.baseDamage = 7;
-    this.weaponDam = 0;
-    this.defence = 0;
-    this.critical = 0.15;
-    this.weaponCond = 100;
-    this.accEffect = 0;
-    this.action = "";
-    this.dead = false;
   }
 
   randomAttribute(){
@@ -71,7 +72,7 @@ class Player{
 
   receiveDamage(dam){
     this.stats["health"] -= dam;
-    this.stats["health"] = int(constrain(this.stats["health"], 0, 30));
+    this.stats["health"] = int(constrain(this.stats["health"], 0, this.baseHealth));
     if (this.stats["health"] <= 0){
       this.dead = true;
     }
@@ -79,6 +80,6 @@ class Player{
 
   heal(health){
     this.stats["health"] += health;
-    this.stats["health"] = int(constrain(this.stats["health"], 0, 30));
+    this.stats["health"] = int(constrain(this.stats["health"], 0, this.baseHealth));
   }
 }

@@ -3,15 +3,15 @@
     {
       "id": 0,
       "name": "Shield",
-      "def": 8
+      "def": 5
     },{
       "id": 1,
       "name": "Boots",
-      "def": 3
+      "def": 2
     },{
       "id": 2,
       "name": "Gloves",
-      "def": 2
+      "def": 1
     },{
       "id": 3,
       "name": "Necklace",
@@ -19,7 +19,7 @@
     },{
       "id": 4,
       "name": "Chestpiece",
-      "def": 5
+      "def": 3
     },{
       "id": 5,
       "name": "Ring",
