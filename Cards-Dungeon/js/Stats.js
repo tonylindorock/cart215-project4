@@ -96,6 +96,7 @@ class Stats {
     this.maps.push(MAPS[mapObj.id]);
     this.step = mapObj.size;
     this.mapRevealed += 1;
+    this.currentStep = 0;
   }
 
   nextPos(){

@@ -122,7 +122,7 @@
     "size": 8,
     "spawn": {
       "herbs": 0.1,
-      "food": 0.3,
+      "food": 0.2,
       "coins": 0.3,
       "acc": 0.4,
       "melee": 0.6,
@@ -136,7 +136,7 @@
     "spawn": {
       "herbs": 0.1,
       "food": 0.1,
-      "coins": 0,
+      "coins": 0.8,
       "acc": 0.5,
       "melee": 0.5,
       "ranged": 0.5,

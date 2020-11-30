@@ -33,7 +33,7 @@ class Player{
     }else if (0.5 < temp && temp <= 0.8){
       return int(random(25, 50));
     }else{
-      return int(random(1, 25));
+      return int(random(5, 25));
     }
   }
 
