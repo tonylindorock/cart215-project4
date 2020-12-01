@@ -57,6 +57,7 @@ class Player{
     let p = random();
     if (p < this.critical){
       final *= 2;
+      console.log("CRITICAL!");
     }
     if(this.stats["weapon"].length === 2){
       this.stats["weapon"][1] -= 1;

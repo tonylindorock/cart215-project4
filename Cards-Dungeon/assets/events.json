@@ -210,7 +210,7 @@
           "result": [{
             "text": "The detour took longer than you expected, but you discovered a new route.",
             "playerData": {
-              "food": -8,
+              "food": -2,
               "wit": 5
             }
           }]
@@ -535,7 +535,7 @@
       }, {
         "id": 8,
         "title": "The Bag Under the Tree",
-        "text": "You discover a bag sitting under the tree. There's no one around. Could it be abandoned or left by someone who's nearby?\n\nYou decide to:",
+        "text": "You discover a bag sitting under a tree. There's no one around. Could it be abandoned or left by someone who's nearby?\n\nYou decide to:",
         "enemy": ["HUMAN", 1],
         "choices": [{
           "text": "Leave it"
