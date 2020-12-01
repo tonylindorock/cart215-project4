@@ -486,7 +486,11 @@ function parseChoice(id) {
         player.action = "";
       }
     }
-    card.text = conseqObj.text + "\n" + change;
+    if (change === ""){
+      card.text = conseqObj.text + "\n\nPick any side to continue";
+    }else{
+      card.text = conseqObj.text + "\n" + change + "\n\nPick any side to continue";
+    }
   } else {
     // change event to the next event
     if (gameData.eventObj.choices[id].next != undefined) {
@@ -989,7 +993,7 @@ function healPlayer() {
   let herbUsed = 0;
   if (player.stats["herbs"] >= 2 && player.stats["health"] <= player.baseHealth - (4 * (1 + player.stats["physique"] * 0.01))) {
     console.log("Player started healing " + player.stats["health"] + " Herbs: " + player.stats["herbs"]);
-    while (player.stats["herbs"] - 2 >= 0 && player.stats["health"] + (4 * (1 + player.stats["physique"] * 0.01)) <= player.baseHealth) {
+    while (player.stats["herbs"] - 2 >= 0 && player.baseHealth - player.stats["health"] >= 5) {
       player.heal(4 * (1 + player.stats["physique"] * 0.01));
       player.stats["herbs"] -= 2;
       herbUsed += 2;
@@ -1010,6 +1014,8 @@ function setAccessoryEffect(id) {
       accBonus.foodHerbsBonus = 1;
       accBonus.healingBonus = false;
       accBonus.coinsBonus = 1;
+      console.log("Player now has no bonus.");
+      break;
     case 1:
       accBonus.damageBonus = 1.25;
       console.log("Player now has combat bonus.");

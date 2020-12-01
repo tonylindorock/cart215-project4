@@ -124,7 +124,7 @@
       "title": "- The End -",
       "text": "You have died on the journey to defeat the dungeon. Your remains are soon to be found by other adventurers. May what you left help the next conquer the greatest dungeon.",
       "choices": [{
-        "text": "Damnit",
+        "text": "Dang it",
         "next": ["other", 0]
       }, {
         "text": "Try again and change theme",
@@ -240,7 +240,7 @@
             "attribute": ["wit", 70],
             "text": "You used objects in the environment for you advantage and successfully went through the area without being seen."
           }, {
-            "attribute": ["charm", 70],
+            "attribute": ["charm", 80],
             "text": "You persuaded the raiders that you're a lonely traveller trying to pass. They let you pass with accpetance."
           }]
         }]
@@ -297,7 +297,7 @@
               "charm": 3
             }
           }, {
-            "attribute": ["charm", 70],
+            "attribute": ["charm", 80],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed."
           }, {
             "attribute": ["physique", 70],
@@ -365,7 +365,7 @@
               "charm": 3
             }
           }, {
-            "attribute": ["charm", 70],
+            "attribute": ["charm", 80],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed."
           }, {
             "attribute": ["physique", 70],
@@ -425,7 +425,7 @@
               "charm": 3
             }
           }, {
-            "attribute": ["charm", 70],
+            "attribute": ["charm", 80],
             "text": "You convinced them that you have nothing valuable to them. The raiders left you feeling disappointed."
           }, {
             "attribute": ["physique", 70],
@@ -609,13 +609,13 @@
               "charm": -5
             }
           }, {
-            "attribute": ["physique", 60],
+            "attribute": ["physique", 50],
             "text": "You outran the the crawler. It soon gave up chasing you.",
             "playerData": {
               "charm": 3
             }
           }, {
-            "attribute": ["wit", 60],
+            "attribute": ["wit", 50],
             "text": "You tossed a rock, and it distracted the crawler. You managed to get away.",
             "playerData": {
               "charm": 3
@@ -633,6 +633,7 @@
             "text": "You initiated the fight with the crawler.\n\nYou won.",
             "playerData": {
               "food": 2,
+              "herbs": 2,
               "coins": "+",
               "charm": 3
             }
@@ -646,7 +647,7 @@
         "choices": [{
           "text": "Walk away"
         }, {
-          "text": "Disturb",
+          "text": "Disturb them",
           "result": [{
             "text": "You woke up the resting crawlers. You initiated a fight with crawlers.\n\nYou lost.",
             "playerData": {
@@ -692,7 +693,7 @@
         "choices": [{
           "text": "Walk away"
         }, {
-          "text": "Disturb",
+          "text": "Disturb them",
           "result": [{
             "text": "You woke up the sleeping undeads. You initiated a fight with undeads.\n\nYou lost.",
             "playerData": {
@@ -723,9 +724,16 @@
               "charm": -5
             }
           }, {
-            "attribute": ["wit", 60],
+            "attribute": ["wit", 50],
             "text": "You know how to cover your scent around the beast. You sneaked past it."
-          }]
+          }, {
+            "attribute": ["physique", 60],
+            "text": "The beasts smelled your scent and found you sneaking, but you outran the beasts!",
+            "playerData": {"charm": 2}
+          },{
+            "attribute": ["charm", 60],
+            "text": "The beast smelled your scent and found you sneaking, but it was actually friendly. It didn't attack you or do anything."
+            }]
         }, {
           "text": "Fight",
           "result": [{
@@ -760,7 +768,14 @@
           }, {
             "attribute": ["wit", 60],
             "text": "You know how to cover your scent around the beasts. You sneaked past them."
-          }]
+          }, {
+            "attribute": ["physique", 70],
+            "text": "The beasts smelled your scent and found you sneaking, but you outran the beasts!",
+            "playerData": {"charm": 2}
+          },{
+            "attribute": ["charm", 80],
+            "text": "The beast smelled your scent and found you sneaking, but it was actually friendly. It didn't attack you or do anything."
+            }]
         }, {
           "text": "Fight",
           "result": [{
@@ -785,7 +800,7 @@
         "choices": [{
           "text": "Back off",
           "result": [{
-            "text": "The warlock said you were a coward.",
+            "text": "The warlock called you a coward.",
             "playerData": {
               "charm": -5
             }
@@ -827,8 +842,6 @@
             "attribute": ["wit", 90],
             "text": "You couldn't trust the adventurer, so you quickly took off without throughly exploring the area.",
             "playerData": {
-              "food": 2,
-              "coins": 1,
               "charm": -5
             }
           }]
@@ -898,7 +911,7 @@
           "result": [{
             "text": "You set up a fire and waited until the storm passed.",
             "playerData": {
-              "food": -8
+              "food": -2
             }
           }]
         }]
@@ -950,7 +963,7 @@
         "choices": [{
           "text": "Walk away"
         }, {
-          "text": "Disturb",
+          "text": "Disturb them",
           "result": [{
             "text": "You woke up the resting crawlers. You initiated a fight with crawlers.\n\nYou lost.",
             "playerData": {
@@ -1034,7 +1047,7 @@
         "choices": [{
           "text": "Walk away"
         }, {
-          "text": "Disturb",
+          "text": "Disturb them",
           "result": [{
             "text": "You woke up the sleeping undeads. You initiated a fight with undeads.\n\nYou lost.",
             "playerData": {
@@ -1069,7 +1082,14 @@
           }, {
             "attribute": ["wit", 50],
             "text": "You know how to cover your scent around the beast. You sneaked past it."
-          }]
+          }, {
+            "attribute": ["physique", 60],
+            "text": "The beasts smelled your scent and found you sneaking, but you outran the beasts!",
+            "playerData": {"charm": 2}
+          },{
+            "attribute": ["charm", 60],
+            "text": "The beast smelled your scent and found you sneaking, but it was actually friendly. It didn't attack you or do anything."
+            }]
         }, {
           "text": "Fight",
           "result": [{
@@ -1103,9 +1123,16 @@
               "charm": -5
             }
           }, {
-            "attribute": ["wit", 70],
+            "attribute": ["wit", 60],
             "text": "You know how to cover your scent around the beasts. You sneaked past them."
-          }]
+          }, {
+            "attribute": ["physique", 70],
+            "text": "The beasts smelled your scent and found you sneaking, but you outran the beasts!",
+            "playerData": {"charm": 2}
+          },{
+            "attribute": ["charm", 80],
+            "text": "The beast smelled your scent and found you sneaking, but it was actually friendly. It didn't attack you or do anything."
+            }]
         }, {
           "text": "Fight",
           "result": [{
@@ -1131,7 +1158,7 @@
         "choices": [{
           "text": "Back off",
           "result": [{
-            "text": "The warlock said you were a coward.",
+            "text": "The warlock called you a coward.",
             "playerData": {
               "charm": -5
             }
@@ -1252,17 +1279,21 @@
             "charm": -5
           }
         }, {
-          "attribute": ["charm", 70],
+          "attribute": ["charm", 80],
           "text": "The owner saw you as an inspiring, selfless adventure, doing good deeds for others and sacrificing yourself. They gave you the room for free.",
           "playerData": {
-            "food": -8
+            "food": -8,
+            "combat": 2,
+            "physique": 2
           }
         }, {
           "attribute": ["coins", 8],
           "text": "You went to the room, ate some food and went to sleep. The next day will be full of challenges again.",
           "playerData": {
             "food": -8,
-            "coins": -8
+            "coins": -8,
+            "combat": 2,
+            "physique": 2
           }
         }]
       }, {
@@ -1281,7 +1312,9 @@
           "text": "You know your limit and didn't have fun all night. You went to your room when you felt tired. The next day will be full of challenges again.",
           "playerData": {
             "food": -8,
-            "coins": -10
+            "coins": -10,
+            "combat": 2,
+            "physique": 2
           }
         }, {
           "attribute": ["coins", 8],
@@ -1308,7 +1341,7 @@
               "food": -8,
               "combat": -5,
               "physique": -5,
-              "wit": 1,
+              "wit": 5,
               "charm": -5
             }
           },
@@ -1316,7 +1349,8 @@
             "attribute": ["combat", 60],
             "text": "During the night, you heard some scary sounds. Suddenly, some funitures started to move by themselves. The cabin is haunted!\n\nBut you couldn't care less, you had a decent sleep.",
             "playerData": {
-              "food": -8
+              "food": -8,
+              "physique": 2
             }
           }
         ]
@@ -1358,7 +1392,9 @@
           "attribute": ["charm", 70],
           "text": "You convinced the owner to allow you to sleep on the floor for free. It was not very comfortable, but at least you had some sleep.",
           "playerData": {
-            "food": -8
+            "food": -8,
+            "combat": 2,
+            "physique": 2
           }
         }, {
           "attribute": ["coins", 10],
@@ -1366,6 +1402,8 @@
           "playerData": {
             "food": 2,
             "coins": -10,
+            "combat": 2,
+            "physique": 2,
             "charm": 3
           }
         }]
@@ -1381,7 +1419,7 @@
             "charm": -5
           }
         }, {
-          "attribute": ["charm", 70],
+          "attribute": ["charm", 60],
           "text": "The owner was nice enough to give you some food.\n\nYou stayed outside without a sleep until the next morning.",
           "playerData": {
             "food": 2,
@@ -1408,10 +1446,12 @@
             "charm": -5
           }
         }, {
-          "attribute": ["charm", 70],
+          "attribute": ["charm", 80],
           "text": "The owner saw you as an inspiring, selfless adventure, doing good deeds for others and sacrificing yourself. They gave you the room for free.",
           "playerData": {
-            "food": -8
+            "food": -8,
+            "combat": 2,
+            "physique": 2
           }
         }, {
           "attribute": ["coins", 12],
@@ -1419,6 +1459,8 @@
           "playerData": {
             "food": 2,
             "coins": -12,
+            "combat": 2,
+            "physique": 2,
             "charm": 5
           }
         }]
@@ -1445,6 +1487,8 @@
           "text": "You stayed with the adventurer. The night was great. You even exchanged dungeon tips. When you woke up, the adventurer had already left.\n\nThey left some food for you!",
           "playerData": {
             "food": 1,
+            "combat": 2,
+            "physique": 2,
             "wit": 8,
             "charm": 3
           }
@@ -1462,7 +1506,9 @@
         "result": [{
           "text": "You decided not to stay with the adventurer. You later found a great camping spot under a tree and slept through the night.",
           "playerData": {
-            "food": -8
+            "food": -8,
+            "combat": 2,
+            "physique": 2
           }
         }]
       }]

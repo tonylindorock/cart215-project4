@@ -140,7 +140,7 @@
       "acc": 0.5,
       "melee": 0.5,
       "ranged": 0.5,
-      "enemy": ["WARLOCK", "UNDEAD", "CRAWLER", "GUARDIAN"]
+      "enemy": ["WARLOCK", "UNDEAD", "GUARDIAN"]
     }
   }]
 }
