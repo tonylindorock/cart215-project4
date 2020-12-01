@@ -10,11 +10,14 @@ class Player{
     this.action = "";
     this.dead = false;
 
+    this.perk = 0;
+
+    this.randomPerk();
     this.stats = {
-      "combat": this.randomAttribute(),
-      "physique": this.randomAttribute(),
-      "wit": this.randomAttribute(),
-      "charm": this.randomAttribute(),
+      "combat": this.randomAttribute(0),
+      "physique": this.randomAttribute(1),
+      "wit": this.randomAttribute(2),
+      "charm": this.randomAttribute(3),
       "herbs": 0,
       "food": 0,
       "coins": 0,
@@ -24,16 +27,25 @@ class Player{
     };
   }
 
-  randomAttribute(){
+  randomPerk(){
+    let temp = int(random(0, 4));
+    this.perk = temp;
+  }
+
+  randomAttribute(id){
+    if (this.perk === id){
+      return int(random(50, 70));
+    }
+
     let temp = random();
     if (temp > 0.975){
-      return int(random(75, 80));
+      return int(random(60, 70));
     }else if (0.8 < temp && temp <= 0.975){
-      return int(random(50, 75));
+      return int(random(40, 60));
     }else if (0.5 < temp && temp <= 0.8){
-      return int(random(25, 50));
+      return int(random(20, 40));
     }else{
-      return int(random(5, 25));
+      return int(random(5, 20));
     }
   }
 

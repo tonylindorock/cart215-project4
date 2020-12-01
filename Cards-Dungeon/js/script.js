@@ -52,6 +52,7 @@ let preBattleHealth = 30;
 let traderOffer;
 let traderPrice = 0;
 let accEffect = -1;
+let guardianEncounterCount = 0;
 
 let accBonus = {
   damageBonus: 1,
@@ -674,7 +675,7 @@ function getExploreEvent() {
     let randomExploreEv = random(eventsJSON.events.explore);
 
     if (gameData.state["day"] === 7) {
-      while (randomExploreEv.enemy === undefined || (randomExploreEv.enemy != undefined && !gameData.currentLoc.spawn.enemy.includes(randomExploreEv.enemy[0]))) {
+      while (randomExploreEv.enemy === undefined || (randomExploreEv.enemy != undefined && !gameData.currentLoc.spawn.enemy.includes(randomExploreEv.enemy[0])) || (randomExploreEv.enemy[0] === "GUARDIAN" && guardianEncounterCount > 5)) {
         randomExploreEv = random(eventsJSON.events.explore);
       }
     } else {
@@ -952,6 +953,9 @@ function getEnemy(array) {
 }
 
 function battle(enemyType, num) {
+  if (enemyType === "GUARDIAN"){
+    guardianEncounterCount += 1;
+  }
   let enemy;
   console.log("******** BATTLE STARTED ********");
   if (accBonus.healingBonus) {
@@ -1044,6 +1048,7 @@ function resetGame(id) {
   gameData.state["lost"] = false;
   gameData.state["won"] = false;
   gameData.state["day"] = 1;
+  guardianEncounterCount = 0;
   // reset player
   player = new Player();
   let firstWeapon = getWeapon("melee", int(random(weaponsJSON.weapons.melee.length)));
